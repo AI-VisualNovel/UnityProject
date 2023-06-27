@@ -15,8 +15,24 @@ public class MainPageBtn : MonoBehaviour
     {
         
     }
-    public void PrintSuccessMessage()
+    public void PrintNewGameMessage()
     {
-        Debug.Log("Success!");
+        Debug.Log("NewGame!");
+    }
+    public void PrintContinueGameMessage()
+    {
+        Debug.Log("ContinueGame!");
+    }
+    public void PrintViewLoadingMessage()
+    {
+        Debug.Log("ViewLoading!");
+    }
+    public void PrintSettingMessage()
+    {
+        Debug.Log("Setting!");
+    }
+    public void PrintExitGameMessage()
+    {
+        Debug.Log("ExitGame!");
     }
 }
