@@ -7,6 +7,7 @@ public class ButtonManager : MonoBehaviour
     public Button[] buttons;
 
     private Button selectedButton;
+    [SerializeField] private AudioSource clickEffect;
 
     private void Start()
     {
@@ -16,9 +17,11 @@ public class ButtonManager : MonoBehaviour
             button.onClick.AddListener(() => SelectButton(button));
         }
     }
+    
 
     private void SelectButton(Button button)
     {
+        clickEffect.Play();
         // 如果按钮已选中，则不执行任何操作
         if (button == selectedButton)
             return;
