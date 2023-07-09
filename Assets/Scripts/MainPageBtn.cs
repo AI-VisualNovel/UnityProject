@@ -19,7 +19,7 @@ public class MainPageBtn : MonoBehaviour
     public void PrintNewGameMessage()
     {
         Debug.Log("NewGame!");
-        SceneManager.LoadScene("HelpPage-main");
+        SceneManager.LoadScene("CreateNewGamePage");
     }
     public void PrintContinueGameMessage()
     {
