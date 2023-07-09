@@ -7,9 +7,10 @@ public class CreateNewGameButton : MonoBehaviour
     public Color desiredColor;
     public Toggle[] toggles;
     public InputField inputField;
-
+    [SerializeField] private AudioSource ClickSound;
     public void SearchSelectedButtonText()
     {
+        ClickSound.Play();
         foreach (Toggle toggle in toggles)
         {
             if (toggle.isOn)
