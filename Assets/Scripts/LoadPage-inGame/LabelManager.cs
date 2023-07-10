@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class LabelManager : MonoBehaviour
+public class LabelManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public GameObject Label;
+
+    public void OnPointerEnter(PointerEventData eventData){
+        // Label.SetHighlight(eventData);
+         Debug.Log("Mouse is over GameObject.");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void OnPointerExit(PointerEventData eventData){
+        Debug.Log("Mouse is leaving GameObject.");
     }
 }
