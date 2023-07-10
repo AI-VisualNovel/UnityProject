@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainPageBtn : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MainPageBtn : MonoBehaviour
     public void PrintNewGameMessage()
     {
         Debug.Log("NewGame!");
+        SceneManager.LoadScene("CreateNewGamePage");
     }
     public void PrintContinueGameMessage()
     {
