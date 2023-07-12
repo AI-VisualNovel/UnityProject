@@ -11,28 +11,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainPage.unity
     guid: 299efd756e1d3b749922dcc515a634c8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoadPage-inGame.unity
     guid: 43f1c32641ade3e47a0153559a3846f7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AboutPage-main.unity
     guid: c2cff106433b2c74a87905be7813d4de
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HelpPage-main.unity
     guid: cc8535a3851947c4bb5ebb79c60be91e
   - enabled: 1
     path: Assets/Scenes/CreateNewGamePage.unity
     guid: 2e3560dc65aa92946b315e863842170d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AboutPage-main.unity
     guid: c2cff106433b2c74a87905be7813d4de
   - enabled: 1
     path: Assets/Scenes/GamePage.unity
     guid: 149f386f689b03b40b62c8959b5933f0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoadPage-inGame.unity
     guid: 43f1c32641ade3e47a0153559a3846f7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SavePage.unity
     guid: 8311cac7b97488b4bb5f64f54490291e
   - enabled: 1
@@ -44,7 +44,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GamePage.unity
     guid: 149f386f689b03b40b62c8959b5933f0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HelpPage-main.unity
     guid: cc8535a3851947c4bb5ebb79c60be91e
+  - enabled: 1
+    path: Assets/Scenes/Book2.unity
+    guid: 58f242d7328745d47ac50b415dcebbf2
+  - enabled: 1
+    path: Assets/Scenes/Book1.unity
+    guid: ed98f538ed6327e4098aca2523ca4246
   m_configObjects: {}
