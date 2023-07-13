@@ -15,8 +15,8 @@ public class LabelController1 : MonoBehaviour
     public GameObject AboutPage_main;
     public GameObject HelpPage_main;
 
-    public Button label1;
-    public Button label2;
+    // public Button label1;
+    // public Button label2;
     public Button label3;
     public Button label4;
     public Button label5;
@@ -25,22 +25,24 @@ public class LabelController1 : MonoBehaviour
     public Button label8;
 
 
-    void start(){
-        // label_controller2 = GameObject.FindGameObjectWithTag("LabelController2").GetComponent<LabelController2>();
-        label3_pressed();
+    void Start(){
+        LoadPage_main.SetActive(false);
+        SettingPage_main.SetActive(false);
+        AboutPage_main.SetActive(false);
+        HelpPage_main.SetActive(false);
     }
 
     // history page
-    public void label1_pressed(){ 
-        // SceneManager.LoadScene("Book2");
-        label_controller2.label1_pressed();
-    }
+    // public void label1_pressed(){ 
+    //     // SceneManager.LoadScene("Book2");
+    //     label_controller2.label1_pressed();
+    // }
 
     // save page
-    public void label2_pressed(){ 
-        // SceneManager.LoadScene("Book2");
-        label_controller2.label2_pressed();
-    }
+    // public void label2_pressed(){ 
+    //     // SceneManager.LoadScene("Book2");
+    //     label_controller2.label2_pressed();
+    // }
 
     // load page
     public void label3_pressed(){ 
