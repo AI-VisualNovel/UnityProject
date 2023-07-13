@@ -24,8 +24,13 @@ public class LabelController2 : MonoBehaviour
     public Button label8;
 
 
-    void start(){
-        
+    void Start(){
+        HistoryPage.SetActive(false);
+        SavePage.SetActive(false);
+        LoadPage_inGame.SetActive(false);
+        SettingPage_inGame.SetActive(false);
+        AboutPage_inGame.SetActive(false);
+        HelpPage_inGame.SetActive(false);
     }
 
     // history page
