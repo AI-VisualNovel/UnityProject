@@ -4,16 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-// , IPointerEnterHandler, IPointerExitHandler
+
 public class SettingPageButtonManger : MonoBehaviour
 {
-
-    // public void OnPointerEnter(PointerEventData eventData) {
-    //     Debug.Log("The cursor enter the selectable UI element.");
-    // }
-    // public void OnPointerExit(PointerEventData eventData) {
-    //     Debug.Log("The cursor exited the selectable UI element.");
-    // }
 
     public Button[] buttons;
     private Button selectedButton;
