@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
-
-public class SettingPageButtonManger : MonoBehaviour
+public class TextGenerationOptionManager : MonoBehaviour
 {
 
     public Button[] buttons;
@@ -19,6 +17,7 @@ public class SettingPageButtonManger : MonoBehaviour
         {
             button.onClick.AddListener(() => SelectButton(button));
         }
+        
     }
 
     private void SelectButton(Button button)
@@ -44,6 +43,9 @@ public class SettingPageButtonManger : MonoBehaviour
         selectedColors.normalColor = selected; // 设置选中状态的颜色
         button.colors = selectedColors;
         selectedButton = button;
+
+        string buttonText = button.GetComponentInChildren<TextMeshProUGUI>().text;
+        Debug.Log("Text Generation Option Selected Button Text: " + buttonText);
     }
 
     private void Update()
