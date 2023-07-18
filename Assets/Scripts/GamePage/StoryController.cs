@@ -12,6 +12,7 @@ namespace OpenAI
 {
     public class StoryController : MonoBehaviour
     {
+        [SerializeField] private GameObject WrongApiPanel;
         [SerializeField] private InputField inputField;
         [SerializeField] private GameObject optionChoicing;
         [SerializeField] private Button button;
@@ -27,7 +28,10 @@ namespace OpenAI
 
         private void Start()
         {
+            
             button.onClick.AddListener(SendReply);
+            
+            
             remainingText = currentFullText;
         }
 
@@ -40,7 +44,9 @@ namespace OpenAI
         
         private async void SendReply()
         {
+            try{
             userInput = inputField.text;
+            
             Instruction += $"{inputField.text}\nA: ";
 
             textArea.text = "...";
@@ -67,6 +73,13 @@ namespace OpenAI
             remainingText = remainingText.Remove(0, charactersToAdd);
 
             Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
+            
+            }
+            catch(Exception ex)
+            {
+                WrongApiPanel.SetActive(true);
+            }
+            
         }
 
         private void MoveOn(){

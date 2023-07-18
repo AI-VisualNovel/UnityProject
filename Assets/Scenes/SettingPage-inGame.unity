@@ -313,11 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a99a97b1b4f3d340a0534ad3fab2d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 324742694}
-  - {fileID: 1018289308}
-  - {fileID: 2049885340}
-  clickEffect: {fileID: 49031912}
 --- !u!82 &49031912
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2689,10 +2684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a99a97b1b4f3d340a0534ad3fab2d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 1154598216}
-  - {fileID: 321365586}
-  clickEffect: {fileID: 631423923}
 --- !u!82 &631423923
 AudioSource:
   m_ObjectHideFlags: 0
