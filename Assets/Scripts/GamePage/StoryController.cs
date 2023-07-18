@@ -7,6 +7,7 @@ using System.Threading;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 
+
 namespace OpenAI
 {
     public class StoryController : MonoBehaviour
@@ -17,7 +18,7 @@ namespace OpenAI
         [SerializeField] private Text textArea;
         [SerializeField] private Image image;
         
-        private OpenAIApi openai = new OpenAIApi();
+        private OpenAIApi openai = new OpenAIApi(InputFieldManager.user_api);
         
         private string userInput;
         private string Instruction = "You are now acting as a game terminal, generate plot development according to my instructions. \nQ: ";
