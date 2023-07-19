@@ -22,16 +22,46 @@ namespace OpenAI
         private OpenAIApi openai = new OpenAIApi(InputFieldManager.user_api);
         
         private string userInput;
-        private string Instruction = "You are now acting as a game terminal, generate plot development according to my instructions. \nQ: ";
+        private string Instruction ;
+
         private string currentFullText = "";
         private string remainingText;
 
+        
+
+
+
         private void Start()
-        {
-            
+        {           
+            // CreateNewGame Variable
+            string gameMode,gameStyle,gamePicQuality,gameDirection,gameLanguage;
+            if(CreateNewGameButton.gamedir==null)
+            {
+                gameMode = CreateNewGameButton.buttonTexts[0];
+                gameStyle = CreateNewGameButton.buttonTexts[1];
+                gamePicQuality = CreateNewGameButton.buttonTexts[2];
+                gameDirection = CreateNewGameButton.buttonTexts[3];
+                gameLanguage = CreateNewGameButton.buttonTexts[4];
+            }
+            else
+            {
+                gameDirection = CreateNewGameButton.gamedir;
+                gameMode = CreateNewGameButton.buttonTexts[0];
+                gameStyle = CreateNewGameButton.buttonTexts[1];
+                gamePicQuality = CreateNewGameButton.buttonTexts[2];
+                gameLanguage = CreateNewGameButton.buttonTexts[3];
+            }
+            if(gameLanguage=="中文")
+            {
+                Instruction = "你現在是一個遊戲終端，根據我的指示生成劇情發展。\n產出的圖像需要是"+gameStyle+"的樣子，故事的主題是一種"+gameMode+"的背景\n同時我希望遊戲是朝向"+gameDirection+"Q: ";
+            }
+            else
+            {
+                Instruction = "You are now acting as a game terminal, generate plot development according to my instructions. \nQ: ";
+            }
             button.onClick.AddListener(SendReply);
             
-            
+            Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
             remainingText = currentFullText;
         }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CreateNewGameButton : MonoBehaviour
 {
@@ -10,9 +11,11 @@ public class CreateNewGameButton : MonoBehaviour
     [SerializeField] private AudioSource ClickSound;
     
     public static string[] buttonTexts;
-
+    public static int buttonLength ;
+    public static string gamedir ;
     public void SearchSelectedButtonText()
     {
+        buttonLength = buttons.Length;
         buttonTexts = new string[buttons.Length];
         int i = 0;
         ClickSound.Play();
@@ -29,6 +32,7 @@ public class CreateNewGameButton : MonoBehaviour
         if (ColorUtility.ToHtmlStringRGB(inputFieldColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
         {
             string inputText = inputField.text;
+            gamedir = inputText;
             Debug.Log("遊戲走向: " + inputText);
         }
 
@@ -45,5 +49,7 @@ public class CreateNewGameButton : MonoBehaviour
                 i++;
             }
         }
+        SceneManager.LoadScene("GamePage");
+
     }
 }

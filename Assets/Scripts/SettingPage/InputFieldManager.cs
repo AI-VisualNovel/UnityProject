@@ -24,7 +24,7 @@ public class InputFieldManager : MonoBehaviour
         else
         {
             Debug.Log("InputField 的文本为：" + user_api);
-            SceneManager.LoadScene("GamePage");
+            SceneManager.LoadScene("CreateNewGamePage");
 
         }
     }
