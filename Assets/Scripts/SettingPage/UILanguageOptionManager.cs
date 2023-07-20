@@ -7,7 +7,7 @@ public class UILanguageOptionManager : MonoBehaviour
 {
 
     public Button[] buttons;
-    private Button selectedButton;
+    public Button selectedButton;
     [SerializeField] private AudioSource clickEffect;
 
     private void Start()
@@ -20,7 +20,7 @@ public class UILanguageOptionManager : MonoBehaviour
         
     }
 
-    private void SelectButton(Button button)
+    public void SelectButton(Button button)
     {
         clickEffect.Play();
         // 如果按钮已选中，则不执行任何操作
@@ -43,9 +43,15 @@ public class UILanguageOptionManager : MonoBehaviour
         selectedColors.normalColor = selected; // 设置选中状态的颜色
         button.colors = selectedColors;
         selectedButton = button;
-
-        string buttonText = button.GetComponentInChildren<TextMeshProUGUI>().text;
-        Debug.Log("UI Language Option Manager Selected Button Text: " + buttonText);
+    }
+    public string GetSelectedButtonText()
+    {
+        if (selectedButton != null)
+        {
+            return selectedButton.GetComponentInChildren<TextMeshProUGUI>().text;
+        } else {
+            return "null";
+        }
     }
 
     private void Update()

@@ -7,7 +7,7 @@ public class TextGenerationOptionManager : MonoBehaviour
 {
 
     public Button[] buttons;
-    private Button selectedButton;
+    public Button selectedButton;
     [SerializeField] private AudioSource clickEffect;
 
     private void Start()
@@ -43,10 +43,17 @@ public class TextGenerationOptionManager : MonoBehaviour
         selectedColors.normalColor = selected; // 设置选中状态的颜色
         button.colors = selectedColors;
         selectedButton = button;
-
-        string buttonText = button.GetComponentInChildren<TextMeshProUGUI>().text;
-        Debug.Log("Text Generation Option Selected Button Text: " + buttonText);
     }
+    public string GetSelectedButtonText()
+    {
+        if (selectedButton != null)
+        {
+            return selectedButton.GetComponentInChildren<TextMeshProUGUI>().text;
+        } else {
+            return "null";
+        }
+    }
+
 
     private void Update()
     {
