@@ -53,9 +53,18 @@ public class LabelController2 : MonoBehaviour
         saveload2.SetActive(false);
         saveload3.SetActive(false);
 
+
+        if (HistoryPage == true)
+        {
+            label1_pressed();
+        }
         if (toSavePage == true)
         {
             label2_pressed();
+        }
+        if (toSettingPage_inGame == true)
+        {
+            label4_pressed();
         }
         else
         {
