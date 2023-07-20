@@ -15,9 +15,15 @@ namespace OpenAI
         [SerializeField] private GameObject WrongApiPanel;
         [SerializeField] private InputField inputField;
         [SerializeField] private GameObject optionChoicing;
+        [SerializeField] private GameObject defaultChoicing;
         [SerializeField] private Button button;
         [SerializeField] private Text textArea;
         [SerializeField] private Image image;
+
+        [SerializeField] private Button option1;
+        [SerializeField] private Button option2;
+        [SerializeField] private Button option3;
+
         
         private OpenAIApi openai = new OpenAIApi(InputFieldManager.user_api);
         
@@ -27,12 +33,11 @@ namespace OpenAI
         private string currentFullText = "";
         private string remainingText;
 
-        
-
-
-
         private void Start()
         {           
+
+            defaultChoicing.SetActive(false);
+
             // CreateNewGame Variable
             string gameMode,gameStyle,gamePicQuality,gameDirection,gameLanguage;
             if(CreateNewGameButton.gamedir==null)
@@ -60,7 +65,10 @@ namespace OpenAI
                 Instruction = "You are now acting as a game terminal, generate plot development according to my instructions. \nQ: ";
             }
             button.onClick.AddListener(SendReply);
-            
+            option1.onClick.AddListener(() => SendReply2(option1));
+            option2.onClick.AddListener(() => SendReply2(option2));
+            option3.onClick.AddListener(() => SendReply2(option3));
+
             Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
             remainingText = currentFullText;
         }
@@ -94,7 +102,53 @@ namespace OpenAI
             currentFullText = completionResponse.Choices[0].Text.Trim();
             remainingText = currentFullText;
 
-            SendImageRequest();
+            GetOptions(option1);
+            GetOptions(option2);
+            GetOptions(option3);
+            //SendImageRequest();
+
+            Debug.Log(currentFullText);
+            int charactersToAdd = Mathf.Min(113, remainingText.Length);
+            string displayedText = remainingText.Substring(0, charactersToAdd);
+            textArea.text = displayedText;
+            remainingText = remainingText.Remove(0, charactersToAdd);
+
+            Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
+            
+            }
+            catch(Exception ex)
+            {
+                WrongApiPanel.SetActive(true);
+            }
+            
+        }
+
+        private async void SendReply2(Button button)
+        {
+            try{
+            userInput = button.GetComponentInChildren<Text>().text;
+            
+            Instruction += $"{inputField.text}\nA: ";
+
+            textArea.text = "...";
+            inputField.text = "";
+
+            optionChoicing.SetActive(false);
+
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = Instruction,
+                Model = "text-davinci-003",
+                MaxTokens = 2048
+            });
+
+            currentFullText = completionResponse.Choices[0].Text.Trim();
+            remainingText = currentFullText;
+
+            GetOptions(option1);
+            GetOptions(option2);
+            GetOptions(option3);
+            //SendImageRequest();
 
             Debug.Log(currentFullText);
             int charactersToAdd = Mathf.Min(113, remainingText.Length);
@@ -120,7 +174,21 @@ namespace OpenAI
                 remainingText = remainingText.Remove(0, charactersToAdd);
             }else{
                 optionChoicing.SetActive(true);
+                defaultChoicing.SetActive(true);
             }
+        }
+
+        private async void GetOptions(Button button)
+        {
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n範例:\n劇情:小明來到一個岔路口，請問他該怎麼做?\n你要回答:向左走\n以下是劇情:" + userInput + "請你回答:",
+                Model = "text-davinci-003",
+                MaxTokens = 2048
+            });
+
+            Text buttonText = button.GetComponentInChildren<Text>();
+            buttonText.text = completionResponse.Choices[0].Text.Trim();
         }
 
         private async void SendImageRequest()
