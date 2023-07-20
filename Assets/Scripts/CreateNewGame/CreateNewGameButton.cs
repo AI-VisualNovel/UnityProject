@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CreateNewGameButton : MonoBehaviour
 {
@@ -8,22 +9,30 @@ public class CreateNewGameButton : MonoBehaviour
     public Toggle[] toggles;
     public InputField inputField;
     [SerializeField] private AudioSource ClickSound;
+    
+    public static string[] buttonTexts;
+    public static int buttonLength ;
+    public static string gamedir ;
     public void SearchSelectedButtonText()
     {
+        buttonLength = buttons.Length;
+        buttonTexts = new string[buttons.Length];
+        int i = 0;
         ClickSound.Play();
-        foreach (Toggle toggle in toggles)
-        {
-            if (toggle.isOn)
-            {
-                string toggleText = toggle.GetComponentInChildren<Text>().text;
-                Debug.Log("Selected Toggle Text: " + toggleText);
-            }
-        }
+        // foreach (Toggle toggle in toggles)
+        // {
+        //     if (toggle.isOn)
+        //     {
+        //         string toggleText = toggle.GetComponentInChildren<Text>().text;
+        //         Debug.Log("Selected Toggle Text: " + toggleText);
+        //     }
+        // }
 
         Color inputFieldColor = inputField.image.color;
         if (ColorUtility.ToHtmlStringRGB(inputFieldColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
         {
             string inputText = inputField.text;
+            gamedir = inputText;
             Debug.Log("遊戲走向: " + inputText);
         }
 
@@ -34,8 +43,13 @@ public class CreateNewGameButton : MonoBehaviour
             if (ColorUtility.ToHtmlStringRGB(buttonNormalColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
             {
                 string buttonText = button.GetComponentInChildren<Text>().text;
-                Debug.Log("Selected Button Text: " + buttonText);
+                // Debug.Log("Selected Button Text: " + buttonText);
+                buttonTexts[i] = buttonText;
+                Debug.Log("Selected Button Text: " + buttonTexts[i]);
+                i++;
             }
         }
+        SceneManager.LoadScene("GamePage");
+
     }
 }
