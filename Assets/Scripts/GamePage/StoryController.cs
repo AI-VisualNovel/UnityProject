@@ -33,10 +33,12 @@ namespace OpenAI
         private string currentFullText = "";
         private string remainingText;
 
+        private bool optionShow = false;
+
         private void Start()
         {           
 
-            defaultChoicing.SetActive(false);
+            optionChoicing.SetActive(false);
 
             // CreateNewGame Variable
             string gameMode,gameStyle,gamePicQuality,gameDirection,gameLanguage;
@@ -64,6 +66,8 @@ namespace OpenAI
             {
                 Instruction = "You are now acting as a game terminal, generate plot development according to my instructions. \nQ: ";
             }
+
+            SendReply();
             button.onClick.AddListener(SendReply);
             option1.onClick.AddListener(() => SendReply2(option1));
             option2.onClick.AddListener(() => SendReply2(option2));
@@ -82,6 +86,7 @@ namespace OpenAI
         
         private async void SendReply()
         {
+            optionShow = false;
             try{
             userInput = inputField.text;
             
@@ -115,6 +120,7 @@ namespace OpenAI
 
             Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
             
+            optionShow = true;
             }
             catch(Exception ex)
             {
@@ -125,6 +131,7 @@ namespace OpenAI
 
         private async void SendReply2(Button button)
         {
+            optionShow = false;
             try{
             userInput = button.GetComponentInChildren<Text>().text;
             
@@ -155,9 +162,10 @@ namespace OpenAI
             string displayedText = remainingText.Substring(0, charactersToAdd);
             textArea.text = displayedText;
             remainingText = remainingText.Remove(0, charactersToAdd);
-
+            
             Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
             
+            optionShow = true;
             }
             catch(Exception ex)
             {
@@ -172,9 +180,8 @@ namespace OpenAI
                 string displayedText = remainingText.Substring(0, charactersToAdd);
                 textArea.text = displayedText;
                 remainingText = remainingText.Remove(0, charactersToAdd);
-            }else{
+            }else if(optionShow == true){
                 optionChoicing.SetActive(true);
-                defaultChoicing.SetActive(true);
             }
         }
 
