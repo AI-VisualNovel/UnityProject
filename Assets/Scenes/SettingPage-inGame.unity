@@ -317,6 +317,7 @@ MonoBehaviour:
   - {fileID: 324742694}
   - {fileID: 1018289308}
   - {fileID: 2049885340}
+  selectedButton: {fileID: 0}
   clickEffect: {fileID: 49031912}
 --- !u!82 &49031912
 AudioSource:
@@ -3041,6 +3042,7 @@ MonoBehaviour:
   buttons:
   - {fileID: 1154598216}
   - {fileID: 321365586}
+  selectedButton: {fileID: 0}
   clickEffect: {fileID: 631423923}
 --- !u!82 &631423923
 AudioSource:
