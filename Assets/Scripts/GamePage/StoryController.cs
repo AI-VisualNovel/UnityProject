@@ -15,9 +15,15 @@ namespace OpenAI
         [SerializeField] private GameObject WrongApiPanel;
         [SerializeField] private InputField inputField;
         [SerializeField] private GameObject optionChoicing;
+        [SerializeField] private GameObject defaultChoicing;
         [SerializeField] private Button button;
         [SerializeField] private Text textArea;
         [SerializeField] private Image image;
+
+        [SerializeField] private Button option1;
+        [SerializeField] private Button option2;
+        [SerializeField] private Button option3;
+
         
         private OpenAIApi openai = new OpenAIApi(InputFieldManager.user_api);
         
@@ -27,12 +33,11 @@ namespace OpenAI
         private string currentFullText = "";
         private string remainingText;
 
-        
-
-
-
         private void Start()
         {           
+
+            defaultChoicing.SetActive(false);
+
             // CreateNewGame Variable
             string gameMode,gameStyle,gamePicQuality,gameDirection,gameLanguage;
             if(CreateNewGameButton.gamedir==null)
@@ -53,14 +58,17 @@ namespace OpenAI
             }
             if(gameLanguage=="中文")
             {
-                Instruction = "你現在是一個遊戲終端，根據我的指示生成劇情發展。\n產出的圖像需要是"+gameStyle+"的樣子，故事的主題是一種"+gameMode+"的背景\n同時我希望遊戲是朝向"+gameDirection+"Q: ";
+                Instruction = "我現在要跟你玩文字遊戲。故事背景設定在台灣的"+gameMode+"，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西、對建築物的描述也請符合"+gameMode+"，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
             }
             else
             {
                 Instruction = "You are now acting as a game terminal, generate plot development according to my instructions. \nQ: ";
             }
             button.onClick.AddListener(SendReply);
-            
+            option1.onClick.AddListener(() => SendReply2(option1));
+            option2.onClick.AddListener(() => SendReply2(option2));
+            option3.onClick.AddListener(() => SendReply2(option3));
+
             Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
             remainingText = currentFullText;
         }
@@ -94,7 +102,53 @@ namespace OpenAI
             currentFullText = completionResponse.Choices[0].Text.Trim();
             remainingText = currentFullText;
 
-            SendImageRequest();
+            GetOptions(option1);
+            GetOptions(option2);
+            GetOptions(option3);
+            //SendImageRequest();
+
+            Debug.Log(currentFullText);
+            int charactersToAdd = Mathf.Min(113, remainingText.Length);
+            string displayedText = remainingText.Substring(0, charactersToAdd);
+            textArea.text = displayedText;
+            remainingText = remainingText.Remove(0, charactersToAdd);
+
+            Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
+            
+            }
+            catch(Exception ex)
+            {
+                WrongApiPanel.SetActive(true);
+            }
+            
+        }
+
+        private async void SendReply2(Button button)
+        {
+            try{
+            userInput = button.GetComponentInChildren<Text>().text;
+            
+            Instruction += $"{inputField.text}\nA: ";
+
+            textArea.text = "...";
+            inputField.text = "";
+
+            optionChoicing.SetActive(false);
+
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = Instruction,
+                Model = "text-davinci-003",
+                MaxTokens = 2048
+            });
+
+            currentFullText = completionResponse.Choices[0].Text.Trim();
+            remainingText = currentFullText;
+
+            GetOptions(option1);
+            GetOptions(option2);
+            GetOptions(option3);
+            //SendImageRequest();
 
             Debug.Log(currentFullText);
             int charactersToAdd = Mathf.Min(113, remainingText.Length);
@@ -120,7 +174,21 @@ namespace OpenAI
                 remainingText = remainingText.Remove(0, charactersToAdd);
             }else{
                 optionChoicing.SetActive(true);
+                defaultChoicing.SetActive(true);
             }
+        }
+
+        private async void GetOptions(Button button)
+        {
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n範例:\n劇情:小明來到一個岔路口，請問他該怎麼做?\n你要回答:向左走\n以下是劇情:" + userInput + "請你回答:",
+                Model = "text-davinci-003",
+                MaxTokens = 2048
+            });
+
+            Text buttonText = button.GetComponentInChildren<Text>();
+            buttonText.text = completionResponse.Choices[0].Text.Trim();
         }
 
         private async void SendImageRequest()
