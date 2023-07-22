@@ -20,12 +20,18 @@ public class TextGenerationOptionManager : MonoBehaviour
         
     }
 
-    private void SelectButton(Button button)
+    public void SelectButton(Button button)
     {
         clickEffect.Play();
         // 如果按钮已选中，则不执行任何操作
         if (button == selectedButton)
             return;
+        // for reset button
+        if (button == null)
+        {
+            selectedButton = null;
+            return;
+        }
 
         // 取消之前选中的按钮状态
         if (selectedButton != null)

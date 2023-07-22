@@ -7328,6 +7328,9 @@ MonoBehaviour:
   - {fileID: 1167420294}
   - {fileID: 1419872213}
   inputField: {fileID: 2118066600}
+  defaultBackgroundSliderValue: 0.5
+  defaultEffectMusicSliderValue: 0.3
+  defaultCharacterDubbingSliderValue: 0.7
 --- !u!1 &1053907499
 GameObject:
   m_ObjectHideFlags: 0
