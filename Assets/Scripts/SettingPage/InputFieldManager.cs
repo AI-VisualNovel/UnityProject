@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class InputFieldManager : MonoBehaviour
 {
+
     public static string user_api;
     public TMP_InputField inputField;
     [SerializeField] private AudioSource ClickSound;
 
-    private void Start()
-    {
-        
-    }
 
     public void OnButtonClicked()
     {
@@ -23,7 +24,7 @@ public class InputFieldManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("InputField 的文本为：" + user_api);
+            Debug.Log("APIKey 為：" + user_api);
             SceneManager.LoadScene("CreateNewGamePage");
 
         }
