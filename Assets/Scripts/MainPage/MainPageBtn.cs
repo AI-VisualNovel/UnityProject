@@ -6,13 +6,12 @@ using UnityEditor;
 
 public class MainPageBtn : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public AudioSource soundPlayer;
     void Start()
     {
         Debug.Log("Start!");
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -21,24 +20,29 @@ public class MainPageBtn : MonoBehaviour
     {
         Debug.Log("NewGame!");
         SceneManager.LoadScene("CreateNewGamePage");
+        soundPlayer.Play();
     }
     public void PrintContinueGameMessage()
     {
         Debug.Log("ContinueGame!");
+        soundPlayer.Play();
     }
     public void PrintViewLoadingMessage()
     {
         Debug.Log("ViewLoading!");
         SceneManager.LoadScene("LoadPage-inGame");
+        soundPlayer.Play();
     }
     public void PrintSettingMessage()
     {
         Debug.Log("Setting!");
         SceneManager.LoadScene("SettingPage-inGame");
+        soundPlayer.Play();
     }
     public void PrintExitGameMessage()
     {
         Debug.Log("ExitGame!");
+        soundPlayer.Play();
         #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
         #else
