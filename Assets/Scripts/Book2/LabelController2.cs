@@ -54,7 +54,7 @@ public class LabelController2 : MonoBehaviour
         saveload3.SetActive(false);
 
 
-        if (HistoryPage == true)
+        if (toHistoryPage == true)
         {
             label1_pressed();
         }
@@ -62,18 +62,21 @@ public class LabelController2 : MonoBehaviour
         {
             label2_pressed();
         }
+        if (toLoadPage_inGame == true)
+        {
+            label3_pressed();
+        }
         if (toSettingPage_inGame == true)
         {
             label4_pressed();
         }
-        else
+        if (toAboutPage_inGame == true)
         {
-            HistoryPage.SetActive(false);
-            SavePage.SetActive(false);
-            LoadPage_inGame.SetActive(false);
-            SettingPage_inGame.SetActive(false);
-            AboutPage_inGame.SetActive(false);
-            HelpPage_inGame.SetActive(false);
+            label5_pressed();
+        }
+        if (toHelpPage_inGame == true)
+        {
+            label6_pressed();
         }
 
 
