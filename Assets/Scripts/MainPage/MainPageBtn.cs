@@ -14,7 +14,7 @@ public class MainPageBtn : MonoBehaviour
 
     void Update()
     {
-        
+
     }
     public void PrintNewGameMessage()
     {
@@ -30,23 +30,26 @@ public class MainPageBtn : MonoBehaviour
     public void PrintViewLoadingMessage()
     {
         Debug.Log("ViewLoading!");
-        SceneManager.LoadScene("LoadPage-inGame");
+        // SceneManager.LoadScene("LoadPage-inGame");
+        LabelController2.toLoadPage_inGame = true;
+        SceneManager.LoadScene("Book2");
         soundPlayer.Play();
     }
     public void PrintSettingMessage()
     {
         Debug.Log("Setting!");
-        SceneManager.LoadScene("SettingPage-inGame");
+        LabelController2.toSettingPage_inGame = true;
+        SceneManager.LoadScene("Book2");
         soundPlayer.Play();
     }
     public void PrintExitGameMessage()
     {
         Debug.Log("ExitGame!");
         soundPlayer.Play();
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 }
