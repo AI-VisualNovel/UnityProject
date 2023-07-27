@@ -8174,7 +8174,7 @@ MonoBehaviour:
         m_MethodName: LoadImage
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1324767415}
+          m_ObjectArgument: {fileID: 1040875141}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
