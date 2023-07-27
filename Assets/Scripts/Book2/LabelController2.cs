@@ -34,25 +34,8 @@ public class LabelController2 : MonoBehaviour
     public Button label7;
     public Button label8;
 
-    // paginations
-    public Button pagination1;
-    public Button pagination2;
-    public Button pagination3;
-
-
-    // saveload_screenshots
-    public GameObject saveload1;
-    public GameObject saveload2;
-    public GameObject saveload3;
-
-
     void Start()
     {
-
-
-        saveload2.SetActive(false);
-        saveload3.SetActive(false);
-
 
         if (toHistoryPage == true)
         {
@@ -79,10 +62,6 @@ public class LabelController2 : MonoBehaviour
             label6_pressed();
         }
 
-
-        pagination1.onClick.AddListener(() => switch_page(saveload1, saveload2, saveload3));
-        pagination2.onClick.AddListener(() => switch_page(saveload2, saveload1, saveload3));
-        pagination3.onClick.AddListener(() => switch_page(saveload3, saveload1, saveload2));
     }
 
     // history page
@@ -163,21 +142,8 @@ public class LabelController2 : MonoBehaviour
         Application.Quit();
 #endif
     }
-
-
-    public void switch_page(GameObject to_show, GameObject to_hide1, GameObject to_hide2)
-    {
-
-        to_show.SetActive(true);
-        to_hide1.SetActive(false);
-        to_hide2.SetActive(false);
-    }
-
+    
 }
 
-// public void save_screenshot()
-// {
-
-// }
 
 
