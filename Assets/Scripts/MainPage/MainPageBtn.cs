@@ -6,43 +6,50 @@ using UnityEditor;
 
 public class MainPageBtn : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public AudioSource soundPlayer;
     void Start()
     {
         Debug.Log("Start!");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void PrintNewGameMessage()
     {
         Debug.Log("NewGame!");
         SceneManager.LoadScene("CreateNewGamePage");
+        soundPlayer.Play();
     }
     public void PrintContinueGameMessage()
     {
         Debug.Log("ContinueGame!");
+        soundPlayer.Play();
     }
     public void PrintViewLoadingMessage()
     {
         Debug.Log("ViewLoading!");
-        SceneManager.LoadScene("LoadPage-inGame");
+        // SceneManager.LoadScene("LoadPage-inGame");
+        LabelController2.toLoadPage_inGame = true;
+        SceneManager.LoadScene("Book2");
+        soundPlayer.Play();
     }
     public void PrintSettingMessage()
     {
         Debug.Log("Setting!");
-        SceneManager.LoadScene("SettingPage-inGame");
+        LabelController2.toSettingPage_inGame = true;
+        SceneManager.LoadScene("Book2");
+        soundPlayer.Play();
     }
     public void PrintExitGameMessage()
     {
         Debug.Log("ExitGame!");
-        #if UNITY_EDITOR
+        soundPlayer.Play();
+#if UNITY_EDITOR
         EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 }
