@@ -20,7 +20,6 @@ public class NavController : MonoBehaviour
         LabelController2.toHelpPage_inGame = false;
     }
 
-
     public void ScreenShot()
     {
         ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/screenshot " + System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss") + ".png");
