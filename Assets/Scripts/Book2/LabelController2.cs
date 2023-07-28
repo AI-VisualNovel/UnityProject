@@ -37,6 +37,14 @@ public class LabelController2 : MonoBehaviour
     void Start()
     {
 
+        HistoryPage.SetActive(false);
+        SavePage.SetActive(false);
+        LoadPage_inGame.SetActive(false);
+        SettingPage_inGame.SetActive(false);
+        AboutPage_inGame.SetActive(false);
+        HelpPage_inGame.SetActive(false);
+
+
         if (toHistoryPage == true)
         {
             label1_pressed();
