@@ -17,6 +17,11 @@ public class CreateNewGameButton : MonoBehaviour
     {
         buttonLength = buttons.Length;
         buttonTexts = new string[buttons.Length];
+        buttonTexts[0] = "白色恐怖";
+        buttonTexts[1] = "漫畫";
+        buttonTexts[2] = "中";
+        buttonTexts[3] = "無";
+        buttonTexts[4] = "中文";
         int i = 0;
         ClickSound.Play();
         // foreach (Toggle toggle in toggles)
