@@ -8,7 +8,7 @@ public class LoadingScene : MonoBehaviour
     public GameObject normalScreen;
     public GameObject LoadingScreen;
     public Slider slider;
-    public float loadingTime = 2.0f;
+    public float loadingTime;
 
     public void LoadScene(int sceneId)
     {
