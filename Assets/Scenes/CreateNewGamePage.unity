@@ -2558,9 +2558,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94495a06a206d4f6ca60c9d44d31f05b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normanlScreen: {fileID: 1410246841}
+  normalScreen: {fileID: 1410246841}
   LoadingScreen: {fileID: 809476358}
-  LoadingBarFill: {fileID: 1037588753}
+  slider: {fileID: 342601818}
+  loadingTime: 3
 --- !u!4 &686205806
 Transform:
   m_ObjectHideFlags: 0
@@ -4383,7 +4384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1410246842
 MonoBehaviour:
   m_ObjectHideFlags: 0
