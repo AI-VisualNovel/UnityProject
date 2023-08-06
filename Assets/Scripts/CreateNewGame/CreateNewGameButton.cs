@@ -54,7 +54,6 @@ public class CreateNewGameButton : MonoBehaviour
                 i++;
             }
         }
-        SceneManager.LoadScene("GamePage");
-
+       
     }
 }
