@@ -15,8 +15,8 @@ namespace OpenAI
         [SerializeField] private GameObject WrongApiPanel;
         [SerializeField] private InputField inputField;
         [SerializeField] private GameObject optionChoicing;
-        [SerializeField] private GameObject defaultChoicing;
-        [SerializeField] private GameObject gameUI;
+        //[SerializeField] private GameObject defaultChoicing;
+        //[SerializeField] private GameObject gameUI;
         [SerializeField] private Button button;
         [SerializeField] private Text textArea;
         [SerializeField] private Image image;
@@ -25,7 +25,7 @@ namespace OpenAI
         [SerializeField] private Button option2;
         [SerializeField] private Button option3;
 
-        [SerializeField] private Button hideUI;
+        //[SerializeField] private Button hideUI;
 
         private OpenAIApi openai = new OpenAIApi(InputFieldManager.user_api);
         
@@ -74,42 +74,42 @@ namespace OpenAI
 
             SendReply();
             button.onClick.AddListener(SendReply);
-            option1.onClick.AddListener(() => SendReply2(option1));
-            option2.onClick.AddListener(() => SendReply2(option2));
-            option3.onClick.AddListener(() => SendReply2(option3));
-            hideUI.onClick.AddListener(UIHiding);
+            option1.onClick.AddListener(() => SendReplyButton(option1));
+            option2.onClick.AddListener(() => SendReplyButton(option2));
+            option3.onClick.AddListener(() => SendReplyButton(option3));
+            //hideUI.onClick.AddListener(UIHiding);
 
 
             Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
             remainingText = currentFullText;
         }
 
-        private void Update() {
-            if (Input.GetMouseButtonDown(0)){
-                if(UIHide == true){
-                    gameUI.SetActive(true);
-                    UIHide = false;
-                }else{
-                    MoveOn();
-                }
-            }
-        }
+        // private void Update() {
+        //     if (Input.GetMouseButtonDown(0)){
+        //         if(UIHide == true){
+        //             gameUI.SetActive(true);
+        //             UIHide = false;
+        //         }else{
+        //             MoveOn();
+        //         }
+        //     }
+        // }
         
-        private void MoveOn(){
-                if(remainingText.Length > 0){
-                    int charactersToAdd = Mathf.Min(113, remainingText.Length);
-                    string displayedText = remainingText.Substring(0, charactersToAdd);
-                    textArea.text = displayedText;
-                    remainingText = remainingText.Remove(0, charactersToAdd);
-                }else if(optionShow == true){
-                    optionChoicing.SetActive(true);
-            }
-        }
+        // private void MoveOn(){
+        //         if(remainingText.Length > 0){
+        //             int charactersToAdd = Mathf.Min(113, remainingText.Length);
+        //             string displayedText = remainingText.Substring(0, charactersToAdd);
+        //             textArea.text = displayedText;
+        //             remainingText = remainingText.Remove(0, charactersToAdd);
+        //         }else if(optionShow == true){
+        //             optionChoicing.SetActive(true);
+        //     }
+        // }
 
-        private void UIHiding(){
-            gameUI.SetActive(false);
-            UIHide = true;
-        }
+        // private void UIHiding(){
+        //     gameUI.SetActive(false);
+        //     UIHide = true;
+        // }
 
         private async void SendReply()
         {
@@ -156,7 +156,7 @@ namespace OpenAI
             
         }
 
-        private async void SendReply2(Button button)
+        private async void SendReplyButton(Button button)
         {
             optionShow = false;
             try{
@@ -261,3 +261,4 @@ namespace OpenAI
         }
     }
 }
+
