@@ -3,44 +3,88 @@ using UnityEngine.UI;
 
 public class GameLoadingControl : MonoBehaviour
 {
-    // 引用 Slider 對象
-    public Slider LoadingSlider;
-    // 用來顯示Slider音量的Text元件
-    public Text LoadingSliderText;
-    // 控制進度
-    private float VolumeValue;
-    // 遊戲預計運行時間（秒）
-    private float totalTime = 5f;
-    // 每幀應該增加的進度
-    private float increment; 
-    // Start is called before the first frame update
-    void Start()
+    public RawImage loadingImage;
+    public Slider loadingSlider;
+    public Text loadingSliderText;
+
+    private float totalTime = 5f; // 预计加载时间（秒）
+    private float increment; // 每帧应该增加的进度
+    private float currentProgress = 0f; // 当前进度
+
+    private bool isLoading = false; // 控制加载状态
+    private bool accelerate = false; // 标志是否加速
+
+    private float elapsedTime = 0f; // 计时器
+    private bool slowDown = false; // 标志是否减速
+    
+    private void Start()
     {
-        // 計算每幀應該增加的進度
-        increment = 100f / (totalTime * 60f); // 假設每秒運行60幀
+        increment = 2000f / (totalTime * 60f); // 假设每秒运行60帧
+        loadingImage.gameObject.SetActive(false); // 初始时隐藏图片和Slider
+        loadingSlider.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (VolumeValue < 100)
+        if (isLoading && currentProgress < 100f)
         {
-            VolumeValue += increment;
-            // 實時更新進度百分比的文本顯示
-            LoadingSliderText.text = Mathf.FloorToInt(VolumeValue).ToString() + "%";
-            LoadingSlider.value = VolumeValue / 100f;
-        }
-        // else
-        // {
-        //     LoadingSliderText.text = "Done";
-        // }
-    }
-    private void UpdateVolumeText(Slider slider, Text volumeText)
-    {
-        // 取得Slider的值
-        float volume = slider.value;
+            if (accelerate)
+            {
+                // 加速增加進度
+                currentProgress += increment * 20f * Time.deltaTime;
+            }
+            else if (slowDown)
+            {
+                currentProgress += increment * 0.5f * Time.deltaTime; // 减速增加进度
+            }
+            else
+            {
+                // 等速增加進度
+                currentProgress += increment * Time.deltaTime;
+            }
 
-        // 將值轉換成百分比格式，並設定給Text元件
-        volumeText.text = volume.ToString("F1") + "%";
+            loadingSlider.value = currentProgress / 100f;
+            loadingSliderText.text = Mathf.FloorToInt(currentProgress).ToString() + "%";
+            if (currentProgress >= 100f)
+            {
+                // 隱藏Slider和RawImage和text
+                loadingSlider.gameObject.SetActive(false);
+                loadingImage.gameObject.SetActive(false);
+                loadingSliderText.gameObject.SetActive(false);
+            }
+            if (isLoading)
+            {
+                elapsedTime += Time.deltaTime;
+
+                // 当时间超过五秒时，启动减速
+                if (elapsedTime >= 5f && !accelerate)
+                {
+                    slowDown = true;
+                }
+            }
+        }
+    }
+
+    public void StartLoading()
+    {
+        Debug.Log("StartLoading method called");
+        isLoading = true;
+        currentProgress = 0f;
+        loadingSlider.value = 0f;
+        loadingSliderText.text = "0%";
+        loadingSlider.gameObject.SetActive(true);
+        loadingImage.gameObject.SetActive(true);
+        loadingSliderText.gameObject.SetActive(true);
+
+        // 在这里开始加载数据或执行异步操作
+
+        // 模拟获得回傳值后加速
+        // chatgpt有回傳資料時開始加速
+        Invoke("AccelerateProgress", 1f); // 2秒后加速
+    }
+    // 模擬
+    private void AccelerateProgress()
+    {
+        accelerate = true;
     }
 }
