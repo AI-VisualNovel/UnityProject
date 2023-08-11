@@ -11,8 +11,8 @@ public class CreateNewGameButton : MonoBehaviour
     [SerializeField] private AudioSource ClickSound;
     
     public static string[] buttonTexts;
-    public static int buttonLength ;
-    public static string gamedir ;
+    public static int buttonLength;
+    public static string gamedir;
     public void SearchSelectedButtonText()
     {
         buttonLength = buttons.Length;
@@ -54,6 +54,5 @@ public class CreateNewGameButton : MonoBehaviour
                 i++;
             }
         }
-        
     }
 }

@@ -1241,7 +1241,7 @@ GameObject:
   - component: {fileID: 458925653}
   - component: {fileID: 458925652}
   m_Layer: 5
-  m_Name: Language2
+  m_Name: EnglishLanguage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1676,7 +1676,7 @@ GameObject:
   - component: {fileID: 478698729}
   - component: {fileID: 478698728}
   m_Layer: 5
-  m_Name: Quality3
+  m_Name: LowQuality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1885,7 +1885,7 @@ GameObject:
   - component: {fileID: 503146519}
   - component: {fileID: 503146518}
   m_Layer: 5
-  m_Name: Quality2
+  m_Name: MediumQuality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2376,7 +2376,7 @@ GameObject:
   - component: {fileID: 609290254}
   - component: {fileID: 609290253}
   m_Layer: 0
-  m_Name: title 4
+  m_Name: GameLanguageTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3467,7 +3467,7 @@ GameObject:
   - component: {fileID: 1180995980}
   - component: {fileID: 1180995979}
   m_Layer: 5
-  m_Name: Quality1
+  m_Name: HighQuality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5058,7 +5058,7 @@ GameObject:
   - component: {fileID: 1577198290}
   - component: {fileID: 1577198289}
   m_Layer: 5
-  m_Name: Language1
+  m_Name: ChineseLanguage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5178,7 +5178,7 @@ GameObject:
   - component: {fileID: 1600436077}
   - component: {fileID: 1600436076}
   m_Layer: 0
-  m_Name: title 5
+  m_Name: GameDirectTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5262,7 +5262,7 @@ GameObject:
   - component: {fileID: 1602395058}
   - component: {fileID: 1602395057}
   m_Layer: 0
-  m_Name: title 2
+  m_Name: ImageStyleTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5852,7 +5852,7 @@ GameObject:
   - component: {fileID: 1903369263}
   - component: {fileID: 1903369262}
   m_Layer: 5
-  m_Name: Direct1
+  m_Name: NonDirect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5972,7 +5972,7 @@ GameObject:
   - component: {fileID: 1941960998}
   - component: {fileID: 1941960997}
   m_Layer: 0
-  m_Name: title 1
+  m_Name: ThemeTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6056,7 +6056,7 @@ GameObject:
   - component: {fileID: 1945883122}
   - component: {fileID: 1945883121}
   m_Layer: 0
-  m_Name: title 3
+  m_Name: ImageQualityTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
