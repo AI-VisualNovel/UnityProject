@@ -4697,7 +4697,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6642\u5C1A"
+  m_Text: fashion
 --- !u!222 &1424298870
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4777,7 +4777,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5361\u901A"
+  m_Text: cartoon
 --- !u!222 &1428712458
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4857,7 +4857,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7C21\u7D04"
+  m_Text: simple
 --- !u!222 &1450226549
 CanvasRenderer:
   m_ObjectHideFlags: 0
