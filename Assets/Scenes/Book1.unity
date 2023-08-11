@@ -1102,7 +1102,7 @@ GameObject:
   - component: {fileID: 246344428}
   - component: {fileID: 246344427}
   m_Layer: 5
-  m_Name: BackgroundMusic
+  m_Name: BackgroundMusicTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6530,7 +6530,7 @@ GameObject:
   - component: {fileID: 1396575756}
   - component: {fileID: 1396575755}
   m_Layer: 5
-  m_Name: EffectMusic
+  m_Name: EffectMusicTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9352,7 +9352,7 @@ GameObject:
   - component: {fileID: 1823133927}
   - component: {fileID: 1823133926}
   m_Layer: 5
-  m_Name: VolumeSetting
+  m_Name: VolumeSettingTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9609,7 +9609,7 @@ GameObject:
   - component: {fileID: 1829238177}
   - component: {fileID: 1829238176}
   m_Layer: 5
-  m_Name: CharacterDubbing
+  m_Name: CharacterDubbingTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
