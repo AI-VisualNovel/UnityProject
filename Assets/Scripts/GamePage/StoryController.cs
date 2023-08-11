@@ -114,39 +114,39 @@ namespace OpenAI
         {
             optionShow = false;
             try{
-            userInput = inputField.text;
-            
-            Instruction += $"{inputField.text}\nA: ";
+                userInput = inputField.text;
+                
+                Instruction += $"{inputField.text}\nA: ";
 
-            textArea.text = "...";
-            inputField.text = "";
+                textArea.text = "...";
+                inputField.text = "";
 
-            optionChoicing.SetActive(false);
+                optionChoicing.SetActive(false);
 
-            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
-            {
-                Prompt = Instruction,
-                Model = "text-davinci-003",
-                MaxTokens = 2048
-            });
+                var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+                {
+                    Prompt = Instruction,
+                    Model = "text-davinci-003",
+                    MaxTokens = 2048
+                });
 
-            currentFullText = completionResponse.Choices[0].Text.Trim();
-            remainingText = currentFullText;
+                currentFullText = completionResponse.Choices[0].Text.Trim();
+                remainingText = currentFullText;
 
-            GetOptions(option1);
-            GetOptions(option2);
-            GetOptions(option3);
-            SendImageRequest();
+                GetOptions(option1);
+                GetOptions(option2);
+                GetOptions(option3);
+                SendImageRequest();
 
-            Debug.Log(currentFullText);
-            int charactersToAdd = Mathf.Min(113, remainingText.Length);
-            string displayedText = remainingText.Substring(0, charactersToAdd);
-            textArea.text = displayedText;
-            remainingText = remainingText.Remove(0, charactersToAdd);
+                Debug.Log(currentFullText);
+                int charactersToAdd = Mathf.Min(113, remainingText.Length);
+                string displayedText = remainingText.Substring(0, charactersToAdd);
+                textArea.text = displayedText;
+                remainingText = remainingText.Remove(0, charactersToAdd);
 
-            Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
-            
-            optionShow = true;
+                Instruction += $"{completionResponse.Choices[0].Text}\nQ: ";
+                
+                optionShow = true;
             }
             catch(Exception ex)
             {

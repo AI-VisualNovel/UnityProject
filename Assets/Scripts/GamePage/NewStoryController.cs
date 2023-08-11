@@ -29,8 +29,8 @@ namespace OpenAI
         [SerializeField] private Button option4;
 
         private float height;
-        private OpenAIApi openai = new OpenAIApi(InputFieldManager.user_api);
-
+        private OpenAIApi openai;
+        
         private List<ChatMessage> messages = new List<ChatMessage>();
         private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
 
@@ -70,6 +70,18 @@ namespace OpenAI
             //     //prompt = "You are now acting as a game terminal, generate plot development according to my prompts. \nQ: ";
             // }
 
+            // Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
+            if (PlayerPrefs.HasKey("User_API"))
+            {
+                string User_API = PlayerPrefs.GetString("User_API");
+                openai = new OpenAIApi(User_API);
+            }
+            else
+            {
+                // 出示警告畫面
+                Debug.Log("User API: Not Available");
+            }
+
             SendReply();
             button.onClick.AddListener(SendReply);
             option1.onClick.AddListener(() => SendReplyButton(option1));
@@ -77,7 +89,7 @@ namespace OpenAI
             option3.onClick.AddListener(() => SendReplyButton(option3));
             option4.onClick.AddListener(option4Act);
 
-            // Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
+            
         }
 
         private void AppendMessage(ChatMessage message)
@@ -142,13 +154,13 @@ namespace OpenAI
                 {
                     Debug.LogWarning("No text was generated from this prompt.");
                 }
-
                 //button.enabled = true;
                 //inputField.enabled = true;
                 optionChoicing.SetActive(true);
             }
             catch(Exception ex)
             {
+                Debug.LogError("An error occurred: " + ex.Message);
                 WrongApiPanel.SetActive(true);
             }
         }
