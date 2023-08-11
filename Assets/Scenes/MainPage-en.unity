@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7E7C\u7E8C\u904A\u6232"
+  m_text: Continue Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
   m_sharedMaterial: {fileID: -8906996233754533533, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -884,7 +884,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u65B0\u904A\u6232"
+  m_text: New Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
   m_sharedMaterial: {fileID: -8906996233754533533, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
@@ -911,8 +911,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8A2D\u5B9A\n"
+  m_text: Setting
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
   m_sharedMaterial: {fileID: -8906996233754533533, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
@@ -1202,8 +1202,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8B80\u53D6\u66AB\u5B58"
+  m_text: View Loading
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
   m_sharedMaterial: {fileID: -8906996233754533533, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
@@ -1337,8 +1337,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1646,7 +1646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u96E2\u958B\u904A\u6232\n"
+  m_text: Exit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
   m_sharedMaterial: {fileID: -8906996233754533533, guid: 34a8a1a966c4142ba97b61b3ce3562c8, type: 2}
@@ -1673,8 +1673,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
