@@ -38,10 +38,13 @@ public class LoadingScene : MonoBehaviour
 
         while (!operation.isDone)
         {
+            SceneManager.LoadScene("GamePage");
+
             float progress = Mathf.Clamp01(operation.progress / .9f);
             slider.value = progress;
 
             yield return null;
         }
+        
     }
 }
