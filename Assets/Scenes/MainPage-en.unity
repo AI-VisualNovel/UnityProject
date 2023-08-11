@@ -365,7 +365,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1428539926}
-        m_TargetAssemblyTypeName: MainPageBtn, Assembly-CSharp
+        m_TargetAssemblyTypeName: EnMainPageBtn, Assembly-CSharp
         m_MethodName: PrintViewLoadingMessage
         m_Mode: 1
         m_Arguments:
@@ -777,7 +777,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1428539926}
-        m_TargetAssemblyTypeName: MainPageBtn, Assembly-CSharp
+        m_TargetAssemblyTypeName: EnMainPageBtn, Assembly-CSharp
         m_MethodName: PrintContinueGameMessage
         m_Mode: 1
         m_Arguments:
@@ -1068,7 +1068,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1428539926}
-        m_TargetAssemblyTypeName: MainPageBtn, Assembly-CSharp
+        m_TargetAssemblyTypeName: EnMainPageBtn, Assembly-CSharp
         m_MethodName: PrintNewGameMessage
         m_Mode: 1
         m_Arguments:
@@ -1428,7 +1428,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1428539924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06642b11f0ec5406cb794857370839fa, type: 3}
+  m_Script: {fileID: 11500000, guid: a02b8ee2c754145adbb6e1ed2c92d578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   soundPlayer: {fileID: 459367805}
@@ -1539,7 +1539,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1428539926}
-        m_TargetAssemblyTypeName: MainPageBtn, Assembly-CSharp
+        m_TargetAssemblyTypeName: EnMainPageBtn, Assembly-CSharp
         m_MethodName: PrintSettingMessage
         m_Mode: 1
         m_Arguments:
@@ -2113,7 +2113,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1428539926}
-        m_TargetAssemblyTypeName: MainPageBtn, Assembly-CSharp
+        m_TargetAssemblyTypeName: EnMainPageBtn, Assembly-CSharp
         m_MethodName: PrintExitGameMessage
         m_Mode: 1
         m_Arguments:

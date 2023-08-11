@@ -53,4 +53,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Book1.unity
     guid: ed98f538ed6327e4098aca2523ca4246
+  - enabled: 1
+    path: Assets/Scenes/MainPage-en.unity
+    guid: 9023c0f23a88c4fb7acd54321d1ca04e
+  - enabled: 1
+    path: Assets/Scenes/CreateNewGamePage-en.unity
+    guid: 5e4bb372f044144f8a0d151498b159ca
+  - enabled: 1
+    path: Assets/Scenes/Book1-en.unity
+    guid: a7e896cc37d834c1e9c34ddf220b7258
   m_configObjects: {}
