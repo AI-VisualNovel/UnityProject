@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-
 public class CompleteButtonManager : MonoBehaviour
 {
     public TextGenerationOptionManager textGenerationOptionManager;
@@ -51,6 +50,10 @@ public class CompleteButtonManager : MonoBehaviour
         Debug.Log("人物配音音量值: " + characterDubbingVolume);
 
         user_api= inputField.text;
+
+        PlayerPrefs.SetString("User_API", user_api);
+        PlayerPrefs.Save();
+
         if (string.IsNullOrEmpty(user_api))
         {
             Debug.Log("用戶未輸入任何訊息");
@@ -59,7 +62,6 @@ public class CompleteButtonManager : MonoBehaviour
         {
             Debug.Log("APIKey 為：" + user_api);
             SceneManager.LoadScene("CreateNewGamePage");
-
         }
     
     }
