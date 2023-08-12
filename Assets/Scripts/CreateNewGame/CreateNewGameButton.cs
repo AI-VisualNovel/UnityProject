@@ -7,7 +7,7 @@ public class CreateNewGameButton : MonoBehaviour
     public Button[] buttons;
     public Color desiredColor;
     public Toggle[] toggles;
-    public InputField inputField;
+    // public InputField inputField;
     [SerializeField] private AudioSource ClickSound;
     
     public static string[] buttonTexts;
@@ -33,13 +33,13 @@ public class CreateNewGameButton : MonoBehaviour
         //     }
         // }
 
-        Color inputFieldColor = inputField.image.color;
-        if (ColorUtility.ToHtmlStringRGB(inputFieldColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
-        {
-            string inputText = inputField.text;
-            gamedir = inputText;
-            Debug.Log("遊戲走向: " + inputText);
-        }
+        // Color inputFieldColor = inputField.image.color;
+        // if (ColorUtility.ToHtmlStringRGB(inputFieldColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
+        // {
+        //     string inputText = inputField.text;
+        //     gamedir = inputText;
+        //     Debug.Log("遊戲走向: " + inputText);
+        // }
 
         foreach (Button button in buttons)
         {
