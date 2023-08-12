@@ -11,7 +11,7 @@ public class ButtonManager : MonoBehaviour
 
     private void Start()
     {
-        // 初始化按钮状态
+        // 初始化按钮狀態
         foreach (Button button in buttons)
         {
             button.onClick.AddListener(() => SelectButton(button));
