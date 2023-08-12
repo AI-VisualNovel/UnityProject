@@ -29,10 +29,11 @@ namespace OpenAI
         [SerializeField] private Button option4;
 
         private float height;
-        private OpenAIApi openai;
+        private OpenAIApi openai = new OpenAIApi();
         
         private List<ChatMessage> messages = new List<ChatMessage>();
-        private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
+        // private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
+        private string prompt = "請和我玩劇情文字遊戲，而我想要遊玩的情境是武俠世界，每次都給我一段劇情嚴禁給我選項，我會自行輸入接下來要採取的動作";
 
         private string currentFullText = "";
         private string imgGenerateText = "";
@@ -141,14 +142,13 @@ namespace OpenAI
                 {
                     var message = completionResponse.Choices[0].Message;
                     message.Content = message.Content.Trim();
-                    
+                    currentFullText =  message.Content;
+
                     messages.Add(message);
                     AppendMessage(message);
 
-                    GetOptions(option1);
-                    GetOptions(option2);
-                    GetOptions(option3);
-                    //SendImageRequest();
+                    GetOptions();
+                    SendImageRequest();
                 }
                 else
                 {
@@ -195,14 +195,13 @@ namespace OpenAI
                 {
                     var message = completionResponse.Choices[0].Message;
                     message.Content = message.Content.Trim();
+                    currentFullText =  message.Content;
                     
                     messages.Add(message);
                     AppendMessage(message);
 
-                    GetOptions(option1);
-                    GetOptions(option2);
-                    GetOptions(option3);
-                    //SendImageRequest();
+                    GetOptions();
+                    SendImageRequest();
                 }
                 else
                 {
@@ -219,17 +218,31 @@ namespace OpenAI
             }            
         }
 
-        private async void GetOptions(Button button)
+        private async void GetOptions()
         {
+            //print(currentFullText + "你的選擇是以下三個：\n");
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
-                Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n以下是劇情:" + userInput + "\n請你回答:",
-                Model = "text-davinci-003",
-                MaxTokens = 2048
+                // Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n以下是劇情:" + userInput + "\n請你回答:",
+                Prompt = currentFullText + "你的選擇是以下三個：\n",
+                Model = "davinci:ft-personal:wuxia-getoption-model-2023-08-10-16-50-17",
+                MaxTokens = 256,
+                Temperature = 0.0f,
+                Stop="."
             });
 
-            Text buttonText = button.GetComponentInChildren<Text>();
-            buttonText.text = completionResponse.Choices[0].Text.Trim();
+            //Text buttonText = button.GetComponentInChildren<Text>();
+            print("ALL: "+completionResponse.Choices[0].Text.Trim());
+            string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
+
+            // foreach (string line in lines)
+            // {
+            //     print("EACH: "+line);
+            // }
+            option1.GetComponentInChildren<Text>().text = optionList[0];
+            option2.GetComponentInChildren<Text>().text = optionList[1];
+            option3.GetComponentInChildren<Text>().text = optionList[2];
+            //buttonText.text = completionResponse.Choices[0].Text.Trim();
         }
 
         private async void SendImageRequest()

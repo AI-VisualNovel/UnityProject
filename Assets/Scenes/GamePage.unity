@@ -412,8 +412,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1000625459}
   m_HandleRect: {fileID: 1000625457}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.5835359
+  m_Value: 0.00000006750084
+  m_Size: 0.10459152
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1198,7 +1198,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.5411765, g: 0.4509804, b: 0.25490198, a: 1}
     m_HighlightedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
     m_PressedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
-    m_SelectedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
+    m_SelectedColor: {r: 0.5176471, g: 0.43137255, b: 0.24313726, a: 1}
     m_DisabledColor: {r: 0.52156866, g: 0.43137258, b: 0.24313727, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1439,7 +1439,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.5411765, g: 0.4509804, b: 0.25490198, a: 1}
     m_HighlightedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
     m_PressedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
-    m_SelectedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
+    m_SelectedColor: {r: 0.5176471, g: 0.43137255, b: 0.24313726, a: 1}
     m_DisabledColor: {r: 0.5176471, g: 0.43137258, b: 0.24313727, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1748,10 +1748,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
-    m_FontStyle: 0
+    m_FontSize: 26
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1894,7 +1894,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.000005722046, y: 0.000030517578}
+  m_AnchoredPosition: {x: -0.000005722046, y: 0.000061035156}
   m_SizeDelta: {x: 0.0000076294, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1000625458
@@ -1996,7 +1996,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 32
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
@@ -2253,8 +2253,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -90.71997}
-  m_SizeDelta: {x: -0.7000122, y: 1086}
+  m_AnchoredPosition: {x: 0, y: 2395.7798}
+  m_SizeDelta: {x: -0.7000122, y: 6059}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1139033404
 GameObject:
@@ -2640,10 +2640,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
-    m_FontStyle: 0
+    m_FontSize: 26
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -3085,7 +3085,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.5411765, g: 0.4509804, b: 0.25490198, a: 1}
     m_HighlightedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
     m_PressedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
-    m_SelectedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
+    m_SelectedColor: {r: 0.5176471, g: 0.43137255, b: 0.24313726, a: 1}
     m_DisabledColor: {r: 0.5176471, g: 0.43137258, b: 0.24313727, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3321,7 +3321,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.5411765, g: 0.4509804, b: 0.25490198, a: 1}
     m_HighlightedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
     m_PressedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
-    m_SelectedColor: {r: 0.827451, g: 0.69803923, b: 0.54509807, a: 1}
+    m_SelectedColor: {r: 0.5176471, g: 0.43137255, b: 0.24313726, a: 1}
     m_DisabledColor: {r: 0.5176471, g: 0.43137258, b: 0.24313727, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3950,10 +3950,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
-    m_FontStyle: 0
+    m_FontSize: 26
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
