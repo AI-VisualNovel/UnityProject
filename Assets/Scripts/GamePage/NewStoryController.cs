@@ -28,19 +28,20 @@ namespace OpenAI
         [SerializeField] private Button option3;
         [SerializeField] private Button option4;
 
-        private float height;
-        private OpenAIApi openai = new OpenAIApi("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");
+        private float height = 0;
+        private OpenAIApi openai = new OpenAIApi("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");
         
         private List<ChatMessage> messages = new List<ChatMessage>();
         // private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
         private string prompt = "請和我玩劇情文字遊戲，而我想要遊玩的情境是武俠世界，每次都給我一段劇情嚴禁給我選項，我會自行輸入接下來要採取的動作";
-        //private string prompt = "你好";
 
         private string currentFullText = "";
         private string imgGenerateText = "";
         private string userInput = "";
 
         private CancellationTokenSource token = new CancellationTokenSource();
+        private SemaphoreSlim semaphore;
+        private float heightSpeed = 0;
 
         private void Start()
         {
@@ -145,14 +146,25 @@ namespace OpenAI
                 optionChoicing.SetActive(false);
                 
                 // Complete the prompt
+                heightSpeed = 0;
+                semaphore = new SemaphoreSlim(0);
                 openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
                     Messages = messages,
                     Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),null,token);
-                
-                //省點錢                
+                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                await semaphore.WaitAsync();
+
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
+
+                //省點錢         
+                currentFullText = recMessage.Content;       
                 //GetOptions();
                 //SendImageRequest();
 
@@ -200,14 +212,25 @@ namespace OpenAI
                 optionChoicing.SetActive(false);
                 
                 // Complete the prompt
+                heightSpeed = 0;
+                semaphore = new SemaphoreSlim(0);
                 openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
                     Messages = messages,
                     Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),null,token);
-                
-                //省點錢                
+                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                await semaphore.WaitAsync();
+
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
+
+                //省點錢           
+                currentFullText = recMessage.Content;       
                 //GetOptions();
                 //SendImageRequest();
 
@@ -251,13 +274,25 @@ namespace OpenAI
                 optionChoicing.SetActive(false);
                 
                 // Complete the prompt
+                heightSpeed = 0;
+                semaphore = new SemaphoreSlim(0);
                 openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
                     Messages = messages,
                     Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),null,token);
+                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                await semaphore.WaitAsync();
+
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
+
                 //省點錢                
+                currentFullText = recMessage.Content;       
                 //GetOptions();
                 //SendImageRequest();
 
@@ -273,21 +308,22 @@ namespace OpenAI
 
         private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
         {
-            if(responses != null){
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
                 message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
                 item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
-                print(message.Content);
-            }else{
-                print("end");
-            }
-            
-            //item.anchoredPosition = new Vector2(0, -height);
-            //LayoutRebuilder.ForceRebuildLayoutImmediate(item);
-            //height += item.sizeDelta.y;
-            //scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-            //scroll.verticalNormalizedPosition = 0;
+
+                item.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+                // height += item.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height+heightSpeed);
+                scroll.verticalNormalizedPosition = 0;
+
+                heightSpeed += 0.45f;
+        }
+
+        private void HandleComplete(){
+            semaphore.Release();
         }
 
         private async void GetOptions()
