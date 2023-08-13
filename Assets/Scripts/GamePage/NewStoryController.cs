@@ -28,15 +28,20 @@ namespace OpenAI
         [SerializeField] private Button option3;
         [SerializeField] private Button option4;
 
-        private float height;
-        private OpenAIApi openai;
+        private float height = 0;
+        private OpenAIApi openai = new OpenAIApi("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");
         
         private List<ChatMessage> messages = new List<ChatMessage>();
-        private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
+        // private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
+        private string prompt = "請和我玩劇情文字遊戲，而我想要遊玩的情境是武俠世界，每次都給我一段劇情嚴禁給我選項，我會自行輸入接下來要採取的動作";
 
         private string currentFullText = "";
         private string imgGenerateText = "";
         private string userInput = "";
+
+        private CancellationTokenSource token = new CancellationTokenSource();
+        private SemaphoreSlim semaphore;
+        private float heightSpeed = 0;
 
         private void Start()
         {
@@ -82,7 +87,7 @@ namespace OpenAI
                 Debug.Log("User API: Not Available");
             }
 
-            SendReply();
+            InitSendReply();
             button.onClick.AddListener(SendReply);
             option1.onClick.AddListener(() => SendReplyButton(option1));
             option2.onClick.AddListener(() => SendReplyButton(option2));
@@ -92,7 +97,7 @@ namespace OpenAI
             
         }
 
-        private void AppendMessage(ChatMessage message)
+        private RectTransform AppendMessage(ChatMessage message)
         {
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
@@ -103,27 +108,37 @@ namespace OpenAI
             height += item.sizeDelta.y;
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             scroll.verticalNormalizedPosition = 0;
+
+            return item;
         }
 
-        private async void SendReply(){
+        private async void InitSendReply(){
             selfChoicing.SetActive(false);
             option1.interactable = true;
             option2.interactable = true;
             option3.interactable = true;
             option4.interactable = true;
             try{
-                var newMessage = new ChatMessage()
+                var sentMessage = new ChatMessage()
                 {
                     Role = "user",
                     Content = inputField.text
                 };
-                
-                AppendMessage(newMessage);
 
-                if (messages.Count == 0) newMessage.Content = prompt + "\n" + inputField.text; 
+                var recMessage = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = ""
+                };
                 
-                messages.Add(newMessage);
+                //AppendMessage(sentMessage);
+                var recItem = AppendMessage(recMessage);
+
+                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
                 
+                messages.Add(sentMessage);
+                messages.Add(recMessage);
+               
                 userInput = inputField.text;
                 //button.enabled = false;
                 inputField.text = "";
@@ -131,29 +146,94 @@ namespace OpenAI
                 optionChoicing.SetActive(false);
                 
                 // Complete the prompt
-                var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+                heightSpeed = 0;
+                semaphore = new SemaphoreSlim(0);
+                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
-                    Messages = messages
-                });
+                    Messages = messages,
+                    Stream = true
+                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                await semaphore.WaitAsync();
 
-                if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
-                {
-                    var message = completionResponse.Choices[0].Message;
-                    message.Content = message.Content.Trim();
-                    
-                    messages.Add(message);
-                    AppendMessage(message);
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
 
-                    GetOptions(option1);
-                    GetOptions(option2);
-                    GetOptions(option3);
-                    //SendImageRequest();
-                }
-                else
+                //省點錢         
+                currentFullText = recMessage.Content;       
+                //GetOptions();
+                //SendImageRequest();
+
+                //button.enabled = true;
+                //inputField.enabled = true;
+                optionChoicing.SetActive(true);
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError("An error occurred: " + ex.Message);
+                WrongApiPanel.SetActive(true);
+            }
+        }
+        private async void SendReply(){
+            selfChoicing.SetActive(false);
+            option1.interactable = true;
+            option2.interactable = true;
+            option3.interactable = true;
+            option4.interactable = true;
+            try{
+                var sentMessage = new ChatMessage()
                 {
-                    Debug.LogWarning("No text was generated from this prompt.");
-                }
+                    Role = "user",
+                    Content = inputField.text
+                };
+
+                var recMessage = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = ""
+                };
+                
+                AppendMessage(sentMessage);
+                var recItem = AppendMessage(recMessage);
+
+                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
+                
+                messages.Add(sentMessage);
+                messages.Add(recMessage);
+               
+                userInput = inputField.text;
+                //button.enabled = false;
+                inputField.text = "";
+                //inputField.enabled = false;
+                optionChoicing.SetActive(false);
+                
+                // Complete the prompt
+                heightSpeed = 0;
+                semaphore = new SemaphoreSlim(0);
+                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
+                {
+                    Model = "gpt-3.5-turbo-0613",
+                    Messages = messages,
+                    Stream = true
+                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                await semaphore.WaitAsync();
+
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
+
+                //省點錢           
+                currentFullText = recMessage.Content;       
+                //GetOptions();
+                //SendImageRequest();
+
                 //button.enabled = true;
                 //inputField.enabled = true;
                 optionChoicing.SetActive(true);
@@ -167,47 +247,54 @@ namespace OpenAI
 
         private async void SendReplyButton(Button button){
             try{
-                var newMessage = new ChatMessage()
+                var sentMessage = new ChatMessage()
                 {
                     Role = "user",
                     Content = button.GetComponentInChildren<Text>().text
                 };
                 
-                AppendMessage(newMessage);
+                var recMessage = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = ""
+                };
+                
+                AppendMessage(sentMessage);
+                var recItem = AppendMessage(recMessage);
 
-                if (messages.Count == 0) newMessage.Content = prompt + "\n" + inputField.text; 
+                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
                 
-                messages.Add(newMessage);
-                
+                messages.Add(sentMessage);
+                messages.Add(recMessage);
+               
+                userInput = inputField.text;
                 //button.enabled = false;
                 inputField.text = "";
                 //inputField.enabled = false;
                 optionChoicing.SetActive(false);
                 
                 // Complete the prompt
-                var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+                heightSpeed = 0;
+                semaphore = new SemaphoreSlim(0);
+                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
-                    Messages = messages
-                });
+                    Messages = messages,
+                    Stream = true
+                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                await semaphore.WaitAsync();
 
-                if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
-                {
-                    var message = completionResponse.Choices[0].Message;
-                    message.Content = message.Content.Trim();
-                    
-                    messages.Add(message);
-                    AppendMessage(message);
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
 
-                    GetOptions(option1);
-                    GetOptions(option2);
-                    GetOptions(option3);
-                    //SendImageRequest();
-                }
-                else
-                {
-                    Debug.LogWarning("No text was generated from this prompt.");
-                }
+                //省點錢                
+                currentFullText = recMessage.Content;       
+                //GetOptions();
+                //SendImageRequest();
 
                 //button.enabled = true;
                 //inputField.enabled = true;
@@ -219,17 +306,51 @@ namespace OpenAI
             }            
         }
 
-        private async void GetOptions(Button button)
+        private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
         {
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+
+                message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
+                item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+
+                item.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+                // height += item.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height+heightSpeed);
+                scroll.verticalNormalizedPosition = 0;
+
+                heightSpeed += 0.45f;
+        }
+
+        private void HandleComplete(){
+            semaphore.Release();
+        }
+
+        private async void GetOptions()
+        {
+            //print(currentFullText + "你的選擇是以下三個：\n");
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
-                Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n以下是劇情:" + userInput + "\n請你回答:",
-                Model = "text-davinci-003",
-                MaxTokens = 2048
+                // Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n以下是劇情:" + userInput + "\n請你回答:",
+                Prompt = currentFullText + "你的選擇是以下三個：\n",
+                Model = "davinci:ft-personal:wuxia-getoption-model-2023-08-10-16-50-17",
+                MaxTokens = 256,
+                Temperature = 0.0f,
+                Stop="."
             });
 
-            Text buttonText = button.GetComponentInChildren<Text>();
-            buttonText.text = completionResponse.Choices[0].Text.Trim();
+            //Text buttonText = button.GetComponentInChildren<Text>();
+            print("ALL: "+completionResponse.Choices[0].Text.Trim());
+            string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
+
+            // foreach (string line in lines)
+            // {
+            //     print("EACH: "+line);
+            // }
+            option1.GetComponentInChildren<Text>().text = optionList[0];
+            option2.GetComponentInChildren<Text>().text = optionList[1];
+            option3.GetComponentInChildren<Text>().text = optionList[2];
+            //buttonText.text = completionResponse.Choices[0].Text.Trim();
         }
 
         private async void SendImageRequest()
