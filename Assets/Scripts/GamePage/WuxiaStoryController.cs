@@ -26,7 +26,8 @@ namespace OpenAI
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
 
-        private string prompt = "你好";
+        private string prompt = "和我玩武俠劇情遊戲";
+        //private string prompt = "你好";
 
         private CancellationTokenSource token = new CancellationTokenSource();
         private SemaphoreSlim semaphore;
@@ -34,6 +35,8 @@ namespace OpenAI
         private float height = 0;
         private RectTransform currentMessageRec;
         private bool suspend = false;
+        private string[] currentFullTexts = new string[50];
+        private int textBoxCount = 0;
 
         private void Start()
         {
@@ -44,15 +47,19 @@ namespace OpenAI
         }
 
         private void Update(){
+            print(textBoxCount);
             if(currentMessageRec && suspend == false){
-                textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text;
-                print(currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text);
+                currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
+            }
+            if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
+                textArea.text = currentFullTexts[textBoxCount];
             }
         }
 
         private async void SendReply()
         {
             try{
+                textBoxCount = 0;
                 var sentMessage = new ChatMessage()
                 {
                     Role = "user",
@@ -71,6 +78,7 @@ namespace OpenAI
                     currentMessageRec = sentItem;
                     textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text;
                     suspend = true;
+                    textBoxCount = -1;
                 }
                 var recItem = AppendMessage(recMessage);
 
@@ -108,6 +116,10 @@ namespace OpenAI
 
         private void MoveOn(){
             suspend = false;
+            textBoxCount++;
+            if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
+                textBoxCount++;
+            }
         }
         private RectTransform AppendMessage(ChatMessage message)
         {
