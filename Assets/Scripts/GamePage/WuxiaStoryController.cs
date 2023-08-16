@@ -19,6 +19,7 @@ namespace OpenAI
         [SerializeField] private Button backgroundButton;  
         [SerializeField] private Button textBoxButton;  
         [SerializeField] private ScrollRect scroll;
+        [SerializeField] private Image backgroundImage;
 
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
@@ -26,8 +27,8 @@ namespace OpenAI
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
 
-        private string prompt = "和我玩武俠劇情遊戲";
-        //private string prompt = "你好";
+        //private string prompt = "和我玩武俠劇情遊戲";
+        private string prompt = "你好";
 
         private CancellationTokenSource token = new CancellationTokenSource();
         private SemaphoreSlim semaphore;
@@ -47,7 +48,7 @@ namespace OpenAI
         }
 
         private void Update(){
-            print(textBoxCount);
+            //print(textBoxCount);
             if(currentMessageRec && suspend == false){
                 currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
             }
@@ -58,6 +59,10 @@ namespace OpenAI
 
         private async void SendReply()
         {
+            //隨機換背景
+            int randomInt = UnityEngine.Random.Range(1,5);
+            Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + randomInt);
+            backgroundImage.sprite = newSprite;
             try{
                 textBoxCount = 0;
                 var sentMessage = new ChatMessage()

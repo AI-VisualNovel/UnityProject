@@ -1066,6 +1066,7 @@ MonoBehaviour:
   backgroundButton: {fileID: 1684819092}
   textBoxButton: {fileID: 868994032}
   scroll: {fileID: 1518205721}
+  backgroundImage: {fileID: 1684819089}
   sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
 --- !u!1 &927692014
