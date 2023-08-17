@@ -88,7 +88,6 @@ namespace OpenAI
                 var recItem = AppendMessage(recMessage);
 
                 messages.Add(sentMessage);
-                messages.Add(recMessage);
 
                 inputField.text = "";
                 inputField.enabled = false;
@@ -111,6 +110,9 @@ namespace OpenAI
                 height += recItem.sizeDelta.y;
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
+
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                messages.Add(recMessage);
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
