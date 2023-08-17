@@ -139,7 +139,6 @@ namespace OpenAI
                 if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
                 
                 messages.Add(sentMessage);
-                messages.Add(recMessage);
                
                 userInput = inputField.text;
                 //button.enabled = false;
@@ -166,7 +165,9 @@ namespace OpenAI
                 scroll.verticalNormalizedPosition = 0;
 
                 //省點錢         
-                currentFullText = recMessage.Content;       
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                currentFullText = recMessage.Content;  
+                messages.Add(recMessage);     
                 //GetOptions();
                 //SendImageRequest();
 
@@ -205,7 +206,6 @@ namespace OpenAI
                 if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
                 
                 messages.Add(sentMessage);
-                messages.Add(recMessage);
                
                 userInput = inputField.text;
                 //button.enabled = false;
@@ -232,7 +232,9 @@ namespace OpenAI
                 scroll.verticalNormalizedPosition = 0;
 
                 //省點錢           
-                currentFullText = recMessage.Content;       
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                currentFullText = recMessage.Content;  
+                messages.Add(recMessage);    
                 //GetOptions();
                 //SendImageRequest();
 
@@ -267,7 +269,6 @@ namespace OpenAI
                 if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
                 
                 messages.Add(sentMessage);
-                messages.Add(recMessage);
                
                 userInput = inputField.text;
                 //button.enabled = false;
@@ -294,7 +295,9 @@ namespace OpenAI
                 scroll.verticalNormalizedPosition = 0;
 
                 //省點錢                
-                currentFullText = recMessage.Content;       
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                currentFullText = recMessage.Content;  
+                messages.Add(recMessage);     
                 //GetOptions();
                 //SendImageRequest();
 
