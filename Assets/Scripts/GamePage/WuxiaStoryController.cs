@@ -20,6 +20,8 @@ namespace OpenAI
         [SerializeField] private Button textBoxButton;  
         [SerializeField] private ScrollRect scroll;
         [SerializeField] private Image backgroundImage;
+        [SerializeField] private Button hideUIButton;
+        [SerializeField] private GameObject gameUI;
 
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
@@ -38,12 +40,14 @@ namespace OpenAI
         private bool suspend = false;
         private string[] currentFullTexts = new string[50];
         private int textBoxCount = 0;
+        private bool UIHideing = false;
 
         private void Start()
         {
-            backgroundButton.onClick.AddListener(MoveOn);
             textBoxButton.onClick.AddListener(MoveOn);
             sendButton.onClick.AddListener(SendReply);
+            hideUIButton.onClick.AddListener(UIHiding);
+            backgroundButton.onClick.AddListener(BackGroundClick);
             SendReply();
         }
 
@@ -159,6 +163,20 @@ namespace OpenAI
 
         private void HandleComplete(){
             semaphore.Release();
+        }
+
+        private void UIHiding(){
+            gameUI.SetActive(false);
+            UIHideing = true;
+        }
+
+        private void BackGroundClick(){
+            if(UIHideing == true){
+                gameUI.SetActive(true);
+                UIHideing = false;
+            }else{
+                MoveOn();
+            }
         }
     }
 }
