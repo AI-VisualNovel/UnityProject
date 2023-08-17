@@ -26,6 +26,8 @@ namespace OpenAI
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
 
+        [SerializeField] private Button testButton;
+
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
 
@@ -44,6 +46,8 @@ namespace OpenAI
 
         private void Start()
         {
+            testButton.onClick.AddListener(Test);
+
             textBoxButton.onClick.AddListener(MoveOn);
             sendButton.onClick.AddListener(SendReply);
             hideUIButton.onClick.AddListener(UIHiding);
@@ -58,6 +62,13 @@ namespace OpenAI
             }
             if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
                 textArea.text = currentFullTexts[textBoxCount];
+            }
+        }
+
+        private void Test(){
+            //print(currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text);
+            foreach (ChatMessage message in messages){
+                print(message.Role + ":" +message.Content);
             }
         }
 
