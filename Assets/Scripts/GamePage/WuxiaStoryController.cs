@@ -45,6 +45,7 @@ namespace OpenAI
         private bool UIHideing = false;
         private bool canMove = false;
         private float lastChangeTime;
+        private bool imgNeedChange = false;
 
         private void Start()
         {
@@ -64,14 +65,18 @@ namespace OpenAI
                 currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
             }
             if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
-                //Monitor current change
+                //監測字串變化
                 if(textArea.text != currentFullTexts[textBoxCount]){
                     textArea.text = currentFullTexts[textBoxCount];
                     lastChangeTime = Time.time;
                     canMove = false;
                 }
                 
-                if(Time.time - lastChangeTime >= 1f && !canMove){
+                if(Time.time - lastChangeTime >= 0.5f && !canMove){
+                    if(textBoxCount == 0 && imgNeedChange){
+                        ChangeImage(currentFullTexts[0]);
+                        imgNeedChange = false;
+                    }
                     canMove = true;
                 }
             }
@@ -83,17 +88,20 @@ namespace OpenAI
             //     print(message.Role + ":" +message.Content);
             // }
             //print(canMove);
-            print(textBoxCount);
+            //print(textBoxCount);
+            //string p = "在青鳥村度過了許多平靜的日子後，有一天，一位神秘的訪客來到了村子，他自稱是「黑影刺客」，聲稱要挑戰村中最強的劍客。村子裡的人們都感到驚恐，不知如何是好。";
+            //ChangeImage(p);
+            //隨機換背景
+            // int randomInt = UnityEngine.Random.Range(1,5);
+            // Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + randomInt);
+            // backgroundImage.sprite = newSprite;
         }
 
         private async void SendReply()
         {
-            //隨機換背景
-            int randomInt = UnityEngine.Random.Range(1,5);
-            Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + randomInt);
-            backgroundImage.sprite = newSprite;
             try{
                 textBoxCount = 0;
+                imgNeedChange = true;
                 var sentMessage = new ChatMessage()
                 {
                     Role = "user",
@@ -190,6 +198,30 @@ namespace OpenAI
 
         private void HandleComplete(){
             semaphore.Release();
+        }
+
+        private async void ChangeImage(string plot){
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot +"\n\n(1)小村莊\n(2)山谷\n(3)寺廟\n\n請直接回答數字就好:\n",
+                Model = "text-davinci-003",
+                MaxTokens = 128,
+                Temperature = 0.0f,
+                Stop="."
+            });
+
+            //確保只有一個數字
+            string cleanedString = "";
+            foreach (char c in completionResponse.Choices[0].Text.Trim()){
+                if(char.IsDigit(c)){
+                    cleanedString += c;
+                }
+            }
+            print("圖片編號: " + cleanedString);
+
+            //換圖
+            Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString);
+            backgroundImage.sprite = newSprite;
         }
 
         private void UIHiding(){
