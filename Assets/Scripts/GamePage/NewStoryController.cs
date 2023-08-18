@@ -89,14 +89,14 @@ namespace OpenAI
                 Debug.Log("User API: Not Available");
             }
 
-            InitSendReply();
-            button.onClick.AddListener(SendReply);
-            option1.onClick.AddListener(() => SendReplyButton(option1));
-            option2.onClick.AddListener(() => SendReplyButton(option2));
-            option3.onClick.AddListener(() => SendReplyButton(option3));
+        
+            button.onClick.AddListener(() => SendReply(null));
+            option1.onClick.AddListener(() => SendReply(option1));
+            option2.onClick.AddListener(() => SendReply(option2));
+            option3.onClick.AddListener(() => SendReply(option3));
             option4.onClick.AddListener(option4Act);
 
-            
+            SendReply(null);
         }
 
         private RectTransform AppendMessage(ChatMessage message)
@@ -114,96 +114,37 @@ namespace OpenAI
             return item;
         }
 
-        private async void InitSendReply(){
+        private async void SendReply(Button button){
             selfChoicing.SetActive(false);
             option1.interactable = true;
             option2.interactable = true;
             option3.interactable = true;
             option4.interactable = true;
             try{
+                string userContent = "";
+                if(button){
+                    userContent = button.GetComponentInChildren<Text>().text;
+                }else{
+                    userContent = inputField.text;
+                }
+
                 var sentMessage = new ChatMessage()
                 {
                     Role = "user",
-                    Content = inputField.text
+                    Content = userContent
                 };
-
                 var recMessage = new ChatMessage()
                 {
                     Role = "assistant",
                     Content = ""
                 };
-                
-                //AppendMessage(sentMessage);
+
+                if (messages.Count == 0){
+                    sentMessage.Content = prompt + "\n" + inputField.text; 
+                }else{
+                    AppendMessage(sentMessage);
+                }
                 var recItem = AppendMessage(recMessage);
-
-                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
-                
-                messages.Add(sentMessage);
-               
-                userInput = inputField.text;
-                //button.enabled = false;
-                inputField.text = "";
-                //inputField.enabled = false;
-                optionChoicing.SetActive(false);
-                
-                // Complete the prompt
-                heightSpeed = 0;
-                semaphore = new SemaphoreSlim(0);
-                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
-                {
-                    Model = "gpt-3.5-turbo-0613",
-                    Messages = messages,
-                    Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
-                await semaphore.WaitAsync();
-
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                recItem.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
-                height += recItem.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-                scroll.verticalNormalizedPosition = 0;
-
-                //省點錢         
-                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
-                currentFullText = recMessage.Content;  
-                messages.Add(recMessage);     
-                //GetOptions();
-                //SendImageRequest();
-
-                //button.enabled = true;
-                //inputField.enabled = true;
-                optionChoicing.SetActive(true);
-            }
-            catch(Exception ex)
-            {
-                Debug.LogError("An error occurred: " + ex.Message);
-                WrongApiPanel.SetActive(true);
-            }
-        }
-        private async void SendReply(){
-            selfChoicing.SetActive(false);
-            option1.interactable = true;
-            option2.interactable = true;
-            option3.interactable = true;
-            option4.interactable = true;
-            try{
-                var sentMessage = new ChatMessage()
-                {
-                    Role = "user",
-                    Content = inputField.text
-                };
-
-                var recMessage = new ChatMessage()
-                {
-                    Role = "assistant",
-                    Content = ""
-                };
-                
-                AppendMessage(sentMessage);
-                var recItem = AppendMessage(recMessage);
-
-                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
                 
                 messages.Add(sentMessage);
                
@@ -247,68 +188,10 @@ namespace OpenAI
                 Debug.LogError("An error occurred: " + ex.Message);
                 WrongApiPanel.SetActive(true);
             }
-        }
 
-        private async void SendReplyButton(Button button){
-            try{
-                var sentMessage = new ChatMessage()
-                {
-                    Role = "user",
-                    Content = button.GetComponentInChildren<Text>().text
-                };
-                
-                var recMessage = new ChatMessage()
-                {
-                    Role = "assistant",
-                    Content = ""
-                };
-                
-                AppendMessage(sentMessage);
-                var recItem = AppendMessage(recMessage);
-
-                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
-                
-                messages.Add(sentMessage);
-               
-                userInput = inputField.text;
-                //button.enabled = false;
-                inputField.text = "";
-                //inputField.enabled = false;
-                optionChoicing.SetActive(false);
-                
-                // Complete the prompt
-                heightSpeed = 0;
-                semaphore = new SemaphoreSlim(0);
-                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
-                {
-                    Model = "gpt-3.5-turbo-0613",
-                    Messages = messages,
-                    Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
-                await semaphore.WaitAsync();
-
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                recItem.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
-                height += recItem.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-                scroll.verticalNormalizedPosition = 0;
-
-                //省點錢                
-                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
-                currentFullText = recMessage.Content;  
-                messages.Add(recMessage);     
-                //GetOptions();
-                //SendImageRequest();
-
-                //button.enabled = true;
-                //inputField.enabled = true;
-                optionChoicing.SetActive(true);
+            foreach (ChatMessage message in messages){
+                 print(message.Role + ":" +message.Content);
             }
-            catch(Exception ex)
-            {
-                WrongApiPanel.SetActive(true);
-            }            
         }
 
         private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
