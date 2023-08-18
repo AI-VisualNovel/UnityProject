@@ -31,8 +31,8 @@ namespace OpenAI
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
 
-        //private string prompt = "和我玩武俠劇情遊戲";
-        private string prompt = "你好";
+        private string prompt = "和我玩武俠劇情遊戲";
+        //private string prompt = "你好";
 
         private CancellationTokenSource token = new CancellationTokenSource();
         private SemaphoreSlim semaphore;
@@ -72,7 +72,7 @@ namespace OpenAI
                     canMove = false;
                 }
                 
-                if(Time.time - lastChangeTime >= 0.5f && !canMove){
+                if(Time.time - lastChangeTime >= 1.5f && !canMove){
                     if(textBoxCount == 0 && imgNeedChange){
                         ChangeImage(currentFullTexts[0]);
                         imgNeedChange = false;
@@ -203,7 +203,7 @@ namespace OpenAI
         private async void ChangeImage(string plot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
-                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot +"\n\n(1)小村莊\n(2)山谷\n(3)寺廟\n\n請直接回答數字就好:\n",
+                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot +"\n\n(1)小村莊\n(2)山谷\n(3)山洞\n(4)寺廟\n(5)遺跡廢墟\n(6)竹林\n(7)瀑布\n(8)荒野\n(9)市集\n(10)擂台\n\n請直接回答數字就好:\n",
                 Model = "text-davinci-003",
                 MaxTokens = 128,
                 Temperature = 0.0f,
@@ -217,10 +217,12 @@ namespace OpenAI
                     cleanedString += c;
                 }
             }
-            print("圖片編號: " + cleanedString);
+            print("圖片類別編號: " + cleanedString);
 
             //換圖
-            Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString);
+            int randomInt = UnityEngine.Random.Range(1,5);
+            print("圖片隨機碼" + randomInt);
+            Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
         }
 
