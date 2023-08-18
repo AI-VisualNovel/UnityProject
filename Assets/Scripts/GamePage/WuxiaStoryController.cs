@@ -43,6 +43,8 @@ namespace OpenAI
         private string[] currentFullTexts = new string[50];
         private int textBoxCount = 0;
         private bool UIHideing = false;
+        private bool canMove = false;
+        private float lastChangeTime;
 
         private void Start()
         {
@@ -53,23 +55,35 @@ namespace OpenAI
             hideUIButton.onClick.AddListener(UIHiding);
             backgroundButton.onClick.AddListener(BackGroundClick);
             SendReply();
+
+            lastChangeTime = Time.time;
         }
 
         private void Update(){
-            //print(textBoxCount);
             if(currentMessageRec && suspend == false){
                 currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
             }
             if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
-                textArea.text = currentFullTexts[textBoxCount];
+                //Monitor current change
+                if(textArea.text != currentFullTexts[textBoxCount]){
+                    textArea.text = currentFullTexts[textBoxCount];
+                    lastChangeTime = Time.time;
+                    canMove = false;
+                }
+                
+                if(Time.time - lastChangeTime >= 1f && !canMove){
+                    canMove = true;
+                }
             }
         }
 
         private void Test(){
             //print(currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text);
-            foreach (ChatMessage message in messages){
-                print(message.Role + ":" +message.Content);
-            }
+            // foreach (ChatMessage message in messages){
+            //     print(message.Role + ":" +message.Content);
+            // }
+            //print(canMove);
+            print(textBoxCount);
         }
 
         private async void SendReply()
@@ -137,10 +151,12 @@ namespace OpenAI
         }
 
         private void MoveOn(){
-            suspend = false;
-            textBoxCount++;
-            if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
+            if(canMove){
+                suspend = false;
                 textBoxCount++;
+                if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
+                    textBoxCount++;
+                }
             }
         }
         private RectTransform AppendMessage(ChatMessage message)
