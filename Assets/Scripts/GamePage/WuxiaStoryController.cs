@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
-
-
+using System.Text.RegularExpressions;
 
 namespace OpenAI
 {
@@ -22,6 +21,10 @@ namespace OpenAI
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Button hideUIButton;
         [SerializeField] private GameObject gameUI;
+
+        [SerializeField] private Button option1Button;
+        [SerializeField] private Button option2Button;
+        [SerializeField] private Button option3Button;
 
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
@@ -52,10 +55,15 @@ namespace OpenAI
             testButton.onClick.AddListener(Test);
 
             textBoxButton.onClick.AddListener(MoveOn);
-            sendButton.onClick.AddListener(SendReply);
+            sendButton.onClick.AddListener(() => SendReply(null));
             hideUIButton.onClick.AddListener(UIHiding);
             backgroundButton.onClick.AddListener(BackGroundClick);
-            SendReply();
+
+            option1Button.onClick.AddListener(() => SendReply(option1Button));
+            option2Button.onClick.AddListener(() => SendReply(option2Button));
+            option3Button.onClick.AddListener(() => SendReply(option3Button));
+
+            SendReply(null);
 
             lastChangeTime = Time.time;
         }
@@ -95,17 +103,33 @@ namespace OpenAI
             // int randomInt = UnityEngine.Random.Range(1,5);
             // Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + randomInt);
             // backgroundImage.sprite = newSprite;
+            // string full = "\nsdfa532.古代中國66dc.\n\n古代657.0日本\n\n現91.c代社會PJI";
+            // string[] optionList = full.Split('\n');
+            // string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
+            // for (int i = 0; i < filteredOptions.Length; i++)
+            // {
+            //     //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
+            //     filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()]+", "");
+            //     print(filteredOptions[i]);
+            // }
         }
 
-        private async void SendReply()
+        private async void SendReply(Button button)
         {
             try{
                 textBoxCount = 0;
                 imgNeedChange = true;
+
+                string userContent = "";
+                if(button){
+                    userContent = button.GetComponentInChildren<Text>().text;
+                }else{
+                    userContent = inputField.text;
+                }
                 var sentMessage = new ChatMessage()
                 {
                     Role = "user",
-                    Content = inputField.text
+                    Content = userContent
                 };
                 var recMessage = new ChatMessage()
                 {
@@ -150,6 +174,8 @@ namespace OpenAI
 
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 messages.Add(recMessage);
+
+                GetOptions(recMessage.Content);
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
@@ -200,6 +226,30 @@ namespace OpenAI
             semaphore.Release();
         }
 
+        private async void GetOptions(string fullPlot)
+        {
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = "請根據以下劇情給予我三個選項\n\n劇情:\n" + fullPlot + "\n\n請以換行符分隔三個選項:\n",
+                Model = "text-davinci-003",
+                MaxTokens = 256,
+                Temperature = 0.0f,
+            });
+
+            print("ALL: "+completionResponse.Choices[0].Text.Trim());
+            string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
+            //字串處理
+            string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
+            for (int i = 0; i < filteredOptions.Length; i++)
+            {
+                //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
+                filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()\n]+", "");
+            }
+            
+            option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
+            option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
+            option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
+        }
         private async void ChangeImage(string plot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
@@ -221,7 +271,7 @@ namespace OpenAI
 
             //換圖
             int randomInt = UnityEngine.Random.Range(1,5);
-            print("圖片隨機碼" + randomInt);
+            print("圖片隨機碼: " + randomInt);
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
         }
