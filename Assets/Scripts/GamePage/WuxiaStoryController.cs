@@ -22,9 +22,14 @@ namespace OpenAI
         [SerializeField] private Button hideUIButton;
         [SerializeField] private GameObject gameUI;
 
+        [SerializeField] private GameObject optionChoicing;
+        [SerializeField] private GameObject fourOptions;
+        [SerializeField] private GameObject selfChoicingPanel;
+
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
         [SerializeField] private Button option3Button;
+        [SerializeField] private Button option4Button;
 
         [SerializeField] private RectTransform sent;
         [SerializeField] private RectTransform received;
@@ -49,19 +54,21 @@ namespace OpenAI
         private bool canMove = false;
         private float lastChangeTime;
         private bool imgNeedChange = false;
+        private bool getOptionDone = false;
 
         private void Start()
         {
             testButton.onClick.AddListener(Test);
 
             textBoxButton.onClick.AddListener(MoveOn);
-            sendButton.onClick.AddListener(() => SendReply(null));
+            sendButton.onClick.AddListener(sendButtonAct);
             hideUIButton.onClick.AddListener(UIHiding);
             backgroundButton.onClick.AddListener(BackGroundClick);
 
             option1Button.onClick.AddListener(() => SendReply(option1Button));
             option2Button.onClick.AddListener(() => SendReply(option2Button));
             option3Button.onClick.AddListener(() => SendReply(option3Button));
+            option4Button.onClick.AddListener(option4ButtonAct);
 
             SendReply(null);
 
@@ -80,7 +87,7 @@ namespace OpenAI
                     canMove = false;
                 }
                 
-                if(Time.time - lastChangeTime >= 1.5f && !canMove){
+                if(Time.time - lastChangeTime >= 1f && !canMove){
                     if(textBoxCount == 0 && imgNeedChange){
                         ChangeImage(currentFullTexts[0]);
                         imgNeedChange = false;
@@ -96,7 +103,7 @@ namespace OpenAI
             //     print(message.Role + ":" +message.Content);
             // }
             //print(canMove);
-            //print(textBoxCount);
+            print(textBoxCount);
             //string p = "在青鳥村度過了許多平靜的日子後，有一天，一位神秘的訪客來到了村子，他自稱是「黑影刺客」，聲稱要挑戰村中最強的劍客。村子裡的人們都感到驚恐，不知如何是好。";
             //ChangeImage(p);
             //隨機換背景
@@ -116,9 +123,11 @@ namespace OpenAI
 
         private async void SendReply(Button button)
         {
+            optionChoicing.SetActive(false);
             try{
                 textBoxCount = 0;
                 imgNeedChange = true;
+                getOptionDone = false;
 
                 string userContent = "";
                 if(button){
@@ -191,6 +200,9 @@ namespace OpenAI
                 if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
                     textBoxCount++;
                 }
+                if(textBoxCount >= currentFullTexts.Length && getOptionDone){
+                    optionChoicing.SetActive(true);
+                }
             }
         }
         private RectTransform AppendMessage(ChatMessage message)
@@ -245,10 +257,12 @@ namespace OpenAI
                 //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
                 filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()\n]+", "");
             }
-            
+
             option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
             option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
             option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
+
+            getOptionDone = true;
         }
         private async void ChangeImage(string plot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
@@ -276,6 +290,16 @@ namespace OpenAI
             backgroundImage.sprite = newSprite;
         }
 
+        private void option4ButtonAct(){
+            fourOptions.SetActive(false);
+            selfChoicingPanel.SetActive(true);
+        }
+
+        private void sendButtonAct(){
+            fourOptions.SetActive(true);
+            selfChoicingPanel.SetActive(false);
+            SendReply(null);
+        }
         private void UIHiding(){
             gameUI.SetActive(false);
             UIHideing = true;
