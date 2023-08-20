@@ -16,7 +16,7 @@ namespace OpenAI
         [SerializeField] private ScrollRect scroll;
         
         [SerializeField] private RectTransform sent;
-        [SerializeField] private RectTransform received;
+        [SerializeField] public RectTransform received; // Lai
 
         [SerializeField] private Image image;
         [SerializeField] private GameObject WrongApiPanel;
@@ -29,11 +29,13 @@ namespace OpenAI
         [SerializeField] private Button option4;
 
         private float height = 0;
-        private OpenAIApi openai = new OpenAIApi("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");
-        
+        // private OpenAIApi openai = new OpenAIApi("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");
+        private OpenAIApi openai = new OpenAIApi("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");
         private List<ChatMessage> messages = new List<ChatMessage>();
+        public SaveLoad SaveLoad;
         // private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
-        private string prompt = "請和我玩劇情文字遊戲，而我想要遊玩的情境是武俠世界，每次都給我一段劇情嚴禁給我選項，我會自行輸入接下來要採取的動作";
+        // private string prompt = "請和我玩劇情文字遊戲，而我想要遊玩的情境是武俠世界，每次都給我一段劇情嚴禁給我選項，我會自行輸入接下來要採取的動作";
+        private string prompt = "給我一個四字成語，不要其餘的解釋";
 
         private string currentFullText = "";
         private string imgGenerateText = "";
@@ -76,6 +78,8 @@ namespace OpenAI
             // }
 
             // Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
+
+            
             if (PlayerPrefs.HasKey("User_API"))
             {
                 string User_API = PlayerPrefs.GetString("User_API");
@@ -164,7 +168,18 @@ namespace OpenAI
                 scroll.verticalNormalizedPosition = 0;
 
                 //省點錢         
-                currentFullText = recMessage.Content;       
+                // currentFullText = recMessage.Content;  
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                currentFullText = recMessage.Content;  
+                messages.Add(recMessage);   
+                // SaveLoad.Story = currentFullText;
+                SaveLoad.CreateTextFile(currentFullText);
+                // Debug.Log("currentFullText 1: " + currentFullText);     
+                // Debug.Log("recMessage.Content 1: " + recMessage.Content);   
+                // foreach (var message in messages)
+                // {
+                //     Debug.Log("Content 1: " + message.Content);
+                // }     
                 //GetOptions();
                 //SendImageRequest();
 
@@ -230,7 +245,23 @@ namespace OpenAI
                 scroll.verticalNormalizedPosition = 0;
 
                 //省點錢           
-                currentFullText = recMessage.Content;       
+                // currentFullText = recMessage.Content; 
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                currentFullText = recMessage.Content;  
+                messages.Add(recMessage);  
+                // SaveLoad.Story = currentFullText;
+                SaveLoad.CreateTextFile(currentFullText);
+                // Debug.Log("currentFullText 2: " + currentFullText);     
+
+
+
+                // Debug.Log("sentMessage.Content 2: " + sentMessage.Content);     
+                // Debug.Log("recMessage.Content 2: " + recMessage.Content);   
+                // foreach (var message in messages)
+                // {
+                //     Debug.Log("Content 2: " + message.Content);
+                // }  
+
                 //GetOptions();
                 //SendImageRequest();
 
@@ -292,7 +323,23 @@ namespace OpenAI
                 scroll.verticalNormalizedPosition = 0;
 
                 //省點錢                
-                currentFullText = recMessage.Content;       
+                // currentFullText = recMessage.Content;   
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                currentFullText = recMessage.Content;  
+                messages.Add(recMessage); 
+
+                // SaveLoad.Story = currentFullText;
+                SaveLoad.CreateTextFile(currentFullText);
+
+                // Debug.Log("currentFullText 3: " + currentFullText);     
+
+                // Debug.Log("sentMessage.Content 3: " + sentMessage.Content);     
+                // Debug.Log("recMessage.Content 3: " + recMessage.Content);    
+                // foreach (var message in messages)
+                // {
+                //     Debug.Log("Content 3: " + message.Content);
+                // } 
+
                 //GetOptions();
                 //SendImageRequest();
 

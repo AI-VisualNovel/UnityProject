@@ -7,16 +7,8 @@ using System.IO;
 public class ScreenShotsController : MonoBehaviour
 {
 
-
-    public GameObject saveload1;
-    public GameObject saveload2;
-    public GameObject saveload3;
-    public GameObject saveload4;
-
     public string imagePath = "/Art/ScreenShots/";
     public static string img; // will receive the newest img name from NavController
-
-
 
     public void Synchronize(Button LoadPage_button){
         string fullPath = Application.dataPath + imagePath + img + ".png";
@@ -50,7 +42,9 @@ public class ScreenShotsController : MonoBehaviour
             Image buttonImage = button.image;
             buttonImage.sprite = sprite;
 
-            img = "already_saved";
+            img = img + "already_saved";
+            Debug.Log(button.name);
+
         }
         else
         {
@@ -58,6 +52,16 @@ public class ScreenShotsController : MonoBehaviour
         }
     }
 
+
+    public void LoadGame(Button button){
+        // img = img - "already_saved";
+        // string readFromFilePath = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + img + ".txt";
+        // List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
+        // foreach (string line in fileLines){ 
+        //     Debug.Log(line);
+
+        // }
+    }
 
 
 }
