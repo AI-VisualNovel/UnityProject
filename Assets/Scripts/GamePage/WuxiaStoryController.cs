@@ -267,7 +267,7 @@ namespace OpenAI
         private async void ChangeImage(string plot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
-                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot +"\n\n(1)小村莊\n(2)山谷\n(3)山洞\n(4)寺廟\n(5)遺跡廢墟\n(6)竹林\n(7)瀑布\n(8)荒野\n(9)市集\n(10)擂台\n(11)酒樓\n(12)客棧\n(13)武學門派\n(14)武林聚會\n(15)城牆\n(16)山寨\n(17)密室\n(18)山谷涼亭\n(19)山間小徑\n(20)軍營\n\n請直接回答數字就好:\n",
+                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot +"\n\n(1)小村莊\n(2)山谷\n(3)山洞\n(4)寺廟\n(5)遺跡廢墟\n(6)竹林\n(7)瀑布\n(8)荒野\n(9)市集\n(10)擂台\n(11)酒樓\n(12)客棧\n(13)武學門派\n(14)武林聚會\n(15)城牆\n(16)山寨\n(17)密室\n(18)山谷涼亭\n(19)山間小徑\n(20)軍營\n(21)冰川\n(22)沙漠\n(23)皇宮\n(24)雪山\n(25)森林\n(26)港口\n(27)湖泊\n(28)衙門\n(29)戰場\n(30)懸崖\n\n請直接回答數字就好:\n",
                 Model = "text-davinci-003",
                 MaxTokens = 128,
                 Temperature = 0.0f,
