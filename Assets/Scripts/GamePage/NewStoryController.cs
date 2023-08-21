@@ -174,6 +174,7 @@ namespace OpenAI
                 messages.Add(recMessage);   
                 // SaveLoad.Story = currentFullText;
                 SaveLoad.CreateTextFile(currentFullText);
+                SaveLoad.SaveStoryToList(currentFullText);
                 // Debug.Log("currentFullText 1: " + currentFullText);     
                 // Debug.Log("recMessage.Content 1: " + recMessage.Content);   
                 // foreach (var message in messages)
@@ -251,6 +252,8 @@ namespace OpenAI
                 messages.Add(recMessage);  
                 // SaveLoad.Story = currentFullText;
                 SaveLoad.CreateTextFile(currentFullText);
+                SaveLoad.SaveStoryToList(currentFullText);
+
                 // Debug.Log("currentFullText 2: " + currentFullText);     
 
 
@@ -330,6 +333,7 @@ namespace OpenAI
 
                 // SaveLoad.Story = currentFullText;
                 SaveLoad.CreateTextFile(currentFullText);
+                SaveLoad.SaveStoryToList(currentFullText);
 
                 // Debug.Log("currentFullText 3: " + currentFullText);     
 

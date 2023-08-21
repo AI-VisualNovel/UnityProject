@@ -4,11 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class ScreenShotsController : MonoBehaviour
+public class SavingLoadingPageController : MonoBehaviour
 {
 
     public string imagePath = "/Art/ScreenShots/";
+    public GameObject saveload1_1;
+    public GameObject saveload1_2;
+    public GameObject saveload1_3;
+    public GameObject saveload1_4;
+    public GameObject saveload2_1;
+    public GameObject saveload2_2;
+    public GameObject saveload2_3;
+    public GameObject saveload2_4;
+    public GameObject saveload3_1;
+    public GameObject saveload3_2;
+    public GameObject saveload3_3;
+    public GameObject saveload3_4;
+
+
+    
     public static string img; // will receive the newest img name from NavController
+
+
+    void Start(){
+        NametheButtons();
+    } 
 
     public void Synchronize(Button LoadPage_button){
         string fullPath = Application.dataPath + imagePath + img + ".png";
@@ -63,5 +83,25 @@ public class ScreenShotsController : MonoBehaviour
         // }
     }
 
+
+    public void UpdateJsonLocation(GameData data, Button button){
+            data.Location = button.name;
+    }
+
+    public void NametheButtons(){
+        // set buttons name
+        saveload1_1.name = "1_1";
+        saveload1_2.name = "1_2";
+        saveload1_3.name = "1_3";
+        saveload1_4.name = "1_4";
+        saveload2_1.name = "2_1";
+        saveload2_2.name = "2_2";
+        saveload2_3.name = "2_3";
+        saveload2_4.name = "2_4";
+        saveload3_1.name = "3_1";
+        saveload3_2.name = "3_2";
+        saveload3_3.name = "3_3";
+        saveload3_4.name = "3_4";
+    }
 
 }

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using static OpenAI.SaveLoad;
+
 public class NavController : MonoBehaviour
 {
 
     // public Button SaveButton;
-    public LabelController2 Book2;
+    // public LabelController2 Book2;
+    // public SaveLoad saveload;
     public static string newest_screenshot;
 
     public void Start()
@@ -22,15 +25,18 @@ public class NavController : MonoBehaviour
 
     public void ScreenShot()
     {
+        // ******************************** TO BE DONE *************************8
         ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/screenshot " + System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss") + ".png");
         newest_screenshot = "screenshot " + System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss");
+        // newest_screenshot = "screenshot " + OpenAI.SaveLoad.saved_time;
+
         Debug.Log("A screenshot was taken and saved as " + newest_screenshot + "!");
     }
 
     public void toSavePAge()
     {
         LabelController2.toSavePage = true;
-        ScreenShotsController.img = newest_screenshot;
+        SavingLoadingPageController.img = newest_screenshot;
         SceneManager.LoadScene("Book2");
     }
 

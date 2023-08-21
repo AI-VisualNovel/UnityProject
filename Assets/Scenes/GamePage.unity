@@ -960,6 +960,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 0
+      - m_Target: {fileID: 367874017}
+        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
+        m_MethodName: LoadFromJson
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &438170618
 CanvasRenderer:
@@ -1569,7 +1581,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 950682371}
         m_TargetAssemblyTypeName: NavController, Assembly-CSharp
         m_MethodName: toSavePAge
@@ -1581,10 +1593,22 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 367874017}
         m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
         m_MethodName: Save
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+      - m_Target: {fileID: 367874017}
+        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
+        m_MethodName: SaveToJson
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4635,7 +4659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6147736411495555725, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 636.44
       objectReference: {fileID: 0}
     - target: {fileID: 6147736411495555725, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4671,7 +4695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6147736411495555725, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -14.999994
+      value: -318.22
       objectReference: {fileID: 0}
     - target: {fileID: 6147736411495555725, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

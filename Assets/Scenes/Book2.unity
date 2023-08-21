@@ -6628,7 +6628,7 @@ GameObject:
   - component: {fileID: 923904767}
   - component: {fileID: 923904766}
   m_Layer: 0
-  m_Name: ScreenShotsController
+  m_Name: SavingLoadingPageController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6646,11 +6646,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec5a4ab2c877414182bfb17b0699182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveload1: {fileID: 0}
-  saveload2: {fileID: 0}
-  saveload3: {fileID: 0}
-  saveload4: {fileID: 0}
   imagePath: /Art/ScreenShots/
+  saveload1_1: {fileID: 1876530391}
+  saveload1_2: {fileID: 1292603207}
+  saveload1_3: {fileID: 80805450}
+  saveload1_4: {fileID: 768400603}
+  saveload2_1: {fileID: 1344190387}
+  saveload2_2: {fileID: 924825845}
+  saveload2_3: {fileID: 1271956853}
+  saveload2_4: {fileID: 1479314421}
+  saveload3_1: {fileID: 1428398595}
+  saveload3_2: {fileID: 1917411980}
+  saveload3_3: {fileID: 785033597}
+  saveload3_4: {fileID: 1213826574}
 --- !u!4 &923904767
 Transform:
   m_ObjectHideFlags: 0
