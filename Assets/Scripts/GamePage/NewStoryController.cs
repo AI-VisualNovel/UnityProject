@@ -169,12 +169,19 @@ namespace OpenAI
 
                 //省點錢         
                 // currentFullText = recMessage.Content;  
+
+
+                // ***************************************************************************************8
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 currentFullText = recMessage.Content;  
                 messages.Add(recMessage);   
-                // SaveLoad.Story = currentFullText;
                 SaveLoad.CreateTextFile(currentFullText);
                 SaveLoad.SaveStoryToList(currentFullText);
+                // ***************************************************************************************8
+
+
+
+
                 // Debug.Log("currentFullText 1: " + currentFullText);     
                 // Debug.Log("recMessage.Content 1: " + recMessage.Content);   
                 // foreach (var message in messages)
