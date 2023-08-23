@@ -175,7 +175,7 @@ namespace OpenAI
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 currentFullText = recMessage.Content;  
                 messages.Add(recMessage);   
-                SaveLoad.CreateTextFile(currentFullText);
+                // SaveLoad.CreateTextFile(currentFullText);
                 SaveLoad.SaveStoryToList(currentFullText);
                 // ***************************************************************************************8
 
@@ -258,7 +258,7 @@ namespace OpenAI
                 currentFullText = recMessage.Content;  
                 messages.Add(recMessage);  
                 // SaveLoad.Story = currentFullText;
-                SaveLoad.CreateTextFile(currentFullText);
+                // SaveLoad.CreateTextFile(currentFullText);
                 SaveLoad.SaveStoryToList(currentFullText);
 
                 // Debug.Log("currentFullText 2: " + currentFullText);     
@@ -339,7 +339,7 @@ namespace OpenAI
                 messages.Add(recMessage); 
 
                 // SaveLoad.Story = currentFullText;
-                SaveLoad.CreateTextFile(currentFullText);
+                // SaveLoad.CreateTextFile(currentFullText);
                 SaveLoad.SaveStoryToList(currentFullText);
 
                 // Debug.Log("currentFullText 3: " + currentFullText);     

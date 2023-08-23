@@ -5,13 +5,15 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 using System.Linq;
+using System;
+
 
 namespace OpenAI
 {
     public class SaveLoad : MonoBehaviour
     {
         public OpenAI.NewStoryController new_story_controller;
-        public Transform contentWindow;
+        public RectTransform contentWindow;
         public GameObject recallTextObject;
         public string saved_time;
         public static string newest_screenshot;
@@ -25,18 +27,16 @@ namespace OpenAI
         }
 
         
-        public void ScreenShot()
-    {
-        // ******************************** TO BE DONE *************************
-        saved_time = System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss");
-        ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/screenshot " + saved_time + ".png");
-        newest_screenshot = "screenshot " + saved_time;
-        // Debug.Log("saved_time: " + saveload.ReturnSaveTime());
-        SavingLoadingPageController.saved_time = saved_time;
-        SavingLoadingPageController.img = newest_screenshot;
-        Debug.Log("A screenshot was taken and saved as " + newest_screenshot + "!");
-    }
-
+        public void ScreenShot(){
+            // ******************************** TO BE DONE *************************
+            saved_time = System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss");
+            ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/screenshot " + saved_time + ".png");
+            newest_screenshot = "screenshot " + saved_time;
+            // Debug.Log("saved_time: " + saveload.ReturnSaveTime());
+            SavingLoadingPageController.saved_time = saved_time;
+            SavingLoadingPageController.img = newest_screenshot;
+            Debug.Log("A screenshot was taken and saved as " + newest_screenshot + "!");
+        }
 
 
         public void SaveStoryToList(string story){
@@ -63,53 +63,80 @@ namespace OpenAI
         }
 
         public void LoadFromJson(){
-            // string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/08-21-23-22-27-51.json");
-            string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/08-21-23-22-56-52.json");
+            // // string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/08-21-23-22-27-51.json");
+            // string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json");
             
-            GameData data = JsonUtility.FromJson<GameData>(json);
-            recallTextObject.GetComponent<Text>().text = data.Story;
-
-            // string formattedLine = line.Replace(""\n"", "\n");
-            // Instantiate(recallTextObject, contentWindow);
+            // GameData data = JsonUtility.FromJson<GameData>(json);
             // recallTextObject.GetComponent<Text>().text = data.Story;
-            Debug.Log(data.Story);
 
-        }
+            // // string formattedLine = line.Replace(""\n"", "\n");
+            // // Instantiate(recallTextObject, contentWindow);
+            // // recallTextObject.GetComponent<Text>().text = data.Story;
+            // Debug.Log(data.Story);
 
+            string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
+            string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
+            foreach (string line in fileLines)
+            {
+                string[] splitLines = line.Split(new string[] { "\n" }, StringSplitOptions.None);
 
-        public void CreateTextFile(string story){
-            string txtDocumentName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat" + ".txt";
-
-            if (!File.Exists(txtDocumentName)){
-                File.WriteAllText(txtDocumentName, "Here's the Story\n");
+                foreach (string splitLine in splitLines)
+                {
+                    // 创建新的文本对象并设置其文本内容
+                    GameObject newTextObject = Instantiate(recallTextObject, contentWindow);
+                    Text textComponent = newTextObject.GetComponent<Text>();
+                    textComponent.text = splitLine;
+                }
             }
 
-            File.AppendAllText(txtDocumentName, story + "\n");
+
 
         }
-        
-        // Start is called before the first frame update
+
+
+
         public void Save(){
         
-            // rename the file as same as screenshots
-            string oldName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat" + ".txt";
-            string newName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss") + ".txt";
-            System.IO.File.Move(oldName, newName);
+            // // rename the file as same as screenshots
+            // string oldName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat" + ".txt";
+            // string newName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss") + ".txt";
+            // System.IO.File.Move(oldName, newName);
         }
 
         public void Load(){
-            string readFromFilePath = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat" + ".txt";
-            List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
-            foreach (string line in fileLines){
 
-                // 目前還不知道為啥會擠在同一行
-                // string formattedLine = line.Replace("<br>", "\n");
-                // Instantiate(recallTextObject, contentWindow);
-                // recallTextObject.GetComponent<Text>().text = line;
-                Debug.Log(line);
+            string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
+            string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
+            foreach (string line in fileLines)
+            {
+                string[] splitLines = line.Split(new string[] { "<br>" }, StringSplitOptions.None);
+
+                foreach (string splitLine in splitLines)
+                {
+                    // 创建新的文本对象并设置其文本内容
+                    GameObject newTextObject = Instantiate(recallTextObject, contentWindow);
+                    Text textComponent = newTextObject.GetComponent<Text>();
+                    textComponent.text = splitLine;
+                }
             }
+
+
+
+
+
+            // string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
+            // // List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
+            // foreach (string line in fileLines){
+
+            //     // 目前還不知道為啥會擠在同一行
+            //     // string formattedLine = line.Replace("<br>", "\n");
+            //     // Instantiate(recallTextObject, contentWindow);
+            //     // recallTextObject.GetComponent<Text>().text = line;
+            //     Debug.Log(line);
+
+            // }
         }
 
         public string ReturnSaveTime(){

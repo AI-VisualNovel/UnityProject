@@ -32,13 +32,12 @@ public class SavingLoadingPageController : MonoBehaviour
 
     void Start(){
         NametheButtons();
-
+        saveload1_1.gameObject.SetActive(true);
     } 
 
     public void LoadImage(Button button)
     {
         string fullPath = Application.dataPath + imagePath + img + ".png";
-        // string fullPath = Application.dataPath + "/Art/ScreenShots/toothless.jpg";
 
         if(img == "already_saved"){
             Debug.LogError("You have already saved your game progress!");
@@ -65,16 +64,47 @@ public class SavingLoadingPageController : MonoBehaviour
         }
     }
 
+    public void LoadAllImage(){
+        // 获取 JSON 文件列表
+        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 
-    public void LoadGame(Button button){
-        // img = img - "already_saved";
-        // string readFromFilePath = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + img + ".txt";
-        // List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
-        // foreach (string line in fileLines){ 
-        //     Debug.Log(line);
+        // 遍历 JSON 文件
+        foreach (string jsonFilePath in jsonFiles)
+        {
+            string json = File.ReadAllText(jsonFilePath);
+            GameData data = JsonConvert.DeserializeObject<GameData>(json);
 
-        // }
+
+            // 根据 ImageLocation 加载图像到对应按钮
+            // 通过按钮名称查找按钮
+            Button foundButton = GameObject.Find(data.Location).GetComponent<Button>();
+           
+            
+            string fullPath = Application.dataPath + imagePath + data.Location + ".png";
+            byte[] imageData = File.ReadAllBytes(fullPath);
+            Texture2D texture = new Texture2D(2, 2); // Create a new Texture2D
+            texture.LoadImage(imageData); // Load the image data into the Texture2D
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
+
+            // Set the sprite as the source image of the button
+            Image buttonImage = foundButton.image;
+            buttonImage.sprite = sprite;
+            
+        }
     }
+    
+
+
+    // public void LoadGame(Button button){
+    //     // img = img - "already_saved";
+    //     // string readFromFilePath = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + img + ".txt";
+    //     // List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
+    //     // foreach (string line in fileLines){ 
+    //     //     Debug.Log(line);
+
+    //     // }
+    // }
 
 
     public void UpdateJsonLocation(Button button){
@@ -107,6 +137,5 @@ public class SavingLoadingPageController : MonoBehaviour
         saveload3_3.gameObject.name = "3_3";
         saveload3_4.gameObject.name = "3_4";
     }
-
 
 }
