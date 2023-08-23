@@ -26,7 +26,7 @@ public class SavingLoadingPageController : MonoBehaviour
 
 
     
-    public static string img; // will receive the newest img name from NavController
+    public static string img; // will receive the newest img name from SaveLoad
     public static string saved_time;
 
 
@@ -81,7 +81,7 @@ public class SavingLoadingPageController : MonoBehaviour
             Button foundButton = GameObject.Find(data.Location).GetComponent<Button>();
            
             
-            string fullPath = Application.dataPath + imagePath + data.Location + ".png";
+            string fullPath = Application.dataPath + imagePath + data.Time + ".png";
             byte[] imageData = File.ReadAllBytes(fullPath);
             Texture2D texture = new Texture2D(2, 2); // Create a new Texture2D
             texture.LoadImage(imageData); // Load the image data into the Texture2D

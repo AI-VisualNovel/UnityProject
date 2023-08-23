@@ -30,9 +30,8 @@ namespace OpenAI
         public void ScreenShot(){
             // ******************************** TO BE DONE *************************
             saved_time = System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss");
-            ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/screenshot " + saved_time + ".png");
-            newest_screenshot = "screenshot " + saved_time;
-            // Debug.Log("saved_time: " + saveload.ReturnSaveTime());
+            ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
+            newest_screenshot = saved_time;
             SavingLoadingPageController.saved_time = saved_time;
             SavingLoadingPageController.img = newest_screenshot;
             Debug.Log("A screenshot was taken and saved as " + newest_screenshot + "!");
