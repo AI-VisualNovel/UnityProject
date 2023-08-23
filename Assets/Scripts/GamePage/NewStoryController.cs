@@ -22,6 +22,7 @@ namespace OpenAI
         [SerializeField] private GameObject WrongApiPanel;
         [SerializeField] private GameObject optionChoicing;
         [SerializeField] private GameObject selfChoicing;
+        [SerializeField] private GameObject loadingImage;
 
         [SerializeField] private Button option1;
         [SerializeField] private Button option2;
@@ -31,6 +32,8 @@ namespace OpenAI
         private float height = 0;
         // private OpenAIApi openai = new OpenAIApi("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");
         private OpenAIApi openai = new OpenAIApi("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");
+        // private OpenAIApi openai = new OpenAIApi();
+        
         private List<ChatMessage> messages = new List<ChatMessage>();
         public SaveLoad SaveLoad;
         // private string prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的白色恐怖時期，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西或建築物，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
@@ -91,14 +94,14 @@ namespace OpenAI
                 Debug.Log("User API: Not Available");
             }
 
-            InitSendReply();
-            button.onClick.AddListener(SendReply);
-            option1.onClick.AddListener(() => SendReplyButton(option1));
-            option2.onClick.AddListener(() => SendReplyButton(option2));
-            option3.onClick.AddListener(() => SendReplyButton(option3));
+        
+            button.onClick.AddListener(() => SendReply(null));
+            option1.onClick.AddListener(() => SendReply(option1));
+            option2.onClick.AddListener(() => SendReply(option2));
+            option3.onClick.AddListener(() => SendReply(option3));
             option4.onClick.AddListener(option4Act);
 
-            
+            SendReply(null);
         }
 
         private RectTransform AppendMessage(ChatMessage message)
@@ -116,7 +119,7 @@ namespace OpenAI
             return item;
         }
 
-        private async void InitSendReply(){
+        private async void SendReply(Button button){
             selfChoicing.SetActive(false);
             option1.interactable = true;
             option2.interactable = true;
@@ -190,43 +193,32 @@ namespace OpenAI
                 // }     
                 //GetOptions();
                 //SendImageRequest();
+                string userContent = "";
+                if(button){
+                    userContent = button.GetComponentInChildren<Text>().text;
+                }else{
+                    userContent = inputField.text;
+                }
 
-                //button.enabled = true;
-                //inputField.enabled = true;
-                optionChoicing.SetActive(true);
-            }
-            catch(Exception ex)
-            {
-                Debug.LogError("An error occurred: " + ex.Message);
-                WrongApiPanel.SetActive(true);
-            }
-        }
-        private async void SendReply(){
-            selfChoicing.SetActive(false);
-            option1.interactable = true;
-            option2.interactable = true;
-            option3.interactable = true;
-            option4.interactable = true;
-            try{
                 var sentMessage = new ChatMessage()
                 {
                     Role = "user",
-                    Content = inputField.text
+                    Content = userContent
                 };
-
                 var recMessage = new ChatMessage()
                 {
                     Role = "assistant",
                     Content = ""
                 };
-                
-                AppendMessage(sentMessage);
-                var recItem = AppendMessage(recMessage);
 
-                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
+                if (messages.Count == 0){
+                    sentMessage.Content = prompt + "\n" + inputField.text; 
+                }else{
+                    AppendMessage(sentMessage);
+                }
+                var recItem = AppendMessage(recMessage);
                 
                 messages.Add(sentMessage);
-                messages.Add(recMessage);
                
                 userInput = inputField.text;
                 //button.enabled = false;
@@ -284,46 +276,6 @@ namespace OpenAI
                 Debug.LogError("An error occurred: " + ex.Message);
                 WrongApiPanel.SetActive(true);
             }
-        }
-
-        private async void SendReplyButton(Button button){
-            try{
-                var sentMessage = new ChatMessage()
-                {
-                    Role = "user",
-                    Content = button.GetComponentInChildren<Text>().text
-                };
-                
-                var recMessage = new ChatMessage()
-                {
-                    Role = "assistant",
-                    Content = ""
-                };
-                
-                AppendMessage(sentMessage);
-                var recItem = AppendMessage(recMessage);
-
-                if (messages.Count == 0) sentMessage.Content = prompt + "\n" + inputField.text; 
-                
-                messages.Add(sentMessage);
-                messages.Add(recMessage);
-               
-                userInput = inputField.text;
-                //button.enabled = false;
-                inputField.text = "";
-                //inputField.enabled = false;
-                optionChoicing.SetActive(false);
-                
-                // Complete the prompt
-                heightSpeed = 0;
-                semaphore = new SemaphoreSlim(0);
-                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
-                {
-                    Model = "gpt-3.5-turbo-0613",
-                    Messages = messages,
-                    Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
-                await semaphore.WaitAsync();
 
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
                 recItem.anchoredPosition = new Vector2(0, -height);
@@ -358,10 +310,6 @@ namespace OpenAI
                 //inputField.enabled = true;
                 optionChoicing.SetActive(true);
             }
-            catch(Exception ex)
-            {
-                WrongApiPanel.SetActive(true);
-            }            
         }
 
         private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
@@ -413,8 +361,8 @@ namespace OpenAI
 
         private async void SendImageRequest()
         {
-            //image.sprite = null;
-            //loadingLabel.SetActive(true);
+            image.sprite = null;
+            loadingImage.SetActive(true);
 
             //
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
@@ -454,7 +402,7 @@ namespace OpenAI
                 Debug.LogWarning("No image was created from this prompt.");
             }
 
-            //loadingLabel.SetActive(false);
+            loadingImage.SetActive(false);
         }
 
         private void option4Act(){
