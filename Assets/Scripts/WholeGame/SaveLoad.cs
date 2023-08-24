@@ -6,6 +6,8 @@ using UnityEditor;
 using System.IO;
 using System.Linq;
 using System;
+using Newtonsoft.Json;
+
 
 
 namespace OpenAI
@@ -18,9 +20,16 @@ namespace OpenAI
         public string saved_time;
         public static string newest_screenshot;
 
+
         public string Story;
         private List<string> stories_list = new List<string>();
+
+        private List<ChatMessage> Chat = new List<ChatMessage>();
         
+        public List<ChatMessage> chat_message;
+        
+
+
         void Start(){
             // create folder
             Directory.CreateDirectory(Application.streamingAssetsPath + "/Chat_Logs/");
@@ -28,7 +37,6 @@ namespace OpenAI
 
         
         public void ScreenShot(){
-            // ******************************** TO BE DONE *************************
             saved_time = System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss");
             ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
             newest_screenshot = saved_time;
@@ -37,6 +45,9 @@ namespace OpenAI
             Debug.Log("A screenshot was taken and saved as " + newest_screenshot + "!");
         }
 
+        public void SaveChatMassage(List<ChatMessage> messages){
+            Chat = messages;
+        }
 
         public void SaveStoryToList(string story){
             stories_list.Add(story);
@@ -50,7 +61,10 @@ namespace OpenAI
         public void SaveToJson(){
             GameData data = new GameData();
             data.Time = saved_time;
-            // saved_time = data.Time;
+
+            string list_to_json = JsonConvert.SerializeObject(Chat);
+            data.ChatMessage = list_to_json;
+
             Debug.Log("saved_time in SaveToJson: " + saved_time);
 
             foreach (string s in stories_list){
@@ -92,17 +106,6 @@ namespace OpenAI
 
 
         }
-
-
-
-        public void Save(){
-        
-            // // rename the file as same as screenshots
-            // string oldName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat" + ".txt";
-            // string newName = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss") + ".txt";
-            // System.IO.File.Move(oldName, newName);
-        }
-
         public void Load(){
 
             string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";

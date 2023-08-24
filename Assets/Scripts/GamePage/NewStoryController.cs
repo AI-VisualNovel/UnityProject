@@ -176,7 +176,15 @@ namespace OpenAI
                 currentFullText = recMessage.Content;  
                 messages.Add(recMessage);   
                 // SaveLoad.CreateTextFile(currentFullText);
+                
+                SaveLoad.SaveChatMassage(messages); // testing
                 SaveLoad.SaveStoryToList(currentFullText);
+
+                // foreach (var M in messages){
+                //     Debug.Log("Role: " + M.Role);
+                //     Debug.Log("Content: " + M.Content);
+                // }
+
                 // ***************************************************************************************8
 
 
@@ -259,6 +267,8 @@ namespace OpenAI
                 messages.Add(recMessage);  
                 // SaveLoad.Story = currentFullText;
                 // SaveLoad.CreateTextFile(currentFullText);
+                
+                SaveLoad.SaveChatMassage(messages); // testing
                 SaveLoad.SaveStoryToList(currentFullText);
 
                 // Debug.Log("currentFullText 2: " + currentFullText);     
@@ -340,16 +350,11 @@ namespace OpenAI
 
                 // SaveLoad.Story = currentFullText;
                 // SaveLoad.CreateTextFile(currentFullText);
+               
+                SaveLoad.SaveChatMassage(messages); // testing
                 SaveLoad.SaveStoryToList(currentFullText);
 
-                // Debug.Log("currentFullText 3: " + currentFullText);     
-
-                // Debug.Log("sentMessage.Content 3: " + sentMessage.Content);     
-                // Debug.Log("recMessage.Content 3: " + recMessage.Content);    
-                // foreach (var message in messages)
-                // {
-                //     Debug.Log("Content 3: " + message.Content);
-                // } 
+                
 
                 //GetOptions();
                 //SendImageRequest();
