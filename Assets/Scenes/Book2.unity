@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a2e508cc9d56f4585feba67c22dc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeScript: {fileID: 1807188649}
+  fadeScript: {fileID: 0}
   HistoryPage: {fileID: 4862644}
   SavePage: {fileID: 97459814}
   LoadPage_inGame: {fileID: 453185750}
@@ -15745,7 +15745,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1807188646}
   - component: {fileID: 1807188647}
-  - component: {fileID: 1807188649}
   m_Layer: 5
   m_Name: AboutPage-inGame
   m_TagString: Untagged
@@ -15787,21 +15786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760dde2fe18deb6499c2e194d67034ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1807188649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807188645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42013befee3744f7bb03af48e3a88c55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LeftText: {fileID: 1918388086}
-  RightText: {fileID: 1088935244}
-  StartFade: 0
 --- !u!1 &1811999685
 GameObject:
   m_ObjectHideFlags: 0

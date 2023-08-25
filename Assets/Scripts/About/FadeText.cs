@@ -14,7 +14,6 @@ public class FadeText : MonoBehaviour
 
     public void FadeIn() {
         StartFade = true;
-        Debug.Log(987);
     }
 
     private void Update() {
