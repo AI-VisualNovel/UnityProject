@@ -38,6 +38,9 @@ namespace OpenAI
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
+        private List<ChatMessage> filteredMessages = new List<ChatMessage>();
+        private string recap = "";
+        private int chatCount = 0;
 
         private string prompt = "和我玩武俠劇情遊戲";
         //private string prompt = "你好";
@@ -95,6 +98,11 @@ namespace OpenAI
                     canMove = true;
                 }
             }
+
+            if(chatCount >= 5){
+                messageFilter();
+                chatCount = 0;
+            }
         }
 
         private void Test(){
@@ -103,7 +111,7 @@ namespace OpenAI
             //     print(message.Role + ":" +message.Content);
             // }
             //print(canMove);
-            print(textBoxCount);
+            //print(textBoxCount);
             //string p = "在青鳥村度過了許多平靜的日子後，有一天，一位神秘的訪客來到了村子，他自稱是「黑影刺客」，聲稱要挑戰村中最強的劍客。村子裡的人們都感到驚恐，不知如何是好。";
             //ChangeImage(p);
             //隨機換背景
@@ -119,6 +127,11 @@ namespace OpenAI
             //     filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()]+", "");
             //     print(filteredOptions[i]);
             // }
+            // messageFilter();
+            foreach(ChatMessage m in filteredMessages){
+                print(m.Role + ":" + m.Content);
+            }
+            print(chatCount);
         }
 
         private async void SendReply(Button button)
@@ -158,6 +171,7 @@ namespace OpenAI
                 var recItem = AppendMessage(recMessage);
 
                 messages.Add(sentMessage);
+                filteredMessages.Add(sentMessage);
 
                 inputField.text = "";
                 inputField.enabled = false;
@@ -169,7 +183,7 @@ namespace OpenAI
                 openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
-                    Messages = messages,
+                    Messages = filteredMessages,
                     Stream = true
                 },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
                 await semaphore.WaitAsync();
@@ -183,6 +197,7 @@ namespace OpenAI
 
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 messages.Add(recMessage);
+                filteredMessages.Add(recMessage);
 
                 GetOptions(recMessage.Content);
 
@@ -191,6 +206,7 @@ namespace OpenAI
             }catch(Exception ex){
                 Debug.LogError("An error occurred: " + ex.Message);
             }
+            chatCount++;
         }
 
         private void MoveOn(){
@@ -311,6 +327,38 @@ namespace OpenAI
                 UIHideing = false;
             }else{
                 MoveOn();
+            }
+        }
+
+        private async void messageFilter(){
+                var toS = new ChatMessage()
+                {
+                    Role = "user",
+                    Content = "請擷取以上對話重要內容以利後續記憶"
+                };
+                filteredMessages.Add(toS);
+
+            var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+            {
+                Model = "gpt-3.5-turbo-0613",
+                Messages = filteredMessages
+            });
+
+            if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
+            {
+                recap = completionResponse.Choices[0].Message.Content;
+                print(recap);
+                filteredMessages.Clear();
+                var s = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = "前情提要: " + recap
+                };
+                filteredMessages.Add(s);
+            }
+            else
+            {
+                Debug.LogWarning("Can't filter!");
             }
         }
     }
