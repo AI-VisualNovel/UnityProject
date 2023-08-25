@@ -76,16 +76,6 @@ namespace OpenAI
         }
 
         public void LoadFromJson(){
-            // // string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/08-21-23-22-27-51.json");
-            // string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json");
-            
-            // GameData data = JsonUtility.FromJson<GameData>(json);
-            // recallTextObject.GetComponent<Text>().text = data.Story;
-
-            // // string formattedLine = line.Replace(""\n"", "\n");
-            // // Instantiate(recallTextObject, contentWindow);
-            // // recallTextObject.GetComponent<Text>().text = data.Story;
-            // Debug.Log(data.Story);
 
             string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
