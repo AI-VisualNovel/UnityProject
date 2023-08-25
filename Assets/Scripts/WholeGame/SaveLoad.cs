@@ -77,59 +77,28 @@ namespace OpenAI
 
         public void LoadFromJson(){
 
-            string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
+            string readFromFilePath = Application.streamingAssetsPath + "/Json/08-25-23-21-59-19.json";
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
-            foreach (string line in fileLines)
-            {
-                string[] splitLines = line.Split(new string[] { "\n" }, StringSplitOptions.None);
-
-                foreach (string splitLine in splitLines)
-                {
-                    // 创建新的文本对象并设置其文本内容
-                    GameObject newTextObject = Instantiate(recallTextObject, contentWindow);
-                    Text textComponent = newTextObject.GetComponent<Text>();
-                    textComponent.text = splitLine;
-                }
+            List<ChatMessage> chat_massage = GetChatMassage(readFromFilePath);
+            foreach (ChatMessage m in chat_massage){
+                Debug.Log(m.Role);
+                Debug.Log(m.Content);
             }
-
-
-
         }
-        public void Load(){
 
-            string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
-            string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
-
-            foreach (string line in fileLines)
-            {
-                string[] splitLines = line.Split(new string[] { "<br>" }, StringSplitOptions.None);
-
-                foreach (string splitLine in splitLines)
-                {
-                    // 创建新的文本对象并设置其文本内容
-                    GameObject newTextObject = Instantiate(recallTextObject, contentWindow);
-                    Text textComponent = newTextObject.GetComponent<Text>();
-                    textComponent.text = splitLine;
-                }
-            }
-
-
-
-
-
-            // string readFromFilePath = Application.streamingAssetsPath + "/Json/08-22-23-17-03-44.json";
-            // // List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
-            // foreach (string line in fileLines){
-
-            //     // 目前還不知道為啥會擠在同一行
-            //     // string formattedLine = line.Replace("<br>", "\n");
-            //     // Instantiate(recallTextObject, contentWindow);
-            //     // recallTextObject.GetComponent<Text>().text = line;
-            //     Debug.Log(line);
-
-            // }
+        public async void LoadingFormerProgress(){
+            
         }
+
+
+        public List<ChatMessage> GetChatMassage(string filepath){
+            string json = File.ReadAllText(filepath);
+            GameData data = JsonConvert.DeserializeObject<GameData>(json);
+            List<ChatMessage> chatMessages = JsonConvert.DeserializeObject<List<ChatMessage>>(data.ChatMessage);
+            return chatMessages;
+        }
+        
 
         public string ReturnSaveTime(){
             return saved_time;
