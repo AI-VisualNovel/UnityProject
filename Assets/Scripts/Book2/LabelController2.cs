@@ -7,6 +7,7 @@ using UnityEditor;
 
 public class LabelController2 : MonoBehaviour
 {
+    public FadeText fadeScript;
 
     // booleans to show which page to go to
     public static bool toHistoryPage;
@@ -125,6 +126,9 @@ public class LabelController2 : MonoBehaviour
         SettingPage_inGame.SetActive(false);
         AboutPage_inGame.SetActive(true);
         HelpPage_inGame.SetActive(false);
+
+        fadeScript.FadeIn();
+        
 
     }
     // help page
