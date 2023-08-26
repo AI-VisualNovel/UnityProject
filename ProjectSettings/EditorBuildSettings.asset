@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Book1-en.unity
     guid: a7e896cc37d834c1e9c34ddf220b7258
+  - enabled: 1
+    path: Assets/Scenes/Legacy.unity
+    guid: c200630d296090041b8118cbd6f69c23
   m_configObjects: {}

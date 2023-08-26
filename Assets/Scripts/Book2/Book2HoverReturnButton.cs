@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Book2HoverReturnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -21,5 +22,10 @@ public class Book2HoverReturnButton : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         // 鼠標離開時禁用按鈕
         button.interactable = false;
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // 鼠標點擊時跳轉到mainpage
+        SceneManager.LoadScene("Legacy");
     }
 }
