@@ -15,6 +15,5 @@ public class GameData
     // public string LatestOption2;
     // public string LatestOption3;
     // public string BackgroundImg; 
-    // public string ScreenShot;
     public string Location; // which button saves the screenshot 
 }

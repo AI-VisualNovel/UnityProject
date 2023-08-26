@@ -19,6 +19,11 @@ namespace OpenAI
         public GameObject recallTextObject;
         public string saved_time;
         public static string newest_screenshot;
+        [SerializeField] private ScrollRect scroll;
+        private float height = 0;
+        [SerializeField] private RectTransform sent;
+        [SerializeField] public RectTransform received; // Lai
+
 
 
         public string Story;
@@ -84,15 +89,37 @@ namespace OpenAI
             foreach (ChatMessage m in chat_massage){
                 Debug.Log(m.Role);
                 Debug.Log(m.Content);
+                var recItem = AppendMessage(m);
+
+
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
             }
+
         }
 
-        public async void LoadingFormerProgress(){
-            
+        private RectTransform AppendMessage(ChatMessage message)
+        {
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+
+            var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
+            item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+            item.anchoredPosition = new Vector2(0, -height);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+            height += item.sizeDelta.y;
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            scroll.verticalNormalizedPosition = 0;
+
+            return item;
         }
+        
 
 
-        public List<ChatMessage> GetChatMassage(string filepath){
+        public static List<ChatMessage> GetChatMassage(string filepath){
             string json = File.ReadAllText(filepath);
             GameData data = JsonConvert.DeserializeObject<GameData>(json);
             List<ChatMessage> chatMessages = JsonConvert.DeserializeObject<List<ChatMessage>>(data.ChatMessage);
