@@ -25,6 +25,8 @@ namespace OpenAI
         [SerializeField] private GameObject optionChoicing;
         [SerializeField] private GameObject fourOptions;
         [SerializeField] private GameObject selfChoicingPanel;
+        [SerializeField] private GameObject moveOnTip;
+
 
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
@@ -98,6 +100,12 @@ namespace OpenAI
                     }
                     canMove = true;
                 }
+            }
+
+            if(canMove){
+                moveOnTip.SetActive(true);
+            }else{
+                moveOnTip.SetActive(false);
             }
         }
 
@@ -187,7 +195,7 @@ namespace OpenAI
                 {
                     Model = "gpt-3.5-turbo-0613",
                     Messages = sendMessages,
-                    Temperature = 0.75f,
+                    Temperature = 1f,
                     MaxTokens = 2048,
                     Stream = true
                 },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
