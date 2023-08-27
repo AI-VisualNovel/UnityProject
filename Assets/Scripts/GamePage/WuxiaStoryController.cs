@@ -60,7 +60,6 @@ namespace OpenAI
         private float lastChangeTime;
         private bool imgNeedChange = false;
         private bool getOptionDone = false;
-        private bool filterDone = true;
 
         private void Start()
         {
@@ -175,7 +174,7 @@ namespace OpenAI
                 var recItem = AppendMessage(recMessage);
 
                 messages.Add(sentMessage);
-                filteredMessages.Add(sentMessage);
+                filteredMessages.Add(sentMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，但是此內容基本上會直接影響到或被下段assistant內容包含故影響不大
 
                 inputField.text = "";
                 inputField.enabled = false;
@@ -190,13 +189,16 @@ namespace OpenAI
                     Content = "請和我玩武俠劇情遊戲，遊戲過程不停根據我的輸入給予我新的武俠世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做，每次給予的劇情不要一次太多，盡量小於300字"
                 };
                 sendMessages.Add(systemMessage);
+                foreach(ChatMessage m in sendMessages){
+                    print("[SEND]" + m.Role + ":" + m.Content);
+                }
                 semaphore = new SemaphoreSlim(0);
                 openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
                     Messages = sendMessages,
                     Temperature = 1f,
-                    MaxTokens = 2048,
+                    //MaxTokens = 1024,
                     Stream = true
                 },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
                 await semaphore.WaitAsync();
@@ -210,7 +212,7 @@ namespace OpenAI
 
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 messages.Add(recMessage);
-                filteredMessages.Add(recMessage);
+                filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
                 
                 chatCount++;
@@ -230,24 +232,24 @@ namespace OpenAI
         }
 
         private async void messageFilter(){
-            filterDone = false;
+            List<ChatMessage> toFilMessages = new List<ChatMessage>(filteredMessages);
             var toS = new ChatMessage()
             {
                 Role = "user",
                 Content = "請擷取以上對話重要內容以利後續記憶"
             };
-            filteredMessages.Add(toS);
+            toFilMessages.Add(toS);
 
             var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
             {
                 Model = "gpt-3.5-turbo-0613",
-                Messages = filteredMessages
+                Messages = toFilMessages
             });
 
             if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
             {
                 recap = completionResponse.Choices[0].Message.Content;
-                print("濃縮:" + recap);
+                print("[RECAP]:\n" + recap);
                 filteredMessages.Clear();
                 var s = new ChatMessage()
                 {
@@ -260,7 +262,6 @@ namespace OpenAI
             {
                 Debug.LogWarning("Can't filter!");
             }
-            filterDone = true;
         }
 
         private void MoveOn(){
@@ -270,7 +271,7 @@ namespace OpenAI
                 if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
                     textBoxCount++;
                 }
-                if(textBoxCount >= currentFullTexts.Length && getOptionDone && filterDone){
+                if(textBoxCount >= currentFullTexts.Length && getOptionDone){
                     optionChoicing.SetActive(true);
                 }
             }
@@ -318,7 +319,7 @@ namespace OpenAI
                 Temperature = 0.0f,
             });
 
-            print("ALL: "+completionResponse.Choices[0].Text.Trim());
+            print("[OPTIONS]:\n"+completionResponse.Choices[0].Text.Trim());
             string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
             //字串處理
             string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
@@ -353,14 +354,13 @@ namespace OpenAI
             }
             //若類別碼無成功給予防範機制(給予隨機類別)
             if(cleanedString.Length > 2){
-                print("圖片類別取得失敗");
+                print("![圖片類別取得失敗]");
                 cleanedString = UnityEngine.Random.Range(1,31).ToString();
             }
-            print("圖片類別編號: " + cleanedString);
 
             //換圖
             int randomInt = UnityEngine.Random.Range(1,5);
-            print("圖片隨機碼: " + randomInt);
+            print("[圖片類別編號]: " + cleanedString + "\n[圖片隨機碼]: " + randomInt);
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
         }
