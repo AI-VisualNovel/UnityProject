@@ -351,6 +351,11 @@ namespace OpenAI
                     cleanedString += c;
                 }
             }
+            //若類別碼無成功給予防範機制(給予隨機類別)
+            if(cleanedString.Length > 2){
+                print("圖片類別取得失敗");
+                cleanedString = UnityEngine.Random.Range(1,31).ToString();
+            }
             print("圖片類別編號: " + cleanedString);
 
             //換圖
