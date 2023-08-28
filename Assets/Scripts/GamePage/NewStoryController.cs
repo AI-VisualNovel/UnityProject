@@ -142,7 +142,7 @@ namespace OpenAI
                 
                 messages.Add(sentMessage);
                 messages.Add(recMessage);
-               
+                
                 userInput = inputField.text;
                 //button.enabled = false;
                 inputField.text = "";
@@ -196,7 +196,7 @@ namespace OpenAI
                 // {
                 //     Debug.Log("Content 1: " + message.Content);
                 // }     
-                //GetOptions();
+                GetOptions();
                 //SendImageRequest();
 
                 //button.enabled = true;
@@ -235,7 +235,7 @@ namespace OpenAI
                 
                 messages.Add(sentMessage);
                 messages.Add(recMessage);
-               
+                
                 userInput = inputField.text;
                 //button.enabled = false;
                 inputField.text = "";
@@ -282,7 +282,7 @@ namespace OpenAI
                 //     Debug.Log("Content 2: " + message.Content);
                 // }  
 
-                //GetOptions();
+                GetOptions();
                 //SendImageRequest();
 
                 //button.enabled = true;
@@ -317,7 +317,7 @@ namespace OpenAI
                 
                 messages.Add(sentMessage);
                 messages.Add(recMessage);
-               
+                
                 userInput = inputField.text;
                 //button.enabled = false;
                 inputField.text = "";
@@ -350,13 +350,14 @@ namespace OpenAI
 
                 // SaveLoad.Story = currentFullText;
                 // SaveLoad.CreateTextFile(currentFullText);
-               
+                
                 SaveLoad.SaveChatMassage(messages); // testing
                 SaveLoad.SaveStoryToList(currentFullText);
 
                 
 
-                //GetOptions();
+                GetOptions();
+
                 //SendImageRequest();
 
                 //button.enabled = true;

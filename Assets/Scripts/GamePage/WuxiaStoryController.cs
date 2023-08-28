@@ -37,6 +37,7 @@ namespace OpenAI
         [SerializeField] private Button testButton;
 
         private OpenAIApi openai = new OpenAIApi();
+
         private List<ChatMessage> messages = new List<ChatMessage>();
 
         private string prompt = "和我玩武俠劇情遊戲";

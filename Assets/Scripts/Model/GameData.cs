@@ -11,9 +11,9 @@ public class GameData
     // public List<ChatMessage> ChatMessage;
     public string ChatMessage;
 
-    // public string LatestOption1;
-    // public string LatestOption2;
-    // public string LatestOption3;
+    public string LatestOption1;
+    public string LatestOption2;
+    public string LatestOption3;
     // public string BackgroundImg; 
     public string Location; // which button saves the screenshot 
 }

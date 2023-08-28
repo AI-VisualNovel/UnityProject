@@ -865,6 +865,9 @@ MonoBehaviour:
   sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   Story: 
+  option1: {fileID: 1682400340}
+  option2: {fileID: 1710648296}
+  option3: {fileID: 927692015}
 --- !u!4 &367874018
 Transform:
   m_ObjectHideFlags: 0

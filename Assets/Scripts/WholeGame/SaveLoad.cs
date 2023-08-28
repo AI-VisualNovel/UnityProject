@@ -32,9 +32,12 @@ namespace OpenAI
         private List<ChatMessage> Chat = new List<ChatMessage>();
         
         public List<ChatMessage> chat_message;
+
+        public Button option1;
+        public Button option2;
+        public Button option3;
+
         
-
-
         void Start(){
             // create folder
             Directory.CreateDirectory(Application.streamingAssetsPath + "/Chat_Logs/");
@@ -69,6 +72,20 @@ namespace OpenAI
 
             string list_to_json = JsonConvert.SerializeObject(Chat);
             data.ChatMessage = list_to_json;
+
+            // 存當前按鈕的文字
+            // 獲取最新的按鈕文本內容
+            string latestOption1Text = option1.GetComponentInChildren<Text>().text;
+            string latestOption2Text = option2.GetComponentInChildren<Text>().text;
+            string latestOption3Text = option3.GetComponentInChildren<Text>().text;
+
+            // 將最新的文本內容儲存在檔案
+            data.LatestOption1 = latestOption1Text;
+            data.LatestOption2 = latestOption2Text;
+            data.LatestOption3 = latestOption3Text;
+            
+            Debug.Log(option1.GetComponentInChildren<Text>().text + "111");
+
 
             Debug.Log("saved_time in SaveToJson: " + saved_time);
 
