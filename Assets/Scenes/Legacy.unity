@@ -427,6 +427,7 @@ MonoBehaviour:
   option1: {fileID: 779074943}
   option2: {fileID: 1228116264}
   option3: {fileID: 663658169}
+  WuxiaStoryController: {fileID: 0}
 --- !u!4 &135001613
 Transform:
   m_ObjectHideFlags: 0
@@ -3631,7 +3632,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 135001612}
         m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
         m_MethodName: ScreenShot
         m_Mode: 1
@@ -3655,9 +3656,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 135001611}
         m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
-        m_MethodName: Save
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3667,7 +3668,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 0
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 135001612}
         m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
         m_MethodName: SaveToJson
         m_Mode: 1

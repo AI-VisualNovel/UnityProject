@@ -10,10 +10,11 @@ public class GameData
     public string Story; // save gpt's response
     // public List<ChatMessage> ChatMessage;
     public string ChatMessage;
-
+    // options
     public string LatestOption1;
     public string LatestOption2;
     public string LatestOption3;
-    // public string BackgroundImg; 
+    // image path
+    public string BackgroundImg; 
     public string Location; // which button saves the screenshot 
 }

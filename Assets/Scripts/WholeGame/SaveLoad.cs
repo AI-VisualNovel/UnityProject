@@ -14,6 +14,7 @@ namespace OpenAI
 {
     public class SaveLoad : MonoBehaviour
     {
+
         public OpenAI.NewStoryController new_story_controller;
         public RectTransform contentWindow;
         public GameObject recallTextObject;
@@ -33,9 +34,13 @@ namespace OpenAI
         
         public List<ChatMessage> chat_message;
 
+
+        // option
         public Button option1;
         public Button option2;
         public Button option3;
+        // image
+        public WuxiaStoryController WuxiaStoryController;
 
         
         void Start(){
@@ -83,9 +88,10 @@ namespace OpenAI
             data.LatestOption1 = latestOption1Text;
             data.LatestOption2 = latestOption2Text;
             data.LatestOption3 = latestOption3Text;
-            
-            Debug.Log(option1.GetComponentInChildren<Text>().text + "111");
 
+            // 讀取文件路徑
+            string imagePath = WuxiaStoryController.BackgroundImagePath;
+            data.BackgroundImg = imagePath;
 
             Debug.Log("saved_time in SaveToJson: " + saved_time);
 
