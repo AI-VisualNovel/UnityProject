@@ -396,7 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 135001613}
-  - component: {fileID: 135001612}
+  - component: {fileID: 135001614}
   m_Layer: 0
   m_Name: SaveLoadController
   m_TagString: Untagged
@@ -404,30 +404,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &135001612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 135001611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2a7b2f0e980815428a1cd6c33382496, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  new_story_controller: {fileID: 0}
-  contentWindow: {fileID: 0}
-  recallTextObject: {fileID: 1363125286511927684, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
-  saved_time: 
-  scroll: {fileID: 0}
-  sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
-  received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
-  Story: 
-  option1: {fileID: 779074943}
-  option2: {fileID: 1228116264}
-  option3: {fileID: 663658169}
-  WuxiaStoryController: {fileID: 0}
 --- !u!4 &135001613
 Transform:
   m_ObjectHideFlags: 0
@@ -443,6 +419,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &135001614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135001611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9304ab9eb9a6b9a4db669f253390df08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  new_story_controller: {fileID: 0}
+  contentWindow: {fileID: 0}
+  recallTextObject: {fileID: 1363125286511927684, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
+  saved_time: 
+  scroll: {fileID: 1518205721}
+  sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
+  received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
+  Story: 
+  option1: {fileID: 779074943}
+  option2: {fileID: 1228116264}
+  option3: {fileID: 663658169}
+  WuxiaStoryController: {fileID: 0}
 --- !u!1 &207854201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1114,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562031876}
   m_CullTransparentMesh: 1
+--- !u!1 &586381802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 586381804}
+  - component: {fileID: 586381803}
+  m_Layer: 0
+  m_Name: NavController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &586381803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586381802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59cd841dea2e1b34c8a06797fccad3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &586381804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586381802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.83016026, y: 0.013161242, z: 51.986423}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &663583399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1287,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 0
-      - m_Target: {fileID: 135001612}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
         m_MethodName: LoadFromJson
         m_Mode: 1
@@ -1694,6 +1738,7 @@ MonoBehaviour:
   sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   testButton: {fileID: 1868398083}
+  SaveLoadLegacy: {fileID: 135001614}
 --- !u!1 &928271495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3648,7 +3693,6 @@ GameObject:
   - component: {fileID: 1868398085}
   - component: {fileID: 1868398084}
   - component: {fileID: 1868398083}
-  - component: {fileID: 1868398086}
   m_Layer: 5
   m_Name: TestButton
   m_TagString: Untagged
@@ -3876,8 +3920,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 135001612}
-        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
+      - m_Target: {fileID: 135001614}
+        m_TargetAssemblyTypeName: OpenAI.SaveLoadLegacy, Assembly-CSharp
         m_MethodName: ScreenShot
         m_Mode: 1
         m_Arguments:
@@ -3888,7 +3932,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 586381803}
         m_TargetAssemblyTypeName: NavController, Assembly-CSharp
         m_MethodName: toSavePAge
         m_Mode: 1
@@ -3900,20 +3944,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 135001611}
-        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 135001612}
-        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
+      - m_Target: {fileID: 135001614}
+        m_TargetAssemblyTypeName: OpenAI.SaveLoadLegacy, Assembly-CSharp
         m_MethodName: SaveToJson
         m_Mode: 1
         m_Arguments:
@@ -3932,15 +3964,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887135215}
   m_CullTransparentMesh: 1
-  m_GameObject: {fileID: 1868398081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 10, y: 10}
-  m_UseGraphicAlpha: 1
 --- !u!1 &1931618867
 GameObject:
   m_ObjectHideFlags: 0
