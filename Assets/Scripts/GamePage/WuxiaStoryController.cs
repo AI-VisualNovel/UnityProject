@@ -25,6 +25,8 @@ namespace OpenAI
         [SerializeField] private GameObject optionChoicing;
         [SerializeField] private GameObject fourOptions;
         [SerializeField] private GameObject selfChoicingPanel;
+        [SerializeField] private GameObject moveOnTip;
+
 
         [SerializeField] private Button option1Button;
         [SerializeField] private Button option2Button;
@@ -38,8 +40,11 @@ namespace OpenAI
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
+        private List<ChatMessage> filteredMessages = new List<ChatMessage>();
+        private string recap = "";
+        private int chatCount = 0;
 
-        private string prompt = "和我玩武俠劇情遊戲";
+        private string prompt = "請直接開始劇情";
         //private string prompt = "你好";
 
         private CancellationTokenSource token = new CancellationTokenSource();
@@ -95,6 +100,12 @@ namespace OpenAI
                     canMove = true;
                 }
             }
+
+            if(canMove){
+                moveOnTip.SetActive(true);
+            }else{
+                moveOnTip.SetActive(false);
+            }
         }
 
         private void Test(){
@@ -103,7 +114,7 @@ namespace OpenAI
             //     print(message.Role + ":" +message.Content);
             // }
             //print(canMove);
-            print(textBoxCount);
+            //print(textBoxCount);
             //string p = "在青鳥村度過了許多平靜的日子後，有一天，一位神秘的訪客來到了村子，他自稱是「黑影刺客」，聲稱要挑戰村中最強的劍客。村子裡的人們都感到驚恐，不知如何是好。";
             //ChangeImage(p);
             //隨機換背景
@@ -119,6 +130,11 @@ namespace OpenAI
             //     filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()]+", "");
             //     print(filteredOptions[i]);
             // }
+            // messageFilter();
+            foreach(ChatMessage m in filteredMessages){
+                print(m.Role + ":" + m.Content);
+            }
+            print(chatCount);
         }
 
         private async void SendReply(Button button)
@@ -158,6 +174,7 @@ namespace OpenAI
                 var recItem = AppendMessage(recMessage);
 
                 messages.Add(sentMessage);
+                filteredMessages.Add(sentMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，但是此內容基本上會直接影響到或被下段assistant內容包含故影響不大
 
                 inputField.text = "";
                 inputField.enabled = false;
@@ -165,11 +182,23 @@ namespace OpenAI
 
                 currentMessageRec = recItem;
                 // Complete the prompt
+                List<ChatMessage> sendMessages = new List<ChatMessage>(filteredMessages);
+                var systemMessage = new ChatMessage()
+                {
+                    Role = "system",
+                    Content = "請和我玩武俠劇情遊戲，遊戲過程不停根據我的輸入給予我新的武俠世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做，每次給予的劇情不要一次太多，盡量小於300字"
+                };
+                sendMessages.Add(systemMessage);
+                foreach(ChatMessage m in sendMessages){
+                    print("[SEND]" + m.Role + ":" + m.Content);
+                }
                 semaphore = new SemaphoreSlim(0);
                 openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
                 {
                     Model = "gpt-3.5-turbo-0613",
-                    Messages = messages,
+                    Messages = sendMessages,
+                    Temperature = 1f,
+                    //MaxTokens = 1024,
                     Stream = true
                 },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
                 await semaphore.WaitAsync();
@@ -183,6 +212,15 @@ namespace OpenAI
 
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 messages.Add(recMessage);
+                filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
+
+                
+                chatCount++;
+                if(chatCount >= 2){
+                    messageFilter();
+                    chatCount = 0;
+                }
+                
 
                 GetOptions(recMessage.Content);
 
@@ -190,6 +228,39 @@ namespace OpenAI
                 sendButton.enabled = true;
             }catch(Exception ex){
                 Debug.LogError("An error occurred: " + ex.Message);
+            }
+        }
+
+        private async void messageFilter(){
+            List<ChatMessage> toFilMessages = new List<ChatMessage>(filteredMessages);
+            var toS = new ChatMessage()
+            {
+                Role = "user",
+                Content = "請擷取以上對話重要內容以利後續記憶"
+            };
+            toFilMessages.Add(toS);
+
+            var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+            {
+                Model = "gpt-3.5-turbo-0613",
+                Messages = toFilMessages
+            });
+
+            if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
+            {
+                recap = completionResponse.Choices[0].Message.Content;
+                print("[RECAP]:\n" + recap);
+                filteredMessages.Clear();
+                var s = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = "前情提要: " + recap
+                };
+                filteredMessages.Add(s);
+            }
+            else
+            {
+                Debug.LogWarning("Can't filter!");
             }
         }
 
@@ -248,14 +319,14 @@ namespace OpenAI
                 Temperature = 0.0f,
             });
 
-            print("ALL: "+completionResponse.Choices[0].Text.Trim());
+            print("[OPTIONS]:\n"+completionResponse.Choices[0].Text.Trim());
             string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
             //字串處理
             string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
             for (int i = 0; i < filteredOptions.Length; i++)
             {
                 //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
-                filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()\n]+", "");
+                filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()\n]+", "");
             }
 
             option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
@@ -281,11 +352,15 @@ namespace OpenAI
                     cleanedString += c;
                 }
             }
-            print("圖片類別編號: " + cleanedString);
+            //若類別碼無成功給予防範機制(給予隨機類別)
+            if(cleanedString.Length > 2){
+                print("![圖片類別取得失敗]");
+                cleanedString = UnityEngine.Random.Range(1,31).ToString();
+            }
 
             //換圖
             int randomInt = UnityEngine.Random.Range(1,5);
-            print("圖片隨機碼: " + randomInt);
+            print("[圖片類別編號]: " + cleanedString + "\n[圖片隨機碼]: " + randomInt);
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
         }
@@ -313,6 +388,7 @@ namespace OpenAI
                 MoveOn();
             }
         }
+
     }
 }
 
