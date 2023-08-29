@@ -14,6 +14,7 @@ namespace OpenAI
 {
     public class SaveLoad : MonoBehaviour
     {
+
         public OpenAI.NewStoryController new_story_controller;
         public RectTransform contentWindow;
         public GameObject recallTextObject;
@@ -44,6 +45,14 @@ namespace OpenAI
         public static bool from_book2 = false;
         public static string jsonfile_name;
 
+        // option
+        public Button option1;
+        public Button option2;
+        public Button option3;
+        // image
+        public WuxiaStoryController WuxiaStoryController;
+
+        
         void Start(){
             if(from_book2 == true){
                 LoadFromJson(jsonfile_name);
@@ -79,6 +88,21 @@ namespace OpenAI
 
             string list_to_json = JsonConvert.SerializeObject(Chat);
             data.ChatMessage = list_to_json;
+
+            // 存當前按鈕的文字
+            // 獲取最新的按鈕文本內容
+            string latestOption1Text = option1.GetComponentInChildren<Text>().text;
+            string latestOption2Text = option2.GetComponentInChildren<Text>().text;
+            string latestOption3Text = option3.GetComponentInChildren<Text>().text;
+
+            // 將最新的文本內容儲存在檔案
+            data.LatestOption1 = latestOption1Text;
+            data.LatestOption2 = latestOption2Text;
+            data.LatestOption3 = latestOption3Text;
+
+            // 讀取文件路徑
+            string imagePath = WuxiaStoryController.BackgroundImagePath;
+            data.BackgroundImg = imagePath;
 
             Debug.Log("saved_time in SaveToJson: " + saved_time);
 

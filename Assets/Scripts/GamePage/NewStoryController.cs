@@ -228,17 +228,6 @@ namespace OpenAI
                 SaveLoad.SaveChatMassage(messages); // testing
                 SaveLoad.SaveStoryToList(currentFullText);
 
-                // Debug.Log("currentFullText 2: " + currentFullText);     
-
-
-
-                // Debug.Log("sentMessage.Content 2: " + sentMessage.Content);     
-                // Debug.Log("recMessage.Content 2: " + recMessage.Content);   
-                // foreach (var message in messages)
-                // {
-                //     Debug.Log("Content 2: " + message.Content);
-                // }  
-
                 // GetOptions();
                 //SendImageRequest();
 

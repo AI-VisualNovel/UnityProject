@@ -37,6 +37,8 @@ namespace OpenAI
         [SerializeField] private Button testButton;
 
         private OpenAIApi openai = new OpenAIApi();
+
+
         private List<ChatMessage> messages = new List<ChatMessage>();
 
         private string prompt = "和我玩武俠劇情遊戲";
@@ -55,6 +57,8 @@ namespace OpenAI
         private float lastChangeTime;
         private bool imgNeedChange = false;
         private bool getOptionDone = false;
+
+        public static string BackgroundImagePath;
 
         private void Start()
         {
@@ -288,6 +292,11 @@ namespace OpenAI
             print("圖片隨機碼: " + randomInt);
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
+            // 提供給SaveLoad script存取
+            string backgroundImagePath = "WuxiaBackground/" + cleanedString + "/" + randomInt;
+            WuxiaStoryController.BackgroundImagePath = backgroundImagePath;
+
+            
         }
 
         private void option4ButtonAct(){
