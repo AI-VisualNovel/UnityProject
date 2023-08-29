@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
-// using System;
-// using System.Windows.Forms;
+using UnityEngine.SceneManagement;
+
 
 public class SavingLoadingPageController : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class SavingLoadingPageController : MonoBehaviour
 
     void Start(){
         NametheButtons();
-        saveload1_1.gameObject.SetActive(true);
+        // saveload1_1.gameObject.SetActive(true);
     } 
 
     public void LoadImage(Button button)
@@ -58,9 +58,12 @@ public class SavingLoadingPageController : MonoBehaviour
             UpdateJsonLocation(button);
             img = img + "already_saved";
         }
-        else
+        else // load game
         {
-            Debug.LogError("Image not found at path: " + fullPath);
+            // string json_name;
+            string jsonfile_name = GetJsonfile(button);
+            LoadGame(jsonfile_name);
+            // Debug.LogError("Image not found at path: " + fullPath);
         }
     }
 
@@ -94,17 +97,32 @@ public class SavingLoadingPageController : MonoBehaviour
         }
     }
     
+    public void LoadGame(string jsonfile_name){ // 跳轉化面並載入遊戲
+        OpenAI.NewStoryController.from_book2 = true;
+        OpenAI.SaveLoad.from_book2 = true;
+        OpenAI.SaveLoad.jsonfile_name = jsonfile_name;
+        SceneManager.LoadScene("GamePage");
+        // Debug.Log(jsonfile_name);
 
+        // OpenAI.SaveLoad.LoadFromJson(jsonfile_name);
+    }
 
-    // public void LoadGame(Button button){
-    //     // img = img - "already_saved";
-    //     // string readFromFilePath = Application.streamingAssetsPath + "/Chat_Logs/" + "Chat " + img + ".txt";
-    //     // List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
-    //     // foreach (string line in fileLines){ 
-    //     //     Debug.Log(line);
+    public string GetJsonfile(Button button){
+        
+        string json_name = "Empty";
+        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
+        foreach (string jsonFilePath in jsonFiles){
+        
+            string json = File.ReadAllText(jsonFilePath);
+            GameData data = JsonConvert.DeserializeObject<GameData>(json);
 
-    //     // }
-    // }
+            if(data.Location == button.name){
+                json_name = data.Time;
+            }
+        }
+        return json_name;  // return json file name inorder to load the correct json file
+    }
 
 
     public void UpdateJsonLocation(Button button){

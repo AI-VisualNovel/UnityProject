@@ -1,5 +1,6 @@
 {
     "Time": "1_3",
     "Story": "\n第三張照片",
+    "ChatMessage": "[{\"Role\":\"user\",\"Content\":\"這是第三張照片喔\\n\"},{\"Role\":\"assistant\",\"Content\":\"巴拉巴拉巴八八\"}]",
     "Location": "1_3"
 }

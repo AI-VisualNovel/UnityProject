@@ -19,10 +19,18 @@ namespace OpenAI
         public GameObject recallTextObject;
         public string saved_time;
         public static string newest_screenshot;
+
+
+        // [SerializeField] private static ScrollRect scroll;
         [SerializeField] private ScrollRect scroll;
         private float height = 0;
         [SerializeField] private RectTransform sent;
         [SerializeField] public RectTransform received; // Lai
+
+
+        // private static float height = 0;
+        // [SerializeField] private static RectTransform sent;
+        // [SerializeField] public static RectTransform received; // Lai
 
 
 
@@ -33,11 +41,13 @@ namespace OpenAI
         
         public List<ChatMessage> chat_message;
         
-
+        public static bool from_book2 = false;
+        public static string jsonfile_name;
 
         void Start(){
-            // create folder
-            Directory.CreateDirectory(Application.streamingAssetsPath + "/Chat_Logs/");
+            if(from_book2 == true){
+                LoadFromJson(jsonfile_name);
+            }
         }
 
         
@@ -80,9 +90,13 @@ namespace OpenAI
             File.WriteAllText(Application.streamingAssetsPath + "/Json/" + data.Time + ".json", json);
         }
 
-        public void LoadFromJson(){
+        // public static void LoadFromJson(string jsonfile_name){
+        public void LoadFromJson(string jsonfile_name){
 
-            string readFromFilePath = Application.streamingAssetsPath + "/Json/08-25-23-21-59-19.json";
+
+            string readFromFilePath = Application.streamingAssetsPath + "/Json/" +  jsonfile_name + ".json";
+            // string readFromFilePath = "Assets/StreamingAssets/Json/08-25-23-21-25-37.json";
+
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
             List<ChatMessage> chat_massage = GetChatMassage(readFromFilePath);
@@ -102,6 +116,7 @@ namespace OpenAI
 
         }
 
+        // private static RectTransform AppendMessage(ChatMessage message)
         private RectTransform AppendMessage(ChatMessage message)
         {
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
@@ -119,7 +134,9 @@ namespace OpenAI
         
 
 
-        public static List<ChatMessage> GetChatMassage(string filepath){
+        // public static List<ChatMessage> GetChatMassage(string filepath){
+        public List<ChatMessage> GetChatMassage(string filepath){
+
             string json = File.ReadAllText(filepath);
             GameData data = JsonConvert.DeserializeObject<GameData>(json);
             List<ChatMessage> chatMessages = JsonConvert.DeserializeObject<List<ChatMessage>>(data.ChatMessage);

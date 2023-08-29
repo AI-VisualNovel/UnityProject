@@ -45,41 +45,12 @@ namespace OpenAI
         private SemaphoreSlim semaphore;
         private float heightSpeed = 0;
 
+        public static bool from_book2 = false;
+
         private void Start()
         {
             optionChoicing.SetActive(false);
 
-            // CreateNewGame Variable
-            // string gameMode,gameStyle,gamePicQuality,gameDirection,gameLanguage;
-            // if(CreateNewGameButton.gamedir==null)
-            // {
-            //     gameMode = CreateNewGameButton.buttonTexts[0];
-            //     gameStyle = CreateNewGameButton.buttonTexts[1];
-            //     gamePicQuality = CreateNewGameButton.buttonTexts[2];
-            //     gameDirection = CreateNewGameButton.buttonTexts[3];
-            //     gameLanguage = CreateNewGameButton.buttonTexts[4];
-            // }
-            // else
-            // {
-            //     gameDirection = CreateNewGameButton.gamedir;
-            //     gameMode = CreateNewGameButton.buttonTexts[0];
-            //     gameStyle = CreateNewGameButton.buttonTexts[1];
-            //     gamePicQuality = CreateNewGameButton.buttonTexts[2];
-            //     gameLanguage = CreateNewGameButton.buttonTexts[3];
-            // }
-            // if(gameLanguage=="中文")
-            // {
-            //     prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的"+gameMode+"，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西、對建築物的描述也請符合"+gameMode+"，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
-            // }
-            // else
-            // {
-            //     prompt = "我現在要跟你玩文字遊戲。故事背景設定在台灣的"+gameMode+"，請確認好資訊無誤再放入故事中，遊玩視角為第二人稱。請詳細敘述主角目前的所在地、場景、正在發生什麼事情、會聽到、看到什麼東西、對建築物的描述也請符合"+gameMode+"，當我問出有關當時造就的情況的問題時，請以正確的資訊教導我。首先請生成150字的故事開頭，第一句話以:你是 {主角名字}，{身分} ,開頭，之後以第二人稱視角敘述周遭環境，必要時也可以以旁白角度描寫事件發生經過、場景描述等。之後我會根據劇情輸入主角（我）後續的動作，再依照我的輸入產生出下一個篇幅為50~100字的劇情，繼續引導故事伏筆前進，貼近當時的歷史背景，適時給我一些線索去探索，盡量在回覆的結尾拋給我一個問題，最後預設一個結尾，引導我到結尾即遊戲結束";
-            //     //prompt = "You are now acting as a game terminal, generate plot development according to my prompts. \nQ: ";
-            // }
-
-            // Debug.Log(gameMode+gameStyle+gamePicQuality+gameDirection+gameLanguage);
-
-            
             if (PlayerPrefs.HasKey("User_API"))
             {
                 string User_API = PlayerPrefs.GetString("User_API");
@@ -91,7 +62,10 @@ namespace OpenAI
                 Debug.Log("User API: Not Available");
             }
 
-            InitSendReply();
+            if(from_book2 == false){
+                InitSendReply();
+            }
+
             button.onClick.AddListener(SendReply);
             option1.onClick.AddListener(() => SendReplyButton(option1));
             option2.onClick.AddListener(() => SendReplyButton(option2));
@@ -170,8 +144,6 @@ namespace OpenAI
                 //省點錢         
                 // currentFullText = recMessage.Content;  
 
-
-                // ***************************************************************************************8
                 recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
                 currentFullText = recMessage.Content;  
                 messages.Add(recMessage);   
@@ -180,23 +152,8 @@ namespace OpenAI
                 SaveLoad.SaveChatMassage(messages); // testing
                 SaveLoad.SaveStoryToList(currentFullText);
 
-                // foreach (var M in messages){
-                //     Debug.Log("Role: " + M.Role);
-                //     Debug.Log("Content: " + M.Content);
-                // }
-
-                // ***************************************************************************************8
-
-
-
-
-                // Debug.Log("currentFullText 1: " + currentFullText);     
-                // Debug.Log("recMessage.Content 1: " + recMessage.Content);   
-                // foreach (var message in messages)
-                // {
-                //     Debug.Log("Content 1: " + message.Content);
-                // }     
-                //GetOptions();
+                
+                // GetOptions();
                 //SendImageRequest();
 
                 //button.enabled = true;
@@ -282,7 +239,7 @@ namespace OpenAI
                 //     Debug.Log("Content 2: " + message.Content);
                 // }  
 
-                //GetOptions();
+                // GetOptions();
                 //SendImageRequest();
 
                 //button.enabled = true;
@@ -356,7 +313,7 @@ namespace OpenAI
 
                 
 
-                //GetOptions();
+                // GetOptions();
                 //SendImageRequest();
 
                 //button.enabled = true;
@@ -396,7 +353,9 @@ namespace OpenAI
             {
                 // Prompt = "請根據以下劇情給予可能的走向選擇，必須簡短至15字內\n以下是劇情:" + userInput + "\n請你回答:",
                 Prompt = currentFullText + "你的選擇是以下三個：\n",
-                Model = "davinci:ft-personal:wuxia-getoption-model-2023-08-10-16-50-17",
+                // Model = "davinci:ft-personal:wuxia-getoption-model-2023-08-10-16-50-17",
+                Model = "text-davinci-003",
+                
                 MaxTokens = 256,
                 Temperature = 0.0f,
                 Stop="."
