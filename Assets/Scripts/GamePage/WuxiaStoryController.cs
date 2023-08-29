@@ -61,6 +61,12 @@ namespace OpenAI
         private bool imgNeedChange = false;
         private bool getOptionDone = false;
 
+        //結局v1參數
+        private int playTime = 0;
+        private int endingPoints = 0;
+        [SerializeField] private GameObject goodEnd;
+        [SerializeField] private GameObject badEnd;
+        [SerializeField] private GameObject normalEnd;
         private void Start()
         {
             testButton.onClick.AddListener(Test);
@@ -131,10 +137,10 @@ namespace OpenAI
             //     print(filteredOptions[i]);
             // }
             // messageFilter();
-            foreach(ChatMessage m in filteredMessages){
-                print(m.Role + ":" + m.Content);
-            }
-            print(chatCount);
+            // foreach(ChatMessage m in filteredMessages){
+            //     print(m.Role + ":" + m.Content);
+            // }
+            // print(chatCount);            
         }
 
         private async void SendReply(Button button)
@@ -165,6 +171,8 @@ namespace OpenAI
                 if (messages.Count == 0){
                     sentMessage.Content = prompt + "\n" + inputField.text; 
                 }else{
+                    GetEndingPoint(userContent);
+
                     var sentItem = AppendMessage(sentMessage);
                     currentMessageRec = sentItem;
                     textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text;
@@ -186,7 +194,8 @@ namespace OpenAI
                 var systemMessage = new ChatMessage()
                 {
                     Role = "system",
-                    Content = "請和我玩武俠劇情遊戲，遊戲過程不停根據我的輸入給予我新的武俠世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做，每次給予的劇情不要一次太多，盡量小於300字"
+                    Content = "請和我玩武俠劇情遊戲，遊戲過程不停根據我的輸入給予我新的武俠世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做但嚴禁給予我選項，每次給予的劇情不要一次太多，盡量小於300字"
+                    //Content = "你現在是一個武俠類型的RPG冒險故事產生器，你每次都要生成一段劇情，每段結尾要給我一些可以回答的問題，我的回答可以不合邏輯，你要跟我繼續玩下去。每次回答字數不要超過300個字左右。"
                 };
                 sendMessages.Add(systemMessage);
                 foreach(ChatMessage m in sendMessages){
@@ -214,14 +223,19 @@ namespace OpenAI
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
-                
+                playTime += UnityEngine.Random.Range(1,11);
+                print("[PT]: " + playTime);
+                if(playTime >= 11){
+                    ToEnding();
+                    return;
+                }
+
                 chatCount++;
                 if(chatCount >= 2){
                     messageFilter();
                     chatCount = 0;
                 }
                 
-
                 GetOptions(recMessage.Content);
 
                 inputField.enabled = true;
@@ -230,7 +244,6 @@ namespace OpenAI
                 Debug.LogError("An error occurred: " + ex.Message);
             }
         }
-
         private async void messageFilter(){
             List<ChatMessage> toFilMessages = new List<ChatMessage>(filteredMessages);
             var toS = new ChatMessage()
@@ -263,7 +276,6 @@ namespace OpenAI
                 Debug.LogWarning("Can't filter!");
             }
         }
-
         private void MoveOn(){
             if(canMove){
                 suspend = false;
@@ -290,7 +302,6 @@ namespace OpenAI
 
             return item;
         }
-
         private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
         {
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
@@ -304,11 +315,9 @@ namespace OpenAI
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
         }
-
         private void HandleComplete(){
             semaphore.Release();
         }
-
         private async void GetOptions(string fullPlot)
         {
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
@@ -364,12 +373,10 @@ namespace OpenAI
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
         }
-
         private void option4ButtonAct(){
             fourOptions.SetActive(false);
             selfChoicingPanel.SetActive(true);
         }
-
         private void sendButtonAct(){
             fourOptions.SetActive(true);
             selfChoicingPanel.SetActive(false);
@@ -379,7 +386,6 @@ namespace OpenAI
             gameUI.SetActive(false);
             UIHideing = true;
         }
-
         private void BackGroundClick(){
             if(UIHideing == true){
                 gameUI.SetActive(true);
@@ -389,6 +395,35 @@ namespace OpenAI
             }
         }
 
+        //結局v1函數
+        private async void GetEndingPoint(string choice){
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = "我在編寫一段劇情遊戲，遊戲會有好結局和壞結局兩種結局，玩家每此的選擇都會使結局更傾向某邊。\n每此抉擇都會判斷抉擇的分數，為介於-5~5之間的整數，若覺得偏向好結局就依照其程度給予1~5的正數分數，覺得偏向壞結局就也依照其程度給予-1~-5的負數分數，無偏向就給予0\n。請你幫助我判斷以下抉擇的分數。\n\n抉擇:\n" + choice + "\n\n請直接給予分數:\n",
+                Model = "text-davinci-003",
+                MaxTokens = 64,
+                Temperature = 1.0f,
+            });
+
+            if (int.TryParse(completionResponse.Choices[0].Text.Trim(), out int ep)){
+                endingPoints += ep;
+            }
+
+            print("[EP] 總分:" + endingPoints + ", 此次分:" + completionResponse.Choices[0].Text.Trim());
+        }
+
+        private void ToEnding(){
+            if(endingPoints >= 20){
+                goodEnd.SetActive(true);
+                print("好結局");
+            }else if(endingPoints <= -10){
+                badEnd.SetActive(true);
+                print("壞結局");
+            }else{
+                normalEnd.SetActive(true);
+                print("普通結局");
+            }
+        }
     }
 }
 
