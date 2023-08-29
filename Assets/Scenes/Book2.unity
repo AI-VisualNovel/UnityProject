@@ -1478,7 +1478,7 @@ GameObject:
   - component: {fileID: 189856076}
   - component: {fileID: 189856075}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2075,7 +2075,7 @@ GameObject:
   - component: {fileID: 272175616}
   - component: {fileID: 272175615}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button3_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2221,7 +2221,7 @@ GameObject:
   - component: {fileID: 282528076}
   - component: {fileID: 282528075}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button2_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2928,7 +2928,7 @@ GameObject:
   - component: {fileID: 370824511}
   - component: {fileID: 370824510}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button1_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4339,7 +4339,7 @@ GameObject:
   - component: {fileID: 531264033}
   - component: {fileID: 531264032}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5031,6 +5031,7 @@ GameObject:
   - component: {fileID: 574396413}
   - component: {fileID: 574396412}
   - component: {fileID: 574396411}
+  - component: {fileID: 574396415}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -5128,6 +5129,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &574396415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574396410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b2d679ad3d9864bad14abc678c58ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  load1_1: {fileID: 1027211784}
+  load1_2: {fileID: 92928839}
+  load1_3: {fileID: 731579551}
+  load1_4: {fileID: 1401238507}
+  load2_1: {fileID: 2145801363}
+  load2_2: {fileID: 1927481109}
+  load2_3: {fileID: 345699772}
+  load2_4: {fileID: 925671083}
+  load3_1: {fileID: 534688579}
+  load3_2: {fileID: 998419141}
+  load3_3: {fileID: 1812864668}
+  load3_4: {fileID: 88496989}
 --- !u!1 &579065039
 GameObject:
   m_ObjectHideFlags: 0
@@ -6607,7 +6632,7 @@ GameObject:
   - component: {fileID: 786003943}
   - component: {fileID: 786003942}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button3_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7311,7 +7336,7 @@ GameObject:
   - component: {fileID: 923904767}
   - component: {fileID: 923904766}
   m_Layer: 0
-  m_Name: ScreenShotsController
+  m_Name: SavingLoadingPageController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7329,11 +7354,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec5a4ab2c877414182bfb17b0699182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveload1: {fileID: 0}
-  saveload2: {fileID: 0}
-  saveload3: {fileID: 0}
-  saveload4: {fileID: 0}
   imagePath: /Art/ScreenShots/
+  saveload1_1: {fileID: 1040875141}
+  saveload1_2: {fileID: 2137684132}
+  saveload1_3: {fileID: 1525481317}
+  saveload1_4: {fileID: 370824510}
+  saveload2_1: {fileID: 531264032}
+  saveload2_2: {fileID: 189856075}
+  saveload2_3: {fileID: 282528075}
+  saveload2_4: {fileID: 1026538981}
+  saveload3_1: {fileID: 786003942}
+  saveload3_2: {fileID: 1990517666}
+  saveload3_3: {fileID: 1668802424}
+  saveload3_4: {fileID: 272175615}
 --- !u!4 &923904767
 Transform:
   m_ObjectHideFlags: 0
@@ -8607,7 +8640,7 @@ GameObject:
   - component: {fileID: 1026538982}
   - component: {fileID: 1026538981}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button2_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8875,7 +8908,7 @@ GameObject:
   - component: {fileID: 1040875142}
   - component: {fileID: 1040875141}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11323,6 +11356,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 923904766}
+        m_TargetAssemblyTypeName: SavingLoadingPageController, Assembly-CSharp
+        m_MethodName: LoadAllImage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1319157859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13618,7 +13663,7 @@ GameObject:
   - component: {fileID: 1525481318}
   - component: {fileID: 1525481317}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button1_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14569,7 +14614,7 @@ GameObject:
   - component: {fileID: 1668802425}
   - component: {fileID: 1668802424}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button3_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18047,7 +18092,7 @@ GameObject:
   - component: {fileID: 1990517667}
   - component: {fileID: 1990517666}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button3_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19231,7 +19276,7 @@ GameObject:
   - component: {fileID: 2137684133}
   - component: {fileID: 2137684132}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Button1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

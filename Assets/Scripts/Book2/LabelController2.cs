@@ -104,6 +104,8 @@ public class LabelController2 : MonoBehaviour
         SettingPage_inGame.SetActive(false);
         AboutPage_inGame.SetActive(false);
         HelpPage_inGame.SetActive(false);
+
+        // SavingLoadingPageController.LoadAllImage();
     }
     // setting page
     public void label4_pressed()
