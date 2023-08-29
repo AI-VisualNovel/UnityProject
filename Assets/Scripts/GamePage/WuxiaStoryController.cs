@@ -65,6 +65,11 @@ namespace OpenAI
 
         public static string BackgroundImagePath;
 
+        // Lai
+        public SaveLoadLegacy SaveLoadLegacy;
+        public static bool from_book2 = false;
+
+
         private void Start()
         {
             testButton.onClick.AddListener(Test);
@@ -79,8 +84,9 @@ namespace OpenAI
             option3Button.onClick.AddListener(() => SendReply(option3Button));
             option4Button.onClick.AddListener(option4ButtonAct);
 
-            SendReply(null);
-
+            if(from_book2 == false){ // 讀檔的過來的話就不用sendreply
+                SendReply(null);
+            }
             lastChangeTime = Time.time;
         }
 
@@ -191,6 +197,8 @@ namespace OpenAI
                 {
                     Role = "system",
                     Content = "請和我玩武俠劇情遊戲，遊戲過程不停根據我的輸入給予我新的武俠世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做，每次給予的劇情不要一次太多，盡量小於300字"
+                    // Content = "給我一個四字成語，不要回答超過四個字"
+
                 };
                 sendMessages.Add(systemMessage);
                 foreach(ChatMessage m in sendMessages){
@@ -218,18 +226,23 @@ namespace OpenAI
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
-                
+
                 chatCount++;
                 if(chatCount >= 2){
                     messageFilter();
                     chatCount = 0;
                 }
                 
+                // 存message
+                SaveLoadLegacy.SaveChatMassage(messages); // 這兩行放著不知為啥option就會跳錯
+                SaveLoadLegacy.SaveStoryToList(recMessage.Content);
 
+                
                 GetOptions(recMessage.Content);
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
+
             }catch(Exception ex){
                 Debug.LogError("An error occurred: " + ex.Message);
             }

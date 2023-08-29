@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class SavingLoadingPageController : MonoBehaviour
 {
 
-    public string imagePath = "/Art/ScreenShots/";
+    public static string imagePath = "/Art/ScreenShots/";
     public Button saveload1_1;
     public Button saveload1_2;
     public Button saveload1_3;
@@ -32,7 +32,7 @@ public class SavingLoadingPageController : MonoBehaviour
 
     void Start(){
         NametheButtons();
-        // saveload1_1.gameObject.SetActive(true);
+        LoadAllImage();
     } 
 
     public void LoadImage(Button button)
@@ -67,7 +67,7 @@ public class SavingLoadingPageController : MonoBehaviour
         }
     }
 
-    public void LoadAllImage(){
+    public static void LoadAllImage(){
         // 获取 JSON 文件列表
         string jsonFolderPath = Application.streamingAssetsPath + "/Json";
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
