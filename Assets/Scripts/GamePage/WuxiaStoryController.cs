@@ -38,7 +38,12 @@ namespace OpenAI
 
         [SerializeField] private Button testButton;
 
-        private OpenAIApi openai = new OpenAIApi();
+        [SerializeField] private Button SaveButton;  
+        [SerializeField] private Button LoadButton;  
+
+        // private OpenAIApi openai = new OpenAIApi();
+        private OpenAIApi openai = new OpenAIApi("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");
+
 
 
         private List<ChatMessage> messages = new List<ChatMessage>();
@@ -83,6 +88,9 @@ namespace OpenAI
             option2Button.onClick.AddListener(() => SendReply(option2Button));
             option3Button.onClick.AddListener(() => SendReply(option3Button));
             option4Button.onClick.AddListener(option4ButtonAct);
+
+            SaveButton.gameObject.SetActive(false);
+            LoadButton.gameObject.SetActive(false);
 
             if(from_book2 == false){ // 讀檔的過來的話就不用sendreply
                 SendReply(null);
@@ -158,6 +166,8 @@ namespace OpenAI
         private async void SendReply(Button button)
         {
             optionChoicing.SetActive(false);
+            SaveButton.gameObject.SetActive(false);
+            LoadButton.gameObject.SetActive(false);
             try{
                 textBoxCount = 0;
                 imgNeedChange = true;
@@ -407,10 +417,13 @@ namespace OpenAI
                 //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
                 filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()\n]+", "");
             }
-
+            
             option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
             option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
             option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
+            // 顯示存檔和讀檔的按鈕
+            SaveButton.gameObject.SetActive(true);
+            LoadButton.gameObject.SetActive(true);
 
             getOptionDone = true;
         }
@@ -452,6 +465,8 @@ namespace OpenAI
         private void option4ButtonAct(){
             fourOptions.SetActive(false);
             selfChoicingPanel.SetActive(true);
+            SaveButton.gameObject.SetActive(false);
+            LoadButton.gameObject.SetActive(false);
         }
 
         private void sendButtonAct(){

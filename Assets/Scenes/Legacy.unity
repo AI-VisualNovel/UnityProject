@@ -1726,6 +1726,8 @@ MonoBehaviour:
   sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   testButton: {fileID: 1868398083}
+  SaveButton: {fileID: 1887135218}
+  LoadButton: {fileID: 663583402}
   SaveLoadLegacy: {fileID: 135001614}
 --- !u!1 &928271495
 GameObject:
