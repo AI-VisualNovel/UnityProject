@@ -431,13 +431,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9304ab9eb9a6b9a4db669f253390df08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  new_story_controller: {fileID: 0}
   contentWindow: {fileID: 0}
-  recallTextObject: {fileID: 1363125286511927684, guid: 79de317f76c71ff46bdeda0a748ab980, type: 3}
+  recallTextObject: {fileID: 8660877164928630358, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   saved_time: 
   scroll: {fileID: 1518205721}
   sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
+  textArea: {fileID: 1931618868}
   Story: 
   option1: {fileID: 779074943}
   option2: {fileID: 1228116264}
@@ -1275,22 +1275,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 135001611}
-        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: OpenAI.SaveLoad, Assembly-CSharp
+      - m_Target: {fileID: 135001614}
+        m_TargetAssemblyTypeName: OpenAI.SaveLoadLegacy, Assembly-CSharp
         m_MethodName: LoadFromJson
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
