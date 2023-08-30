@@ -15,7 +15,7 @@ namespace OpenAI
     public class SaveLoadLegacy : MonoBehaviour
     {
 
-        public OpenAI.NewStoryController new_story_controller;
+        // public OpenAI.WuxiaStoryController wuxia_story_controller;
         public RectTransform contentWindow;
         public GameObject recallTextObject;
         public string saved_time;
@@ -27,11 +27,11 @@ namespace OpenAI
         private float height = 0;
         [SerializeField] private RectTransform sent;
         [SerializeField] public RectTransform received; // Lai
+        [SerializeField] private Text textArea;  // 顯示劇情的地方
+        private RectTransform currentMessageRec;
 
-
-        // private static float height = 0;
-        // [SerializeField] private static RectTransform sent;
-        // [SerializeField] public static RectTransform received; // Lai
+        // testing    
+        private int textBoxCount = 0;
 
 
 
@@ -119,7 +119,7 @@ namespace OpenAI
 
 
             string readFromFilePath = Application.streamingAssetsPath + "/Json/" +  jsonfile_name + ".json";
-            // string readFromFilePath = "Assets/StreamingAssets/Json/08-25-23-21-25-37.json";
+            // string readFromFilePath = "Assets/StreamingAssets/Json/08-30-23-02-29-21.json"; // 測試用
 
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
@@ -129,13 +129,14 @@ namespace OpenAI
                 Debug.Log(m.Content);
                 var recItem = AppendMessage(m);
 
+                var sentItem = AppendMessage(m);
+                currentMessageRec = sentItem;
+                textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
+                
+            
+                // testing
+                WuxiaStoryController.from_book2 = true;
 
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                recItem.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
-                height += recItem.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-                scroll.verticalNormalizedPosition = 0;
             }
 
         }
