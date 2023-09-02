@@ -32,11 +32,6 @@ namespace OpenAI
             GetInitialStory();
         }
 
-        private void Update()
-        {
-            
-        }
-
         private void GetInitialStory()
         {
             var initialStoryMessage = new List<ChatMessage>

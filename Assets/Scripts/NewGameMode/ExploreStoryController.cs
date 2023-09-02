@@ -33,13 +33,11 @@ namespace OpenAI
         private bool canMove = false;
         private float lastChangeTime;
 
-
         private void Start()
         {
             exploreButton.onClick.AddListener(EnterExplore);
             textBoxButton.onClick.AddListener(MoveOn);
             exploreBackgroundButton.onClick.AddListener(MoveOn);
-     
         }
 
         private void Update()
@@ -196,10 +194,11 @@ namespace OpenAI
                 if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
                     textBoxCount++;
                 }
-                if(textBoxCount >= currentFullTexts.Length){
+                if(textBoxCount != 0 && textBoxCount >= currentFullTexts.Length){
                     canMove = false;
                     textBoxCount = 0;
                     exploreBackground.SetActive(false);
+                    FullStoryController.day++;
                 }
             }
         }
