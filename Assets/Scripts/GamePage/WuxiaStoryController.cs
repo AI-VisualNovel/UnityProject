@@ -146,6 +146,7 @@ namespace OpenAI
         private async void SendReply(Button button)
         {
             optionChoicing.SetActive(false);
+            canMove = true;
             try{
                 textBoxCount = 0;
                 imgNeedChange = true;
@@ -223,13 +224,6 @@ namespace OpenAI
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
-                playTime += UnityEngine.Random.Range(1,11);
-                print("[PT]: " + playTime);
-                if(playTime >= 11){
-                    ToEnding();
-                    return;
-                }
-
                 chatCount++;
                 if(chatCount >= 2){
                     messageFilter();
@@ -284,7 +278,14 @@ namespace OpenAI
                     textBoxCount++;
                 }
                 if(textBoxCount >= currentFullTexts.Length && getOptionDone){
+                    playTime += UnityEngine.Random.Range(1,11);
+                    print("[PT]: " + playTime);
+                    if(playTime >= 11){
+                        ToEnding();
+                        return;
+                    }
                     optionChoicing.SetActive(true);
+                    canMove = false;
                 }
             }
         }
