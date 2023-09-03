@@ -24,10 +24,29 @@ namespace OpenAI
         [SerializeField] private ScrollRect scroll;
         [SerializeField] private GameObject endStoryPanel;
         [SerializeField] private Text endStoryTextArea;
+        [SerializeField] private List<Button> placeButtons;
 
+        private List<int> allPlaces = new List<int>();
+        private List<int> fixedPlaces = new List<int>();
+        private List<int> randomPlaces = new List<int>();
 
         private void Start()
         {
+            //分配地圖
+            for (int i = 1; i <= 30; i++){
+                allPlaces.Add(i);
+            }
+            for (int i = 0; i < 10; i++){
+                int randomIndex = UnityEngine.Random.Range(0, allPlaces.Count);
+                int randomNumber = allPlaces[randomIndex];
+                fixedPlaces.Add(randomNumber);
+                allPlaces.RemoveAt(randomIndex);
+            }
+            randomPlaces.AddRange(allPlaces);
+            for (int i = 0; i < placeButtons.Count; i++)
+            {
+                placeButtons[i].GetComponentInChildren<Text>().text = GetPlaceNameByNum(fixedPlaces[i]);
+            }
 
         }
 
@@ -48,8 +67,109 @@ namespace OpenAI
         }
 
         private void Test(){
-            print(CE);
+            //print(CE);
         }
+
+        private string GetPlaceNameByNum(int num){
+            string placeName = "";
+            switch (num)
+            {
+                case 1:
+                    placeName = "小村莊";
+                    break;
+                case 2:
+                    placeName = "山谷";
+                    break;
+                case 3:
+                    placeName = "山洞";
+                    break;
+                case 4:
+                    placeName = "寺廟";
+                    break;
+                case 5:
+                    placeName = "遺跡廢墟";
+                    break;
+                case 6:
+                    placeName = "竹林";
+                    break;
+                case 7:
+                    placeName = "瀑布";
+                    break;
+                case 8:
+                    placeName = "荒野";
+                    break;
+                case 9:
+                    placeName = "市集";
+                    break;
+                case 10:
+                    placeName = "擂台";
+                    break;
+                case 11:
+                    placeName = "酒樓";
+                    break;
+                case 12:
+                    placeName = "客棧";
+                    break;
+                case 13:
+                    placeName = "武學門派";
+                    break;
+                case 14:
+                    placeName = "武林聚會";
+                    break;
+                case 15:
+                    placeName = "城牆";
+                    break;
+                case 16:
+                    placeName = "山寨";
+                    break;
+                case 17:
+                    placeName = "密室";
+                    break;
+                case 18:
+                    placeName = "山谷涼亭";
+                    break;
+                case 19:
+                    placeName = "山間小徑";
+                    break;
+                case 20:
+                    placeName = "軍營";
+                    break;
+                case 21:
+                    placeName = "冰川";
+                    break;
+                case 22:
+                    placeName = "沙漠";
+                    break;
+                case 23:
+                    placeName = "皇宮";
+                    break;
+                case 24:
+                    placeName = "雪山";
+                    break;
+                case 25:
+                    placeName = "森林";
+                    break;
+                case 26:
+                    placeName = "港口";
+                    break;
+                case 27:
+                    placeName = "湖泊";
+                    break;
+                case 28:
+                    placeName = "衙門";
+                    break;
+                case 29:
+                    placeName = "戰場";
+                    break;
+                case 30:
+                    placeName = "懸崖";
+                    break;
+                default:
+                    placeName = "未知地點";
+                    break;
+            }
+            return placeName;
+        } 
 
         private void EnterTheEnd()
         {
