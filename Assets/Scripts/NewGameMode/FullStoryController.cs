@@ -26,9 +26,11 @@ namespace OpenAI
         [SerializeField] private Text endStoryTextArea;
         [SerializeField] private List<Button> placeButtons;
 
+        ExploreStoryController exploreController;
+
         private List<int> allPlaces = new List<int>();
         private List<int> fixedPlaces = new List<int>();
-        private List<int> randomPlaces = new List<int>();
+        public static List<int> randomPlaces = new List<int>();
 
         private void Start()
         {
@@ -43,10 +45,14 @@ namespace OpenAI
                 allPlaces.RemoveAt(randomIndex);
             }
             randomPlaces.AddRange(allPlaces);
+            exploreController = GetComponent<ExploreStoryController>();
             for (int i = 0; i < placeButtons.Count; i++)
             {
+                int placeNum = fixedPlaces[i];
                 placeButtons[i].GetComponentInChildren<Text>().text = GetPlaceNameByNum(fixedPlaces[i]);
+                placeButtons[i].onClick.AddListener(() => exploreController.EnterExplore(placeNum));
             }
+
 
         }
 
@@ -70,7 +76,7 @@ namespace OpenAI
             //print(CE);
         }
 
-        private string GetPlaceNameByNum(int num){
+        public static string GetPlaceNameByNum(int num){
             string placeName = "";
             switch (num)
             {

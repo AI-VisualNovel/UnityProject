@@ -3151,55 +3151,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
---- !u!1 &910866050
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 910866053}
-  - component: {fileID: 910866054}
-  m_Layer: 0
-  m_Name: StoryController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &910866053
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910866050}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -61.37755, y: 475.7334, z: -20.11282}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &910866054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910866050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61ba57aa4f03a12438ef721032cbd6b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scroll: {fileID: 1587003437}
-  initialStoryPanel: {fileID: 592319635}
-  initialStoryPanelButton: {fileID: 592319639}
-  initialStoryTextArea: {fileID: 888345523}
-  initMoveOnTip: {fileID: 1469024734}
 --- !u!1 &928271495
 GameObject:
   m_ObjectHideFlags: 0
@@ -6859,8 +6810,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1596384816}
-  - component: {fileID: 1596384815}
   - component: {fileID: 1596384817}
+  - component: {fileID: 1596384818}
+  - component: {fileID: 1596384815}
   m_Layer: 0
   m_Name: StoryController (1)
   m_TagString: Untagged
@@ -6900,7 +6852,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1596384817
 MonoBehaviour:
@@ -6930,6 +6882,23 @@ MonoBehaviour:
   - {fileID: 122643978}
   - {fileID: 1677764647}
   - {fileID: 2142638837}
+--- !u!114 &1596384818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596384814}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ba57aa4f03a12438ef721032cbd6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scroll: {fileID: 1587003437}
+  initialStoryPanel: {fileID: 592319635}
+  initialStoryPanelButton: {fileID: 592319639}
+  initialStoryTextArea: {fileID: 888345523}
+  initMoveOnTip: {fileID: 1469024734}
 --- !u!1 &1663855384
 GameObject:
   m_ObjectHideFlags: 0
