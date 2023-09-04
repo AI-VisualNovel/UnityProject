@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveOnTipMovement : MonoBehaviour
+public class UpDownMovement : MonoBehaviour
 {
     public float moveRange = 2.0f;  // 上下移動的範圍
     public float moveSpeed = 1.0f;  // 移動速度

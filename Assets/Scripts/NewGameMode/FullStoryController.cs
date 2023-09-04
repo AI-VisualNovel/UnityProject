@@ -25,11 +25,15 @@ namespace OpenAI
         [SerializeField] private GameObject endStoryPanel;
         [SerializeField] private Text endStoryTextArea;
         [SerializeField] private List<Button> placeButtons;
+        [SerializeField] private List<Image> placeImages;
+        [SerializeField] private List<GameObject> placeImagesObj;
+
 
         ExploreStoryController exploreController;
 
         private List<int> allPlaces = new List<int>();
         private List<int> fixedPlaces = new List<int>();
+        private List<int> fixedPlacesImgNum = new List<int>();
         public static List<int> randomPlaces = new List<int>();
 
         private void Start()
@@ -43,14 +47,18 @@ namespace OpenAI
                 int randomNumber = allPlaces[randomIndex];
                 fixedPlaces.Add(randomNumber);
                 allPlaces.RemoveAt(randomIndex);
+
+                int randomImgIndex = UnityEngine.Random.Range(1,5);
+                Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + fixedPlaces[i] + "/" + randomImgIndex);
+                placeImages[i].sprite = newSprite;
             }
             randomPlaces.AddRange(allPlaces);
             exploreController = GetComponent<ExploreStoryController>();
             for (int i = 0; i < placeButtons.Count; i++)
             {
-                int placeNum = fixedPlaces[i];
+                int placeIndex = i;
                 placeButtons[i].GetComponentInChildren<Text>().text = GetPlaceNameByNum(fixedPlaces[i]);
-                placeButtons[i].onClick.AddListener(() => exploreController.EnterExplore(placeNum));
+                placeButtons[i].onClick.AddListener(() => FixedPlaceButtonAct(placeIndex));
             }
 
 
@@ -74,6 +82,9 @@ namespace OpenAI
 
         private void Test(){
             //print(CE);
+            foreach(GameObject obj in placeImagesObj){
+                obj.SetActive(false);
+            }
         }
 
         public static string GetPlaceNameByNum(int num){
@@ -177,6 +188,9 @@ namespace OpenAI
             return placeName;
         } 
 
+        public void FixedPlaceButtonAct(int placeIndex){
+            placeImagesObj[placeIndex].SetActive(true);
+        }
         private void EnterTheEnd()
         {
             string theEndPrompt = "";
