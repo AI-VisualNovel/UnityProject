@@ -28,7 +28,7 @@ namespace OpenAI
 
 
         private string currentFullText = "";
-        private string[] currentFullTexts = new string[80];
+        private string[] currentFullTexts = new string[50];
         private int textBoxCount = 0;
         private bool canMove = false;
         private float lastChangeTime;
