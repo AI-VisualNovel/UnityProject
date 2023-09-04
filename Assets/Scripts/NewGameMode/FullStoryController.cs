@@ -27,8 +27,8 @@ namespace OpenAI
         [SerializeField] private List<Button> placeButtons;
         [SerializeField] private List<Image> placeImages;
         [SerializeField] private List<GameObject> placeImagesObj;
-
-
+        [SerializeField] private RectTransform npcPrefreb;
+        [SerializeField] private List<Transform> npcPlaces;
         ExploreStoryController exploreController;
 
         private List<int> allPlaces = new List<int>();
@@ -51,6 +51,11 @@ namespace OpenAI
                 int randomImgIndex = UnityEngine.Random.Range(1,5);
                 Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + fixedPlaces[i] + "/" + randomImgIndex);
                 placeImages[i].sprite = newSprite;
+
+                int randomNpcNum = UnityEngine.Random.Range(0,2);
+                if(randomNpcNum == 1){
+                    NpcGenerator(npcPlaces[i]);
+                }
             }
             randomPlaces.AddRange(allPlaces);
             exploreController = GetComponent<ExploreStoryController>();
@@ -60,8 +65,6 @@ namespace OpenAI
                 placeButtons[i].GetComponentInChildren<Text>().text = GetPlaceNameByNum(fixedPlaces[i]);
                 placeButtons[i].onClick.AddListener(() => FixedPlaceButtonAct(placeIndex));
             }
-
-
         }
 
         private void Update()
@@ -82,9 +85,6 @@ namespace OpenAI
 
         private void Test(){
             //print(CE);
-            foreach(GameObject obj in placeImagesObj){
-                obj.SetActive(false);
-            }
         }
 
         public static string GetPlaceNameByNum(int num){
@@ -190,6 +190,10 @@ namespace OpenAI
 
         public void FixedPlaceButtonAct(int placeIndex){
             placeImagesObj[placeIndex].SetActive(true);
+        }
+
+        private void NpcGenerator(Transform npcPlace){
+            var newNpc = Instantiate(npcPrefreb,npcPlace);
         }
         private void EnterTheEnd()
         {

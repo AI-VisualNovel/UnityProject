@@ -73,6 +73,7 @@ namespace OpenAI
         }
 
         private void EnterNpcDialog(){
+            npcButton.interactable = false;
             canMove = false;   
             textBoxCount = 0;
             lastChangeTime = Time.time;
@@ -126,6 +127,7 @@ namespace OpenAI
                     canMove = false;
                     textBoxCount = 0;
                     transform.GetChild(1).gameObject.SetActive(false);
+                    npcButton.interactable = true;
                 }
             }
         }
