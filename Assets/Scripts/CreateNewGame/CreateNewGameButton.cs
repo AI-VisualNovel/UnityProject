@@ -7,12 +7,13 @@ public class CreateNewGameButton : MonoBehaviour
     public Button[] buttons;
     public Color desiredColor;
     public Toggle[] toggles;
-    public InputField inputField;
+    [SerializeField] private InputField UserInput;
     [SerializeField] private AudioSource ClickSound;
     
     public static string[] buttonTexts;
     public static int buttonLength;
     public static string gamedir;
+    public static string  User_API="";
     public void SearchSelectedButtonText()
     {
         buttonLength = buttons.Length;
@@ -27,7 +28,7 @@ public class CreateNewGameButton : MonoBehaviour
         
 
        
-
+        User_API = UserInput.text;
         foreach (Button button in buttons)
         {
             ColorBlock buttonColorBlock = button.colors;

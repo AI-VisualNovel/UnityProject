@@ -38,8 +38,10 @@ namespace OpenAI
 
         [SerializeField] private Button testButton;
         [SerializeField] private AudioSource BackgroundSound;
+        [SerializeField] private GameObject WrongApiPanel;
 
-        private OpenAIApi openai = new OpenAIApi();
+
+        private OpenAIApi openai = new OpenAIApi(CreateNewGameButton.User_API);
         private List<ChatMessage> messages = new List<ChatMessage>();
         private List<ChatMessage> filteredMessages = new List<ChatMessage>();
         private string recap = "";
@@ -64,6 +66,7 @@ namespace OpenAI
 
         private void Start()
         {
+            
             testButton.onClick.AddListener(Test);
 
             textBoxButton.onClick.AddListener(MoveOn);
@@ -83,7 +86,9 @@ namespace OpenAI
             AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/Fantasy/" + randomSoundInt); 
             BackgroundSound.clip = newSoundClip;
             BackgroundSound.enabled = true;
-           BackgroundSound.Play();
+            BackgroundSound.Play();
+            
+            
         }
 
         private void Update(){
@@ -124,6 +129,7 @@ namespace OpenAI
 
         private async void SendReply(Button button)
         {
+
             optionChoicing.SetActive(false);
             try{
                 textBoxCount = 0;
@@ -211,12 +217,15 @@ namespace OpenAI
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
-            }catch(Exception ex){
+            }
+            catch(Exception ex){
+                WrongApiPanel.SetActive(true);
                 Debug.LogError("An error occurred: " + ex.Message);
             }
         }
 
         private async void messageFilter(){
+            try{
             List<ChatMessage> toFilMessages = new List<ChatMessage>(filteredMessages);
             var toS = new ChatMessage()
             {
@@ -246,6 +255,11 @@ namespace OpenAI
             else
             {
                 Debug.LogWarning("Can't filter!");
+            }
+            }
+            catch(Exception ex){
+                WrongApiPanel.SetActive(true);
+                Debug.LogError("An error occurred: " + ex.Message);
             }
         }
 
@@ -277,7 +291,8 @@ namespace OpenAI
         }
 
         private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
-        {
+        {   
+            try{
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
                 message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
@@ -288,6 +303,11 @@ namespace OpenAI
                 // height += item.sizeDelta.y;
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
+            }
+            catch(Exception ex){
+                WrongApiPanel.SetActive(true);
+                Debug.LogError("An error occurred: " + ex.Message);
+            }
         }
 
         private void HandleComplete(){
@@ -296,6 +316,7 @@ namespace OpenAI
 
         private async void GetOptions(string fullPlot)
         {
+            try{
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
                 Prompt = "請根據以下劇情給予我三個選項\n\n劇情:\n" + fullPlot + "\n\n請以換行符分隔三個選項:\n",
@@ -319,6 +340,11 @@ namespace OpenAI
             option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
 
             getOptionDone = true;
+            }
+            catch(Exception ex){
+                WrongApiPanel.SetActive(true);
+                Debug.LogError("An error occurred: " + ex.Message);
+            }
         }
         private async void ChangeImage(string plot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
