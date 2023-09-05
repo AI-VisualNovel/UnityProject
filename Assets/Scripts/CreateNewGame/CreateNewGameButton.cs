@@ -17,29 +17,16 @@ public class CreateNewGameButton : MonoBehaviour
     {
         buttonLength = buttons.Length;
         buttonTexts = new string[buttons.Length];
-        buttonTexts[0] = "白色恐怖";
-        buttonTexts[1] = "漫畫";
-        buttonTexts[2] = "中";
-        buttonTexts[3] = "無";
-        buttonTexts[4] = "中文";
+        buttonTexts[0] = "武俠";
+        buttonTexts[1] = "奇幻";
+        buttonTexts[2] = "靈異";
+        buttonTexts[3] = "探索";
+        buttonTexts[4] = "永無止盡";
         int i = 0;
         ClickSound.Play();
-        // foreach (Toggle toggle in toggles)
-        // {
-        //     if (toggle.isOn)
-        //     {
-        //         string toggleText = toggle.GetComponentInChildren<Text>().text;
-        //         Debug.Log("Selected Toggle Text: " + toggleText);
-        //     }
-        // }
+        
 
-        Color inputFieldColor = inputField.image.color;
-        if (ColorUtility.ToHtmlStringRGB(inputFieldColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
-        {
-            string inputText = inputField.text;
-            gamedir = inputText;
-            Debug.Log("遊戲走向: " + inputText);
-        }
+       
 
         foreach (Button button in buttons)
         {
@@ -54,5 +41,26 @@ public class CreateNewGameButton : MonoBehaviour
                 i++;
             }
         }
+        if(buttonTexts[1]=="永無止盡")
+        {
+            switch(buttonTexts[0])
+            {
+                case "武俠":
+                    SceneManager.LoadScene("Legacy_WuXia");
+                    break;
+                case "奇幻":
+                    SceneManager.LoadScene("Legacy_Fantasy");
+                    break;
+                case "靈異":
+                    SceneManager.LoadScene("Legacy_Ghost");
+                    break;
+            }
+
+        }
+        else
+        {
+            SceneManager.LoadScene("NewGamePage");
+        }
+
     }
 }
