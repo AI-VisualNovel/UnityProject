@@ -8829,7 +8829,7 @@ GameObject:
   - component: {fileID: 1596384818}
   - component: {fileID: 1596384815}
   m_Layer: 0
-  m_Name: StoryController (1)
+  m_Name: StoryController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8920,7 +8920,9 @@ MonoBehaviour:
   - {fileID: 819285513}
   - {fileID: 563440442}
   - {fileID: 965516699}
-  npcPrefreb: {fileID: 5388949183163936652, guid: 71f9054066adf6b40a073fafcd775540, type: 3}
+  npcPrefrebs:
+  - {fileID: 5388949183163936652, guid: 71f9054066adf6b40a073fafcd775540, type: 3}
+  - {fileID: 5388949183163936652, guid: 97235aa6677c4bd43b00400c05f2f4c7, type: 3}
   npcPlaces:
   - {fileID: 1052269596}
   - {fileID: 947358108}

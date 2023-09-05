@@ -18,13 +18,13 @@ namespace OpenAI
         private CancellationTokenSource token = new CancellationTokenSource();
         private List<ChatMessage> npcDialogs = new List<ChatMessage>();
 
+        [SerializeField] private string npcName;
+        [SerializeField] private string systemPrompt;
+        
         private Button npcButton;
         private Button npcDialogPanelButton;
         private Text npcDialogTextArea;
         private GameObject moveOnTip;
-
-        private string npcName = "禿驢";
-        private string systemPrompt = "你現在是一個武俠遊戲中的武僧，名字叫做禿驢";
         private string currentFullText = "";
         private string[] currentFullTexts = new string[50];
         private int textBoxCount = 0;
@@ -81,7 +81,7 @@ namespace OpenAI
             var sentMessage = new ChatMessage()
             {
                 Role = "user",
-                Content = "禿驢你好啊!"
+                Content = "哈囉!"
             };
             var recMessage = new ChatMessage()
             {
