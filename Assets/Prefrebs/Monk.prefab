@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 5388949183163936652}
   - component: {fileID: 5388949183163936655}
   m_Layer: 5
-  m_Name: Monk1
+  m_Name: Monk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,6 +423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3118b4bd14461ef4aaf6ee1404c448c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcType: "\u6B66\u50E7"
+  systemPrompt: "\u4F60\u73FE\u5728\u662F\u4E00\u500B\u6B66\u4FE0\u904A\u6232\u4E2D\u7684\u6B66\u50E7"
 --- !u!1 &5388949183239598546
 GameObject:
   m_ObjectHideFlags: 0

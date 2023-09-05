@@ -27,7 +27,7 @@ namespace OpenAI
         [SerializeField] private List<Button> placeButtons;
         [SerializeField] private List<Image> placeImages;
         [SerializeField] private List<GameObject> placeImagesObj;
-        [SerializeField] private RectTransform npcPrefreb;
+        [SerializeField] private List<RectTransform> npcPrefrebs;
         [SerializeField] private List<Transform> npcPlaces;
         ExploreStoryController exploreController;
 
@@ -188,13 +188,39 @@ namespace OpenAI
             return placeName;
         } 
 
+        public static string GetNpcTypeByNum(int num){
+           string npcType = "";
+            switch (num)
+            {
+                case 1:
+                    npcType = "monk";
+                    break;
+                case 2:
+                    npcType = "swordsman";
+                    break;
+                default:
+                    npcType = "";
+                    break;
+            }
+            return npcType;
+        }
         public void FixedPlaceButtonAct(int placeIndex){
             placeImagesObj[placeIndex].SetActive(true);
         }
 
         private void NpcGenerator(Transform npcPlace){
-            var newNpc = Instantiate(npcPrefreb,npcPlace);
+            int randomNpcTypeNum = UnityEngine.Random.Range(1,3);
+            var newNpc = Instantiate(npcPrefrebs[randomNpcTypeNum-1], npcPlace);
+
+            string npcType = GetNpcTypeByNum(randomNpcTypeNum);
+            int randomImgIndex = UnityEngine.Random.Range(1,3);
+            Sprite newSprite = Resources.Load<Sprite>("WuxiaNPC/" + npcType + randomImgIndex);
+
+            if (newSprite != null) {
+                newNpc.GetChild(0).GetComponentInChildren<Image>().sprite = newSprite;
+            }
         }
+
         private void EnterTheEnd()
         {
             string theEndPrompt = "";
