@@ -18,9 +18,10 @@ namespace OpenAI
         private CancellationTokenSource token = new CancellationTokenSource();
         private List<ChatMessage> npcDialogs = new List<ChatMessage>();
 
-        [SerializeField] private string npcName;
+        [SerializeField] private string npcType;
         [SerializeField] private string systemPrompt;
         
+        private string npcName ="";
         private Button npcButton;
         private Button npcDialogPanelButton;
         private Text npcDialogTextArea;
@@ -34,11 +35,11 @@ namespace OpenAI
 
         void Start()
         {
+            GetNpcName(npcType);
             npcButton = transform.GetChild(0).gameObject.GetComponent<Button>();
             npcDialogPanelButton = transform.GetChild(1).gameObject.GetComponent<Button>();
             npcDialogTextArea = transform.GetChild(1).GetChild(1).GetComponent<Text>();
             moveOnTip = transform.GetChild(1).GetChild(2).gameObject;
-            transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = npcName;
             npcButton.onClick.AddListener(NpcButtonAct);
             npcDialogPanelButton.onClick.AddListener(MoveOn);
         }
@@ -65,6 +66,27 @@ namespace OpenAI
             }else{
                 moveOnTip.SetActive(false);
             }            
+        }
+
+        private async void GetNpcName(string npcType){
+            var getNpcNameMessage = new List<ChatMessage>
+            {
+                new ChatMessage()
+                {
+                    Role = "user",
+                    Content = "請給予" + npcType + "這個角色一個名字，五個字以內\n\n請直接回答名字:\n"
+                }
+            };
+            var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+            {
+                Model = "gpt-3.5-turbo-0613",
+                Messages = getNpcNameMessage,
+                MaxTokens = 128,
+                Temperature = 1.0f
+            });
+            npcName = completionResponse.Choices[0].Message.Content.Trim();
+            transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = npcName;
+            print("[npcName]"+npcName);            
         }
         private void NpcButtonAct()
         {
@@ -94,7 +116,7 @@ namespace OpenAI
             var systemMessage = new ChatMessage()
             {
                 Role = "system",
-                Content = systemPrompt
+                Content = systemPrompt + "，你的名字叫做" + npcName
             };
             sendMessages.Add(systemMessage);
             foreach(ChatMessage m in sendMessages){
