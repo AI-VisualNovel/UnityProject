@@ -193,8 +193,16 @@ namespace OpenAI
         }
 
         private void NpcGenerator(Transform npcPlace){
-            var newNpc = Instantiate(npcPrefreb,npcPlace);
+            var newNpc = Instantiate(npcPrefreb, npcPlace);
+
+            int randomImgIndex = UnityEngine.Random.Range(1,3);
+            Sprite newSprite = Resources.Load<Sprite>("WuxiaNPC/monk" + randomImgIndex);
+
+            if (newSprite != null) {
+                newNpc.GetChild(0).GetComponentInChildren<Image>().sprite = newSprite;
+            }
         }
+
         private void EnterTheEnd()
         {
             string theEndPrompt = "";
