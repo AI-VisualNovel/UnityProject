@@ -16,6 +16,7 @@ namespace OpenAI
         private OpenAIApi openai = new OpenAIApi();
         private CancellationTokenSource token = new CancellationTokenSource();
 
+        [SerializeField] private AudioSource exploreBackgroundSound;
 
         [SerializeField] private Button exploreButton;
         [SerializeField] private GameObject exploreBackground;
@@ -79,6 +80,12 @@ namespace OpenAI
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + placeNum + "/" + randomInt);
             exploreBackgroundImg.sprite = newSprite;
             exploreBackground.SetActive(true);
+
+            int randomSoundInt = UnityEngine.Random.Range(1,15);
+            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
+            exploreBackgroundSound.clip = newSoundClip;
+            exploreBackgroundSound.enabled = true;
+            exploreBackgroundSound.Play();
 
             lastChangeTime = Time.time;
             var exploreStoryMessage = new List<ChatMessage>
