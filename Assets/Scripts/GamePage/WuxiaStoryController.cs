@@ -37,6 +37,7 @@ namespace OpenAI
         [SerializeField] private RectTransform received;
 
         [SerializeField] private Button testButton;
+        [SerializeField] private AudioSource BackgroundSound;
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
@@ -78,6 +79,11 @@ namespace OpenAI
             SendReply(null);
 
             lastChangeTime = Time.time;
+            int randomSoundInt = UnityEngine.Random.Range(1,14);
+            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
+            BackgroundSound.clip = newSoundClip;
+            BackgroundSound.enabled = true;
+            BackgroundSound.Play();
         }
 
         private void Update(){
