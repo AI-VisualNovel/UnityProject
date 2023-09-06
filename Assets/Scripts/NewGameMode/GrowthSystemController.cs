@@ -10,10 +10,12 @@ using System.Text.RegularExpressions;
 
 public class GrowthSystemController : MonoBehaviour
 {
-    public int forceValue = 0;
-    public int wisdomValue = 0;
-    public int infoValue = 0;
-    public int fameValue = 0;
+
+    public GameObject getValueTipPanel;
+    private int forceValue = 0;
+    private int wisdomValue = 0;
+    private int infoValue = 0;
+    private int fameValue = 0;
 
     void Start()
     {
@@ -24,5 +26,36 @@ public class GrowthSystemController : MonoBehaviour
     void Update()
     {
         
+    }
+    public void GetForceValue(){
+        int value = UnityEngine.Random.Range(1,11);
+        string getValueTip="";
+        switch (value)
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                getValueTip = "你感到你的武功有些微增長";
+                break;
+
+            case 5:
+            case 6:
+            case 7:
+                getValueTip = "你感到你的武功有所進展";
+                break;
+
+            case 8:
+            case 9:
+            case 10:
+                getValueTip = "你感到你的武功突飛猛進";
+                break;
+            default:
+                break;
+        }
+        forceValue += value;
+        getValueTipPanel.GetComponentInChildren<Text>().text = getValueTip;
+        getValueTipPanel.GetComponent<GetValueTipController>().StartCoroutine("MoveObject");
+        print(getValueTip);
     }
 }

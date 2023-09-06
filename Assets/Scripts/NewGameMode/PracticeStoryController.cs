@@ -105,6 +105,7 @@ namespace OpenAI
                     canMove = false;
                     textBoxCount = 0;
                     practiceBackground.SetActive(false);
+                    GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetForceValue();
                     FullStoryController.day++;
                 }
             }
