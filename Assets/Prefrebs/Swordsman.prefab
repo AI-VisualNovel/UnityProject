@@ -423,8 +423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3118b4bd14461ef4aaf6ee1404c448c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcType: "\u528D\u5BA2"
-  systemPrompt: " \u4F60\u73FE\u5728\u662F\u4E00\u500B\u6B66\u4FE0\u904A\u6232\u4E2D\u7684\u528D\u5BA2"
+  npcType: "\u6CD5\u5E2B"
+  systemPrompt: " \u4F60\u73FE\u5728\u662F\u4E00\u500B\u5947\u5E7B\u904A\u6232\u4E2D\u7684\u6CD5\u5E2B"
 --- !u!1 &5388949183239598546
 GameObject:
   m_ObjectHideFlags: 0
