@@ -7,6 +7,8 @@ using System.Threading;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 
 namespace OpenAI
@@ -17,7 +19,6 @@ namespace OpenAI
         private CancellationTokenSource token = new CancellationTokenSource();
 
         public static int day = 1;
-        public static int CE = 5;
 
         [SerializeField] private Text dayCounter;
         [SerializeField] private Text initialStoryTextArea;
@@ -29,12 +30,18 @@ namespace OpenAI
         [SerializeField] private List<GameObject> placeImagesObj;
         [SerializeField] private List<RectTransform> npcPrefrebs;
         [SerializeField] private List<Transform> npcPlaces;
+        [SerializeField] private GameObject endMoveOnTip;
+
         ExploreStoryController exploreController;
 
         private List<int> allPlaces = new List<int>();
         private List<int> fixedPlaces = new List<int>();
         private List<int> fixedPlacesImgNum = new List<int>();
         public static List<int> randomPlaces = new List<int>();
+
+
+        private CanvasGroup endPanelCanvasGroup;
+        private float fadeDuration = 4.0f;
 
         private void Start()
         {
@@ -65,6 +72,11 @@ namespace OpenAI
                 placeButtons[i].GetComponentInChildren<Text>().text = GetPlaceNameByNum(fixedPlaces[i]);
                 placeButtons[i].onClick.AddListener(() => FixedPlaceButtonAct(placeIndex));
             }
+
+            endPanelCanvasGroup = endStoryPanel.GetComponent<CanvasGroup>();
+            endPanelCanvasGroup.alpha = 0;
+            endStoryPanel.GetComponent<Button>().onClick.AddListener(BackToMainPage);
+            endStoryPanel.GetComponent<Button>().interactable = false;
         }
 
         private void Update()
@@ -76,10 +88,12 @@ namespace OpenAI
 
             dayCounter.text = day.ToString();
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
-            // if(day >= 2){
-            //     EnterTheEnd();
-            //     day = -1;
-            // }
+            if(day >= 3){
+                Invoke("EnterTheEnd", 3.0f);
+                day = -1;
+            }if(day == -1){
+                dayCounter.text = "3";
+            }
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
         }
 
@@ -225,16 +239,11 @@ namespace OpenAI
 
         private void EnterTheEnd()
         {
-            string theEndPrompt = "";
-            if(CE >= 100){
-                theEndPrompt = "最後我成功擊敗了反派";
-            }else if(CE <= 20){
-                theEndPrompt = "最後我被反派擊敗";
-            }else{
-                theEndPrompt = "最後我一事無成";
-            }
+            string theEndPrompt = GameObject.Find("StoryController").GetComponent<GrowthSystemController>().EndJudgment(InitialStoryController.plotIndex);
+            print(theEndPrompt);
 
             endStoryPanel.SetActive(true);
+            StartCoroutine(FadeInEnd());
             var endStoryMessage = new List<ChatMessage>
             {
                 new ChatMessage()
@@ -245,12 +254,16 @@ namespace OpenAI
                 new ChatMessage()
                 {
                     Role = "user",
-                    Content = theEndPrompt + "，請依此生成相應劇情"
+                    Content = "最後我" + theEndPrompt + "，請依此生成相應的結局劇情，劇情不可以在有轉折，僅僅依照 " + theEndPrompt + " 寫得更具體"
                 }
             };
             void HandleResponse(List<CreateChatCompletionResponse> responses){
                 scroll.verticalNormalizedPosition = 0;
                 endStoryTextArea.text = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
+            }
+            void HandleComplete(){
+                endMoveOnTip.SetActive(true);
+                endStoryPanel.GetComponent<Button>().interactable = true;
             }
             openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
             {
@@ -258,8 +271,27 @@ namespace OpenAI
                 Messages = endStoryMessage,
                 Temperature = 1f,
                 Stream = true
-            }, HandleResponse, null,token);
+            }, HandleResponse, HandleComplete,token);
         }
+            private IEnumerator FadeInEnd()
+            {
+                float elapsedTime = 0;
+
+                while (elapsedTime < fadeDuration)
+                {
+                    endPanelCanvasGroup.alpha = Mathf.Lerp(0, 1, elapsedTime / fadeDuration);
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                // 確保透明度達到1
+                endPanelCanvasGroup.alpha = 1;
+            }
+
+            private void BackToMainPage(){
+                SceneManager.LoadScene("MainPage");
+            }
+
     }
 
 }

@@ -7,6 +7,8 @@ using System.Threading;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Collections;
+
 
 
 namespace OpenAI
@@ -21,8 +23,11 @@ namespace OpenAI
         [SerializeField] private Text initialStoryTextArea;
         [SerializeField] private GameObject initMoveOnTip;
 
+        private CanvasGroup initPanelCanvasGroup;
+        private float fadeDuration = 3.0f;
 
-        public int plotIndex;
+
+        public static int plotIndex;
         private string[] plotsPrompts = new string[10];
         private string plotPrompt;
 
@@ -32,7 +37,9 @@ namespace OpenAI
         private void Start()
         {
             InitPlotPrompt();
-            initialStoryPanelButton.interactable = false;
+            initPanelCanvasGroup = initialStoryPanel.GetComponent<CanvasGroup>();
+            initPanelCanvasGroup.alpha = 1;
+            //initialStoryPanelButton.interactable = false;
             initialStoryPanelButton.onClick.AddListener(InitialStoryPanelButtonAct);
             GetInitialStory();
         }
@@ -65,6 +72,22 @@ namespace OpenAI
         }
 
         private void InitialStoryPanelButtonAct(){
+            StartCoroutine(InitFadeOut());
+        }
+
+        private IEnumerator InitFadeOut()
+        {
+            float elapsedTime = 0;
+
+            while (elapsedTime < fadeDuration)
+            {
+                initPanelCanvasGroup.alpha = Mathf.Lerp(1, 0, elapsedTime / fadeDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // 確保透明度達到1
+            initPanelCanvasGroup.alpha = 0;
             initialStoryPanel.SetActive(false);
         }
 
@@ -82,6 +105,7 @@ namespace OpenAI
 
             plotIndex = UnityEngine.Random.Range(0,10);
             plotPrompt = plotsPrompts[plotIndex];
+            print(plotPrompt);
         }
     }
 
