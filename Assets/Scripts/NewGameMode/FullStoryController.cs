@@ -54,7 +54,7 @@ namespace OpenAI
 
                 int randomNpcNum = UnityEngine.Random.Range(0,2);
                 if(randomNpcNum == 1){
-                    NpcGenerator(npcPlaces[i]);
+                    NpcGenerator(npcPlaces[i],fixedPlaces[i]);
                 }
             }
             randomPlaces.AddRange(allPlaces);
@@ -208,7 +208,7 @@ namespace OpenAI
             placeImagesObj[placeIndex].SetActive(true);
         }
 
-        private void NpcGenerator(Transform npcPlace){
+        private void NpcGenerator(Transform npcPlace,int placeNum){
             int randomNpcTypeNum = UnityEngine.Random.Range(1,3);
             var newNpc = Instantiate(npcPrefrebs[randomNpcTypeNum-1], npcPlace);
 
@@ -219,6 +219,8 @@ namespace OpenAI
             if (newSprite != null) {
                 newNpc.GetChild(0).GetComponentInChildren<Image>().sprite = newSprite;
             }
+
+            newNpc.GetComponent<NpcButtonController>().placeNum = placeNum;
         }
 
         private void EnterTheEnd()

@@ -33,6 +33,8 @@ namespace OpenAI
         private int textBoxCount = 0;
         private bool canMove = false;
         private float lastChangeTime;
+        private int addValueTypeNum = 0;
+        private int addValueAmont = 0;
 
         private void Start()
         {
@@ -65,6 +67,50 @@ namespace OpenAI
         }
 
         public void EnterExplore(int num){
+            addValueTypeNum = UnityEngine.Random.Range(1,5);
+            string addValueType = "";
+            switch(addValueTypeNum){
+                case 1:
+                    addValueType = "武功";
+                    break;
+                case 2:
+                    addValueType = "智慧";
+                    break;
+                case 3:
+                    addValueType = "情報";
+                    break;
+                case 4:
+                    addValueType = "名聲";
+                    break;
+            }
+            addValueAmont = UnityEngine.Random.Range(-1,11);
+            string addCondition = "";
+            switch (addValueAmont)
+            {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    addCondition = "些微增長";
+                    break;
+
+                case 5:
+                case 6:
+                case 7:
+                    addCondition = "有所增長";
+                    break;
+
+                case 8:
+                case 9:
+                case 10:
+                    addCondition = "增長極多";
+                    break;
+                default:
+                    addCondition = "毫無增長";
+                    break;
+            }
+
+
             canMove = false;
             int placeNum = 0;
             string placeName = "";
@@ -93,7 +139,7 @@ namespace OpenAI
                 new ChatMessage()
                 {
                     Role = "user",
-                    Content = "請給我一小段武俠世界故事的探險劇情，你是一個武俠世界中的小夥子，以第一人稱視角探索" + placeName + "這個區域。"
+                    Content = "請給我一小段武俠世界故事的探險劇情，以第一人稱視角探索" + placeName + "這個區域，並且這次的探險會使你的" + addValueType + addCondition
                 }
             };
             void HandleResponse(List<CreateChatCompletionResponse> responses){
@@ -117,6 +163,20 @@ namespace OpenAI
                 if(textBoxCount != 0 && textBoxCount >= currentFullTexts.Length){
                     canMove = false;
                     textBoxCount = 0;
+                    switch(addValueTypeNum){
+                        case 1:
+                            GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetForceValue(addValueAmont);
+                            break;
+                        case 2:
+                            GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetWisdomValue(addValueAmont);
+                            break;
+                        case 3:
+                            GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetInfoValue(addValueAmont);
+                            break;
+                        case 4:
+                            GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetFameValue(addValueAmont);
+                            break;
+                    }
                     exploreBackground.SetActive(false);
                     FullStoryController.day++;
                 }

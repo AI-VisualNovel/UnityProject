@@ -20,6 +20,8 @@ namespace OpenAI
 
         [SerializeField] private string npcType;
         [SerializeField] private string systemPrompt;
+
+        public int placeNum = 0;
         
         private string npcName ="";
         private Button npcButton;
@@ -32,9 +34,28 @@ namespace OpenAI
         private bool canMove = false;
         private float lastChangeTime;
 
+        private int addValueTypeNum = 0;
+        private string addValueType = "";
+        private int addValueAmont = 0;
+
 
         void Start()
         {
+            addValueTypeNum = UnityEngine.Random.Range(1,5);
+            switch(addValueTypeNum){
+                case 1:
+                    addValueType = "武功";
+                    break;
+                case 2:
+                    addValueType = "智慧";
+                    break;
+                case 3:
+                    addValueType = "情報";
+                    break;
+                case 4:
+                    addValueType = "名聲";
+                    break;
+            }
             GetNpcName(npcType);
             npcButton = transform.GetChild(0).gameObject.GetComponent<Button>();
             npcDialogPanelButton = transform.GetChild(1).gameObject.GetComponent<Button>();
@@ -99,6 +120,7 @@ namespace OpenAI
             canMove = false;   
             textBoxCount = 0;
             lastChangeTime = Time.time;
+            string npcPlace = FullStoryController.GetPlaceNameByNum(placeNum);
 
             var sentMessage = new ChatMessage()
             {
@@ -116,7 +138,7 @@ namespace OpenAI
             var systemMessage = new ChatMessage()
             {
                 Role = "system",
-                Content = systemPrompt + "，你的名字叫做" + npcName
+                Content = systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "，永遠不要提到你是一個遊戲角色，你的任務是為身為玩家的我提供一個任務，完成任務的話我可以增長我的" + addValueType
             };
             sendMessages.Add(systemMessage);
             foreach(ChatMessage m in sendMessages){

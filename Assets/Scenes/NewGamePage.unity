@@ -4544,9 +4544,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'place2
-
-'
+  m_Text: place9
 --- !u!222 &825906307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6575,7 +6573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: place9
+  m_Text: place8
 --- !u!222 &1218561128
 CanvasRenderer:
   m_ObjectHideFlags: 0

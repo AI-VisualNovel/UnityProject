@@ -34,6 +34,8 @@ namespace OpenAI
         private bool canMove = false;
         private float lastChangeTime;
 
+        private int addForceValue = 0;
+
         private void Start()
         {
             practiceButton.onClick.AddListener(() => EnterPractice(0));
@@ -74,13 +76,40 @@ namespace OpenAI
             practiceBackgroundSound.enabled = true;
             practiceBackgroundSound.Play();
 
+            addForceValue = UnityEngine.Random.Range(-1,11);
+            string addCondition = "";
+            switch (addForceValue)
+            {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    addCondition = "進步緩慢";
+                    break;
+
+                case 5:
+                case 6:
+                case 7:
+                    addCondition = "進步普通";
+                    break;
+
+                case 8:
+                case 9:
+                case 10:
+                    addCondition = "進步飛快";
+                    break;
+                default:
+                    addCondition = "毫無進步";
+                    break;
+            }
+
             lastChangeTime = Time.time;
             var practiceStoryMessage = new List<ChatMessage>
             {
                 new ChatMessage()
                 {
                     Role = "user",
-                    Content = "請以第一人稱視角生成一小段修練武功一天的劇情"
+                    Content = "請以第一人稱視角生成一小段修練武功一天且" + addCondition + "的劇情"
                 }
             };
             void HandleResponse(List<CreateChatCompletionResponse> responses){
@@ -105,7 +134,7 @@ namespace OpenAI
                     canMove = false;
                     textBoxCount = 0;
                     practiceBackground.SetActive(false);
-                    GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetForceValue();
+                    GameObject.Find("StoryController").GetComponent<GrowthSystemController>().GetForceValue(addForceValue);
                     FullStoryController.day++;
                 }
             }
