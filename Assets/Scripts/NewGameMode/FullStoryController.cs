@@ -207,10 +207,64 @@ namespace OpenAI
             switch (num)
             {
                 case 1:
-                    npcType = "monk";
+                    npcType = "Monk";
                     break;
                 case 2:
-                    npcType = "swordsman";
+                    npcType = "Swordsman";
+                    break;
+                case 3:
+                    npcType = "Nun";
+                    break;
+                case 4:
+                    npcType = "Bandits";
+                    break;
+                case 5:
+                    npcType = "Heroine";
+                    break;
+                case 6:
+                    npcType = "Taoist";
+                    break;
+                case 7:
+                    npcType = "Beggars";
+                    break;
+                case 8:
+                    npcType = "Catch";
+                    break;
+                case 9:
+                    npcType = "Scholar";
+                    break;
+                case 10:
+                    npcType = "Knifesman";
+                    break;
+                case 11:
+                    npcType = "MiddleagedKnight";
+                    break;
+                case 12:
+                    npcType = "OldKnight";
+                    break;
+                case 13:
+                    npcType = "OldMonk";
+                    break;
+                case 14:
+                    npcType = "MysteriousAssassin";
+                    break;
+                case 15:
+                    npcType = "DisciplesOfTheSwordSect";
+                    break;
+                case 16:
+                    npcType = "DisciplesOfTheBoxingSect";
+                    break;
+                case 17:
+                    npcType = "Officer";
+                    break;
+                case 18:
+                    npcType = "Drunkard";
+                    break;
+                case 19:
+                    npcType = "Vendors";
+                    break;
+                case 20:
+                    npcType = "GrandMaster";
                     break;
                 default:
                     npcType = "";
@@ -223,12 +277,12 @@ namespace OpenAI
         }
 
         private void NpcGenerator(Transform npcPlace,int placeNum){
-            int randomNpcTypeNum = UnityEngine.Random.Range(1,3);
+            int randomNpcTypeNum = UnityEngine.Random.Range(1,21);
             var newNpc = Instantiate(npcPrefrebs[randomNpcTypeNum-1], npcPlace);
 
             string npcType = GetNpcTypeByNum(randomNpcTypeNum);
-            int randomImgIndex = UnityEngine.Random.Range(1,3);
-            Sprite newSprite = Resources.Load<Sprite>("WuxiaNPC/" + npcType + randomImgIndex);
+            int randomImgIndex = UnityEngine.Random.Range(1,5);
+            Sprite newSprite = Resources.Load<Sprite>("WuxiaNPC/" + npcType + "/"+ randomImgIndex);
 
             if (newSprite != null) {
                 newNpc.GetChild(0).GetComponentInChildren<Image>().sprite = newSprite;
