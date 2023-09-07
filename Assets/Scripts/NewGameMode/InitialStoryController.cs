@@ -66,7 +66,7 @@ namespace OpenAI
             {
                 Model = "gpt-3.5-turbo-0613",
                 Messages = initialStoryMessage,
-                Temperature = 0.0f,
+                Temperature = 0.7f,
                 Stream = true
             }, HandleResponse, HandleComplete,token);
         }

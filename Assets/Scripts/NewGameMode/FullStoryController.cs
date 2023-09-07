@@ -77,6 +77,8 @@ namespace OpenAI
             endPanelCanvasGroup.alpha = 0;
             endStoryPanel.GetComponent<Button>().onClick.AddListener(BackToMainPage);
             endStoryPanel.GetComponent<Button>().interactable = false;
+
+            GetRandomNewPlaceName();
         }
 
         private void Update()
@@ -201,6 +203,31 @@ namespace OpenAI
             }
             return placeName;
         } 
+
+        private async void GetRandomNewPlaceName(){
+            for (int i = 0; i < placeButtons.Count; i++)
+            {
+                string placeName = placeButtons[i].GetComponentInChildren<Text>().text;
+                var getNewPlaceNameMessage = new List<ChatMessage>
+                {
+                    new ChatMessage()
+                    {
+                        Role = "user",
+                        Content = "請給予" + placeName + "這種地方一個名字，五個字以內\n\n請直接回答地方的名字:\n"
+                    }
+                };
+                var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+                {
+                    Model = "gpt-3.5-turbo-0613",
+                    Messages = getNewPlaceNameMessage,
+                    MaxTokens = 128,
+                    Temperature = 1.0f
+                });
+
+                placeButtons[i].GetComponentInChildren<Text>().text = completionResponse.Choices[0].Message.Content.Trim();
+                print(completionResponse.Choices[0].Message.Content.Trim());
+            }
+        }
 
         public static string GetNpcTypeByNum(int num){
            string npcType = "";
