@@ -127,7 +127,7 @@ namespace OpenAI
             exploreBackgroundImg.sprite = newSprite;
             exploreBackground.SetActive(true);
 
-            int randomSoundInt = UnityEngine.Random.Range(1,15);
+            int randomSoundInt = UnityEngine.Random.Range(2,15);
             AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
             exploreBackgroundSound.clip = newSoundClip;
             exploreBackgroundSound.enabled = true;
