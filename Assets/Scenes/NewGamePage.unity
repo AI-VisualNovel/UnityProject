@@ -9391,7 +9391,7 @@ MonoBehaviour:
   - {fileID: 965516699}
   npcPrefrebs:
   - {fileID: 5388949183163936652, guid: 71f9054066adf6b40a073fafcd775540, type: 3}
-  - {fileID: 5388949183163936652, guid: 97235aa6677c4bd43b00400c05f2f4c7, type: 3}
+  - {fileID: 5388949183163936652, guid: 038e8ec42e60fcf49a168ebcbd9afcab, type: 3}
   npcPlaces:
   - {fileID: 1052269596}
   - {fileID: 947358108}

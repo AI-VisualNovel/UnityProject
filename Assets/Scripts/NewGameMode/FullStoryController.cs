@@ -52,10 +52,10 @@ namespace OpenAI
                 Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + fixedPlaces[i] + "/" + randomImgIndex);
                 placeImages[i].sprite = newSprite;
 
-                int randomNpcNum = UnityEngine.Random.Range(0,2);
-                if(randomNpcNum == 1){
+                // int randomNpcNum = UnityEngine.Random.Range(0,2);
+                // if(randomNpcNum == 1){
                     NpcGenerator(npcPlaces[i],fixedPlaces[i]);
-                }
+                //}
             }
             randomPlaces.AddRange(allPlaces);
             exploreController = GetComponent<ExploreStoryController>();
