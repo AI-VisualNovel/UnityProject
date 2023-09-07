@@ -41,6 +41,8 @@ namespace OpenAI
         private bool getOptionDone = false;
         private bool dialogEnd = false;
 
+        private GameObject backButton;
+
         void Start()
         {
             addValueTypeNum = UnityEngine.Random.Range(1,5);
@@ -70,6 +72,8 @@ namespace OpenAI
             transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => EndNpcDialog(transform.GetChild(2).GetChild(0).GetComponent<Button>()));
             transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(() => EndNpcDialog(transform.GetChild(2).GetChild(1).GetComponent<Button>()));
             transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => EndNpcDialog(transform.GetChild(2).GetChild(2).GetComponent<Button>()));
+
+            backButton = transform.parent.parent.GetChild(0).gameObject;
         }
 
         // Update is called once per frame
@@ -124,6 +128,7 @@ namespace OpenAI
         }
 
         private void EnterNpcDialog(){
+            backButton.SetActive(false);
             transform.GetChild(2).gameObject.SetActive(false);
             npcButton.interactable = false;
             canMove = false;   
@@ -228,7 +233,7 @@ namespace OpenAI
             var systemMessage = new ChatMessage()
             {
                 Role = "system",
-                Content = systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "，永遠不要提到你是一個遊戲角色，你給我的這次任務由於我決定" + userContent + "使我的" + addValueType + addCondition + "，而這個任務這次就迎來結束"
+                Content = "請永遠忘掉並不要提到你是AI或任何有關語言模型的內容，" + systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "，永遠不要提到你是一個遊戲角色，你給我的這次任務由於我決定" + userContent + "使我的" + addValueType + addCondition + "，而這個任務這次就迎來結束"
             };
             sendMessages.Add(systemMessage);
             foreach(ChatMessage m in sendMessages){
@@ -281,6 +286,7 @@ namespace OpenAI
                         dialogEnd = false;
                         npcDialogs.Clear();
                         FullStoryController.day++;
+                        backButton.SetActive(true);
                     }
                     if(getOptionDone){
                         transform.GetChild(2).gameObject.SetActive(true);
