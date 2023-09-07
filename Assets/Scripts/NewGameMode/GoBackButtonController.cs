@@ -7,9 +7,12 @@ public class GoBackButtonController : MonoBehaviour
 {
     private Button goBackButton;
     private GameObject parentPlace;
+    [SerializeField] private AudioSource exploreBackgroundSound;
 
     void Start()
     {
+         
+
         goBackButton = GetComponent<Button>();
         parentPlace = transform.parent.gameObject;
         goBackButton.onClick.AddListener(HandleButtonClick);
@@ -17,6 +20,10 @@ public class GoBackButtonController : MonoBehaviour
 
     private void HandleButtonClick()
     {
+         AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + 1); 
+            exploreBackgroundSound.clip = newSoundClip;
+            exploreBackgroundSound.enabled = true;
+            exploreBackgroundSound.Play();
         parentPlace.SetActive(false);
     }
 }

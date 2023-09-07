@@ -70,7 +70,7 @@ namespace OpenAI
             canMove = false;
             practiceBackground.SetActive(true);
 
-            int randomSoundInt = UnityEngine.Random.Range(1,15);
+            int randomSoundInt = UnityEngine.Random.Range(2,15);
             AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
             practiceBackgroundSound.clip = newSoundClip;
             practiceBackgroundSound.enabled = true;

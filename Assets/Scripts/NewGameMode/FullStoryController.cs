@@ -19,6 +19,7 @@ namespace OpenAI
         private CancellationTokenSource token = new CancellationTokenSource();
 
         public static int day = 1;
+        [SerializeField] private AudioSource exploreBackgroundSound;
 
         [SerializeField] private Text dayCounter;
         [SerializeField] private Text initialStoryTextArea;
@@ -300,6 +301,11 @@ namespace OpenAI
             return npcType;
         }
         public void FixedPlaceButtonAct(int placeIndex){
+            int randomSoundInt = UnityEngine.Random.Range(2,15);
+            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
+            exploreBackgroundSound.clip = newSoundClip;
+            exploreBackgroundSound.enabled = true;
+            exploreBackgroundSound.Play();
             placeImagesObj[placeIndex].SetActive(true);
         }
 

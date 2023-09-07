@@ -919,6 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &99305244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1873,6 +1874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &219993711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2086,6 +2088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &238067402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4431,6 +4434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &796441575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7200,6 +7204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &1256653659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9469,6 +9474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2210cc9396a8346822b5a8d77b6ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
   dayCounter: {fileID: 2131277657}
   initialStoryTextArea: {fileID: 888345523}
   scroll: {fileID: 553785127}
@@ -9723,6 +9729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &1615046671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10779,6 +10786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &1763146854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10991,6 +10999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &1802407835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11375,7 +11384,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860087600}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6148de9dc8e9fc24782bd965d25088cd, type: 3}
@@ -11796,6 +11805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &1894577634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12615,6 +12625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126e1900c970efd4aa18b825d7139a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploreBackgroundSound: {fileID: 1860087601}
 --- !u!114 &2062815577
 MonoBehaviour:
   m_ObjectHideFlags: 0
