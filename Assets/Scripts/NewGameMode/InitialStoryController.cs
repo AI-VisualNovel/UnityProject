@@ -22,6 +22,8 @@ namespace OpenAI
         [SerializeField] private Button initialStoryPanelButton;
         [SerializeField] private Text initialStoryTextArea;
         [SerializeField] private GameObject initMoveOnTip;
+        [SerializeField] private List<GameObject> tutorialPanels;
+
 
         private CanvasGroup initPanelCanvasGroup;
         private float fadeDuration = 3.0f;
@@ -41,6 +43,11 @@ namespace OpenAI
             initPanelCanvasGroup.alpha = 1;
             initialStoryPanelButton.interactable = false;
             initialStoryPanelButton.onClick.AddListener(InitialStoryPanelButtonAct);
+
+            for(int i = 0;i < tutorialPanels.Count;i++){
+                int index = i;
+                tutorialPanels[i].GetComponent<Button>().onClick.AddListener(() => ShowNextTutorial(index));
+            }
             GetInitialStory();
         }
 
@@ -90,6 +97,7 @@ namespace OpenAI
             // 確保透明度達到1
             initPanelCanvasGroup.alpha = 0;
             initialStoryPanel.SetActive(false);
+            tutorialPanels[0].SetActive(true);
         }
 
         private void InitPlotPrompt(){
@@ -107,6 +115,13 @@ namespace OpenAI
             plotIndex = UnityEngine.Random.Range(0,10);
             plotPrompt = plotsPrompts[plotIndex];
             print(plotPrompt);
+        }
+
+        private void ShowNextTutorial(int tutorialIndex){
+            tutorialPanels[tutorialIndex].SetActive(false);
+            if(tutorialIndex + 1 < tutorialPanels.Count){
+                tutorialPanels[tutorialIndex+1].SetActive(true);
+            }
         }
     }
 

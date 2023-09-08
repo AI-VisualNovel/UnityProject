@@ -91,19 +91,19 @@ namespace OpenAI
 
             dayCounter.text = day.ToString();
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
-            if(day >= 3){
+            if(day >= 4){
                 Invoke("EnterTheEnd", 3.0f);
                 day = -1;
             }if(day == -1){
-                dayCounter.text = "3";
+                dayCounter.text = "4";
             }
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
         }
 
-    public GameObject getValueTipPanel;
+
 
         private void Test(){
-                    getValueTipPanel.GetComponent<GetValueTipController>().StartCoroutine("MoveObject");
+
         }
 
         public static string GetPlaceNameByNum(int num){
