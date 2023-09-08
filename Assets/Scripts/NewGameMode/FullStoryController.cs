@@ -100,8 +100,10 @@ namespace OpenAI
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
         }
 
+    public GameObject getValueTipPanel;
+
         private void Test(){
-            //print(CE);
+                    getValueTipPanel.GetComponent<GetValueTipController>().StartCoroutine("MoveObject");
         }
 
         public static string GetPlaceNameByNum(int num){
@@ -222,7 +224,7 @@ namespace OpenAI
                     Model = "gpt-3.5-turbo-0613",
                     Messages = getNewPlaceNameMessage,
                     MaxTokens = 128,
-                    Temperature = 1.0f
+                    Temperature = 0.0f
                 });
 
                 placeButtons[i].GetComponentInChildren<Text>().text = completionResponse.Choices[0].Message.Content.Trim();

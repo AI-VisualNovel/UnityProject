@@ -16,7 +16,7 @@ public class GetValueTipController : MonoBehaviour
     private void Start()
     {
         startPosition = transform.position;
-        endPosition = startPosition - new Vector3(0, moveDistance, 0);
+        endPosition = startPosition - new Vector3(moveDistance, 0, 0);
         //StartCoroutine(MoveObject());
     }
 

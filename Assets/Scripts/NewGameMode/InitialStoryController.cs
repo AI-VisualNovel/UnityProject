@@ -39,7 +39,7 @@ namespace OpenAI
             InitPlotPrompt();
             initPanelCanvasGroup = initialStoryPanel.GetComponent<CanvasGroup>();
             initPanelCanvasGroup.alpha = 1;
-            //initialStoryPanelButton.interactable = false;
+            initialStoryPanelButton.interactable = false;
             initialStoryPanelButton.onClick.AddListener(InitialStoryPanelButtonAct);
             GetInitialStory();
         }
@@ -73,6 +73,7 @@ namespace OpenAI
 
         private void InitialStoryPanelButtonAct(){
             StartCoroutine(InitFadeOut());
+
         }
 
         private IEnumerator InitFadeOut()
