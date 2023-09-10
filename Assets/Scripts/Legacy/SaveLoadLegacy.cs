@@ -132,9 +132,9 @@ namespace OpenAI
                 Debug.Log(m.Content);
                 // var recItem = AppendMessage(m);
 
-                // var sentItem = AppendMessage(m);
-                // currentMessageRec = sentItem;
-                // textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
+                var sentItem = AppendMessage(m);
+                currentMessageRec = sentItem;
+                textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
                 
             
                 // testing
@@ -144,7 +144,7 @@ namespace OpenAI
             }
 
             // 假设 chat_massage 是包含整篇文章的字符串
-            string[] lines = lastMessage.Content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            // string[] lines = lastMessage.Content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             // var recItem = AppendMessage(m);
 
             // var sentItem = AppendMessage(m);
@@ -152,22 +152,18 @@ namespace OpenAI
             // textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
 
 
-            if (lines.Length > 0)
-            {
-                string lastLine = lines[lines.Length - 1];
-                var recItem = AppendMessage(lastMessage,lastLine);
-                var sentItem = AppendMessage(lastMessage,lastLine);
-                currentMessageRec = sentItem;
-                textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
-            }
-            else
-            {
-                Debug.Log("文章为空，没有最后一行内容。");
-            }
-
-
-            
-
+            // if (lines.Length > 0)
+            // {
+            //     string lastLine = lines[lines.Length - 1];
+            //     var recItem = AppendMessage(lastMessage,lastLine);
+            //     var sentItem = AppendMessage(lastMessage,lastLine);
+            //     currentMessageRec = sentItem;
+            //     textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
+            // }
+            // else
+            // {
+            //     Debug.Log("文章为空，没有最后一行内容。");
+            // }
         }
 
         // private static RectTransform AppendMessage(ChatMessage message)
@@ -176,8 +172,7 @@ namespace OpenAI
             scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
             var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
-            // item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
-            // item.GetChild(0).GetChild(0).GetComponent<Text>().text = "阿巴拉拉";
+            item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
 
             item.anchoredPosition = new Vector2(0, -height);
             LayoutRebuilder.ForceRebuildLayoutImmediate(item);
