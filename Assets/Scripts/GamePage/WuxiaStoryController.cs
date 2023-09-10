@@ -177,6 +177,7 @@ namespace OpenAI
 
         private async void SendReply(Button button)
         {
+            from_book2 = false; // reset
             optionChoicing.SetActive(false);
             SaveButton.gameObject.SetActive(false);
             LoadButton.gameObject.SetActive(false);
