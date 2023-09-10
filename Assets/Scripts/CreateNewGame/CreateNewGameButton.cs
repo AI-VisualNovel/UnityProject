@@ -28,7 +28,7 @@ public class CreateNewGameButton : MonoBehaviour
         ClickSound.Play();
         
         string api = apicontroller.GetrealText();
-        Debug.Log(api);
+        Debug.Log("使用者輸入API為: "+api);
         // User_API = apicontroller.realText;
         foreach (Button button in buttons)
         {
