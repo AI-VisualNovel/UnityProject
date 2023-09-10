@@ -336,32 +336,5 @@ namespace OpenAI
 
             getOptionDone = true;
         }
-
-        // private async int DetermineOptionLead(string option,string valueType){
-        //     var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
-        //     {
-        //         Prompt = "你現在是一個武俠遊戲成長系統判斷器，請你判斷「" + option + "」這個選擇會使我的成長系統中的" + valueType + "值有以下何種變化?\n\n(1)毫無增長\n(2)些微增長\n(3)增長不少\n(4)增長極多\n\n請直接給予數字:",
-        //         Model = "text-davinci-003",
-        //         MaxTokens = 256,
-        //         Temperature = 0.5f,
-        //     });
-
-        //     //確保只有一個數字
-        //     string cleanedString = "";
-        //     foreach (char c in completionResponse.Choices[0].Text.Trim()){
-        //         if(char.IsDigit(c)){
-        //             cleanedString += c;
-        //         }
-        //     }
-        //     //若類別碼無成功給予防範機制(給予隨機類別)
-        //     if(cleanedString.Length > 2){
-        //         print("![選擇判斷失敗]");
-        //         cleanedString = UnityEngine.Random.Range(1,5).ToString();
-        //     }
-
-        //     int optionLead = 2;
-        //     int.TryParse(cleanedString, out optionLead);
-        //     return optionLead;
-        // }
     }
 }

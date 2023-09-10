@@ -89,13 +89,13 @@ namespace OpenAI
                 Test();
             }
 
-            dayCounter.text = day.ToString();
+            dayCounter.text = "第" + day.ToString() + "天";
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
             if(day >= 4){
                 Invoke("EnterTheEnd", 3.0f);
                 day = -1;
             }if(day == -1){
-                dayCounter.text = "4";
+                dayCounter.text = "第4天";
             }
             //!!!!!!!!!!!!!!小心使用!!!!!!!!!!!!!!!!!!!
         }
