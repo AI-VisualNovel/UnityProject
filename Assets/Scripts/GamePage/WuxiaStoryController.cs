@@ -94,8 +94,6 @@ namespace OpenAI
 
             if(from_book2 == false){ // 讀檔的過來的話就不用sendreply
                 SendReply(null);
-                // Debug.Log("跑到Start了!!!，from_book2 = false");
-
             }
             if(from_book2 == true){ // 從book2過來的
                 canMove = true;
