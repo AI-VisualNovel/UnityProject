@@ -179,7 +179,7 @@ namespace OpenAI
             }, HandleResponse, HandleComplete,token);  
         }
 
-        private void EndNpcDialog(Button button){
+        private async void EndNpcDialog(Button button){
             transform.GetChild(2).gameObject.SetActive(false);
             npcButton.interactable = false;
             canMove = false;   
@@ -190,30 +190,46 @@ namespace OpenAI
 
             string userContent = button.GetComponentInChildren<Text>().text;
 
-            addValueAmont = UnityEngine.Random.Range(-1,11);
+            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            {
+                Prompt = "你現在是一個武俠遊戲成長系統判斷器，請你判斷「" + userContent + "」這個選擇會使我的成長系統中的" + addValueType + "值有以下何種變化?\n\n(1)毫無增長\n(2)些微增長\n(3)增長不少\n(4)增長極多\n\n請直接給予數字:",
+                Model = "text-davinci-003",
+                MaxTokens = 256,
+                Temperature = 0.5f,
+            });
+            //確保只有一個數字
+            string cleanedString = "";
+            foreach (char c in completionResponse.Choices[0].Text.Trim()){
+                if(char.IsDigit(c)){
+                    cleanedString += c;
+                }
+            }
+            //若類別碼無成功給予防範機制(給予隨機類別)
+            if(cleanedString.Length > 2){
+                print("![選擇判斷失敗]");
+                cleanedString = "2";
+            }
+            int optionLead = 2;
+            int.TryParse(cleanedString, out optionLead);
+            print("[OPTION LEAD]: "  + optionLead);
             string addCondition = "";
-            switch (addValueAmont)
+            switch (optionLead)
             {
                 case 1:
+                    addValueAmont = UnityEngine.Random.Range(-1,1);
+                    addCondition = "毫無增長";
+                    break;
                 case 2:
-                case 3:
-                case 4:
+                    addValueAmont = UnityEngine.Random.Range(1,5);
                     addCondition = "些微增長";
                     break;
-
-                case 5:
-                case 6:
-                case 7:
-                    addCondition = "有所增長";
+                case 3:
+                    addValueAmont = UnityEngine.Random.Range(5,8);
+                    addCondition = "增長不少";
                     break;
-
-                case 8:
-                case 9:
-                case 10:
+                case 4:
+                    addValueAmont = UnityEngine.Random.Range(8,11);
                     addCondition = "增長極多";
-                    break;
-                default:
-                    addCondition = "毫無增長";
                     break;
             }
 
@@ -295,8 +311,7 @@ namespace OpenAI
             }
         }
 
-        private async void GetOptions(string fullPlot)
-        {
+        private async void GetOptions(string fullPlot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
                 Prompt = "請根據以下劇情給予我三個選項\n\n劇情:\n" + fullPlot + "\n\n請以換行符分隔三個選項:\n",
@@ -321,5 +336,32 @@ namespace OpenAI
 
             getOptionDone = true;
         }
+
+        // private async int DetermineOptionLead(string option,string valueType){
+        //     var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+        //     {
+        //         Prompt = "你現在是一個武俠遊戲成長系統判斷器，請你判斷「" + option + "」這個選擇會使我的成長系統中的" + valueType + "值有以下何種變化?\n\n(1)毫無增長\n(2)些微增長\n(3)增長不少\n(4)增長極多\n\n請直接給予數字:",
+        //         Model = "text-davinci-003",
+        //         MaxTokens = 256,
+        //         Temperature = 0.5f,
+        //     });
+
+        //     //確保只有一個數字
+        //     string cleanedString = "";
+        //     foreach (char c in completionResponse.Choices[0].Text.Trim()){
+        //         if(char.IsDigit(c)){
+        //             cleanedString += c;
+        //         }
+        //     }
+        //     //若類別碼無成功給予防範機制(給予隨機類別)
+        //     if(cleanedString.Length > 2){
+        //         print("![選擇判斷失敗]");
+        //         cleanedString = UnityEngine.Random.Range(1,5).ToString();
+        //     }
+
+        //     int optionLead = 2;
+        //     int.TryParse(cleanedString, out optionLead);
+        //     return optionLead;
+        // }
     }
 }
