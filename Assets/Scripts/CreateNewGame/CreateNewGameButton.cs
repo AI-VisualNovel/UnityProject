@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class CreateNewGameButton : MonoBehaviour
 {
+    public APIController apicontroller;
     public Button[] buttons;
     public Color desiredColor;
     public Toggle[] toggles;
@@ -26,9 +27,9 @@ public class CreateNewGameButton : MonoBehaviour
         int i = 0;
         ClickSound.Play();
         
-
-       
-        User_API = UserInput.text;
+        string api = apicontroller.GetrealText();
+        Debug.Log(api);
+        // User_API = apicontroller.realText;
         foreach (Button button in buttons)
         {
             ColorBlock buttonColorBlock = button.colors;
