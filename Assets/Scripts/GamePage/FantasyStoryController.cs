@@ -41,7 +41,12 @@ namespace OpenAI
         [SerializeField] private GameObject WrongApiPanel;
 
 
-        private OpenAIApi openai = new OpenAIApi(CreateNewGameButton.User_API);
+        // private OpenAIApi openai = new OpenAIApi(CreateNewGameButton.User_API); // 先註解掉
+        private OpenAIApi openai = new OpenAIApi("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");
+
+
+
+
         private List<ChatMessage> messages = new List<ChatMessage>();
         private List<ChatMessage> filteredMessages = new List<ChatMessage>();
         private string recap = "";
