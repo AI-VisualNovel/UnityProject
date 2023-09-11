@@ -14,7 +14,7 @@ namespace OpenAI
     {
         [SerializeField] private InputField inputField;
         [SerializeField] private Button sendButton;
-        [SerializeField] private Text textArea;
+        [SerializeField] private Text textArea;  // 顯示劇情的地方
         [SerializeField] private Button backgroundButton;  
         [SerializeField] private Button textBoxButton;  
         [SerializeField] private ScrollRect scroll;
@@ -39,7 +39,14 @@ namespace OpenAI
         [SerializeField] private Button testButton;
         [SerializeField] private AudioSource BackgroundSound;
 
-        private OpenAIApi openai = new OpenAIApi();
+        [SerializeField] private Button SaveButton;  
+        [SerializeField] private Button LoadButton;  
+
+        // private OpenAIApi openai = new OpenAIApi();
+        private OpenAIApi openai = new OpenAIApi("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");
+
+
+
         private List<ChatMessage> messages = new List<ChatMessage>();
         private List<ChatMessage> filteredMessages = new List<ChatMessage>();
         private string recap = "";
@@ -62,6 +69,13 @@ namespace OpenAI
         private bool imgNeedChange = false;
         private bool getOptionDone = false;
 
+        public static string BackgroundImagePath;
+
+        // Lai
+        public SaveLoadLegacy SaveLoadLegacy;
+        public static bool from_book2 = false;
+
+
         private void Start()
         {
             testButton.onClick.AddListener(Test);
@@ -76,8 +90,20 @@ namespace OpenAI
             option3Button.onClick.AddListener(() => SendReply(option3Button));
             option4Button.onClick.AddListener(option4ButtonAct);
 
-            SendReply(null);
+            SaveButton.gameObject.SetActive(false);
+            LoadButton.gameObject.SetActive(false);
 
+            if(from_book2 == false){ // 讀檔的過來的話就不用sendreply
+                SendReply(null);
+                // Debug.Log("跑到Start了!!!，from_book2 = false");
+
+            }
+            if(from_book2 == true){ // 從book2過來的
+                canMove = true;
+                // Debug.Log("跑到Start了!!!，從book2來");
+                SendPreviousReply(textBoxButton.GetComponentInChildren<Text>().text);
+            }
+            
             lastChangeTime = Time.time;
             int randomSoundInt = UnityEngine.Random.Range(1,14);
             AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
@@ -125,6 +151,8 @@ namespace OpenAI
         private async void SendReply(Button button)
         {
             optionChoicing.SetActive(false);
+            SaveButton.gameObject.SetActive(false);
+            LoadButton.gameObject.SetActive(false);
             try{
                 textBoxCount = 0;
                 imgNeedChange = true;
@@ -152,7 +180,7 @@ namespace OpenAI
                 }else{
                     var sentItem = AppendMessage(sentMessage);
                     currentMessageRec = sentItem;
-                    textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                    textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
                     suspend = true;
                     textBoxCount = -1;
                 }
@@ -172,6 +200,8 @@ namespace OpenAI
                 {
                     Role = "system",
                     Content = "請和我玩武俠劇情遊戲，遊戲過程不停根據我的輸入給予我新的武俠世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做，每次給予的劇情不要一次太多，盡量小於300字"
+                    // Content = "給我一個四字成語，不要回答超過四個字"
+
                 };
                 sendMessages.Add(systemMessage);
                 foreach(ChatMessage m in sendMessages){
@@ -199,18 +229,77 @@ namespace OpenAI
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
-                
+
                 chatCount++;
                 if(chatCount >= 2){
                     messageFilter();
                     chatCount = 0;
                 }
                 
+                // 存message
+                SaveLoadLegacy.SaveChatMassage(messages); 
+                SaveLoadLegacy.SaveStoryToList(recMessage.Content);
 
+                
                 GetOptions(recMessage.Content);
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
+
+            }catch(Exception ex){
+                Debug.LogError("An error occurred: " + ex.Message);
+            }
+        }
+
+        private async void SendPreviousReply(string story)
+        {
+           optionChoicing.SetActive(false);
+            try{
+                textBoxCount = 0;
+                imgNeedChange = true;
+                getOptionDone = false;
+
+                
+                
+                var recMessage = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = story
+                };
+
+                var recItem = AppendMessage(recMessage);
+
+                
+                inputField.text = "";
+                inputField.enabled = false;
+                sendButton.enabled = false;
+
+                currentMessageRec = recItem;
+                
+
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
+
+                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                messages.Add(recMessage);
+                filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
+
+
+                chatCount++;
+                if(chatCount >= 2){
+                    messageFilter();
+                    chatCount = 0;
+                }
+                
+                GetOptions(recMessage.Content);
+
+                inputField.enabled = true;
+                sendButton.enabled = true;
+
             }catch(Exception ex){
                 Debug.LogError("An error occurred: " + ex.Message);
             }
@@ -313,10 +402,13 @@ namespace OpenAI
                 //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
                 filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()\n]+", "");
             }
-
+            
             option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
             option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
             option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
+            // 顯示存檔和讀檔的按鈕
+            SaveButton.gameObject.SetActive(true);
+            LoadButton.gameObject.SetActive(true);
 
             getOptionDone = true;
         }
@@ -348,11 +440,18 @@ namespace OpenAI
             print("[圖片類別編號]: " + cleanedString + "\n[圖片隨機碼]: " + randomInt);
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
+            // 提供給SaveLoad script存取
+            string backgroundImagePath = "WuxiaBackground/" + cleanedString + "/" + randomInt;
+            WuxiaStoryController.BackgroundImagePath = backgroundImagePath;
+
+            
         }
 
         private void option4ButtonAct(){
             fourOptions.SetActive(false);
             selfChoicingPanel.SetActive(true);
+            SaveButton.gameObject.SetActive(false);
+            LoadButton.gameObject.SetActive(false);
         }
 
         private void sendButtonAct(){
