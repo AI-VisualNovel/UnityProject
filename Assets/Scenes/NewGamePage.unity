@@ -12327,7 +12327,7 @@ MonoBehaviour:
   - {fileID: 563440442}
   - {fileID: 965516699}
   npcPrefrebs:
-  - {fileID: 5388949183163936652, guid: 71f9054066adf6b40a073fafcd775540, type: 3}
+  - {fileID: 5388949183163936652, guid: 891928606e5bc584b946d7f1c15193d9, type: 3}
   - {fileID: 5388949183163936652, guid: 038e8ec42e60fcf49a168ebcbd9afcab, type: 3}
   - {fileID: 5388949183163936652, guid: ebac9419254566944b4e291bb76cf80d, type: 3}
   - {fileID: 5388949183163936652, guid: 1a71c130aac207d498eb3be4ba097706, type: 3}
