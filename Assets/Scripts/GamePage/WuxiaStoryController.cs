@@ -39,6 +39,7 @@ namespace OpenAI
         [SerializeField] private RectTransform received;
 
         [SerializeField] private Button testButton;
+        [SerializeField] private AudioSource BackgroundSound;
 
         [SerializeField] private Button SaveButton;  
         [SerializeField] private Button LoadButton;  
@@ -111,6 +112,11 @@ namespace OpenAI
             }
             
             lastChangeTime = Time.time;
+            int randomSoundInt = UnityEngine.Random.Range(1,14);
+            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
+            BackgroundSound.clip = newSoundClip;
+            BackgroundSound.enabled = true;
+            BackgroundSound.Play();
         }
 
         private void Update(){
@@ -152,28 +158,7 @@ namespace OpenAI
         }
 
         private void Test(){
-            //print(currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text);
-            // foreach (ChatMessage message in messages){
-            //     print(message.Role + ":" +message.Content);
-            // }
-            //print(canMove);
-            //print(textBoxCount);
-            //string p = "在青鳥村度過了許多平靜的日子後，有一天，一位神秘的訪客來到了村子，他自稱是「黑影刺客」，聲稱要挑戰村中最強的劍客。村子裡的人們都感到驚恐，不知如何是好。";
-            //ChangeImage(p);
-            //隨機換背景
-            // int randomInt = UnityEngine.Random.Range(1,5);
-            // Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + randomInt);
-            // backgroundImage.sprite = newSprite;
-            // string full = "\nsdfa532.古代中國66dc.\n\n古代657.0日本\n\n現91.c代社會PJI";
-            // string[] optionList = full.Split('\n');
-            // string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
-            // for (int i = 0; i < filteredOptions.Length; i++)
-            // {
-            //     //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
-            //     filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()]+", "");
-            //     print(filteredOptions[i]);
-            // }
-            // messageFilter();
+            
             foreach(ChatMessage m in filteredMessages){
                 print(m.Role + ":" + m.Content);
             }
@@ -511,4 +496,3 @@ namespace OpenAI
 
     }
 }
-
