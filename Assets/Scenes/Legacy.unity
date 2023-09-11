@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: 0.1
-  moveSpeed: 0
+  moveSpeed: 6.5
 --- !u!114 &163248841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1888,6 +1888,7 @@ MonoBehaviour:
   fourOptions: {fileID: 1962721955}
   selfChoicingPanel: {fileID: 1663855384}
   moveOnTip: {fileID: 1465660636}
+  moveBackTip: {fileID: 163248838}
   option1Button: {fileID: 779074943}
   option2Button: {fileID: 1228116264}
   option3Button: {fileID: 663658169}

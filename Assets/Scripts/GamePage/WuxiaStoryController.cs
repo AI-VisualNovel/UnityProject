@@ -26,6 +26,8 @@ namespace OpenAI
         [SerializeField] private GameObject fourOptions;
         [SerializeField] private GameObject selfChoicingPanel;
         [SerializeField] private GameObject moveOnTip;
+        [SerializeField] private GameObject moveBackTip;
+
 
 
         [SerializeField] private Button option1Button;
@@ -141,8 +143,11 @@ namespace OpenAI
 
             if(canMove){
                 moveOnTip.SetActive(true);
+                moveBackTip.SetActive(true);
+
             }else{
                 moveOnTip.SetActive(false);
+                moveBackTip.SetActive(false);
             }
         }
 
