@@ -224,7 +224,7 @@ namespace OpenAI
                     Model = "gpt-3.5-turbo-0613",
                     Messages = getNewPlaceNameMessage,
                     MaxTokens = 128,
-                    Temperature = 0.0f
+                    Temperature = 1.0f
                 });
 
                 placeButtons[i].GetComponentInChildren<Text>().text = completionResponse.Choices[0].Message.Content.Trim();

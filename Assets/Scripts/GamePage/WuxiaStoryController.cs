@@ -45,7 +45,7 @@ namespace OpenAI
   
 
         // private OpenAIApi openai = new OpenAIApi();
-        private OpenAIApi openai = new OpenAIApi("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");
+        private OpenAIApi openai = new OpenAIApi();
 
 
 
@@ -103,7 +103,7 @@ namespace OpenAI
             if(from_book2 == true){ // 從book2過來的
                 canMove = true;
                 // Debug.Log("跑到Start了!!!，從book2來");
-                LoadingPanel.gameObject.SetActive(true);
+                //LoadingPanel.gameObject.SetActive(true);
                 // LoadingScene loadingscene = new LoadingScene();
                 // loadingscene.LoadScene(0);
                 SendPreviousReply(textBoxButton.GetComponentInChildren<Text>().text);
@@ -120,8 +120,13 @@ namespace OpenAI
         private void Update(){
 
             if(from_book2 == true){
-                if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
-                    MoveOn(); // 一直跳到有選項出現
+                // if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
+                //     MoveOn(); // 一直跳到有選項出現
+                // }
+                textBoxCount = 1000;
+                textArea.text = currentFullTexts[currentFullTexts.Length-1];
+                if(getOptionDone){
+                    optionChoicing.SetActive(true);
                 }
             }
 

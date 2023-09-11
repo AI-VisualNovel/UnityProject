@@ -617,7 +617,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 487919977}
   m_HandleRect: {fileID: 487919976}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1647,7 +1647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &860528747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1895,6 +1895,7 @@ MonoBehaviour:
   sent: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   received: {fileID: 8660877164928630359, guid: ddbfca48380adc349bdcc705e9664f5a, type: 3}
   testButton: {fileID: 1868398083}
+  BackgroundSound: {fileID: 0}
   SaveButton: {fileID: 1887135218}
   LoadButton: {fileID: 663583402}
   LoadingPanel: {fileID: 860528746}
