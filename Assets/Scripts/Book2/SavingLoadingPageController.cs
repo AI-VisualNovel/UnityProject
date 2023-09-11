@@ -107,7 +107,7 @@ public class SavingLoadingPageController : MonoBehaviour
         OpenAI.WuxiaStoryController.from_book2 = true;
         OpenAI.SaveLoadLegacy.from_book2 = true;
         OpenAI.SaveLoadLegacy.jsonfile_name = jsonfile_name;
-        SceneManager.LoadScene("Legacy");
+        SceneManager.LoadScene("Legacy_WuXia");
 
 
         // Debug.Log(jsonfile_name);

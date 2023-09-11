@@ -37,9 +37,12 @@ namespace OpenAI
         [SerializeField] private RectTransform received;
 
         [SerializeField] private Button testButton;
+        [SerializeField] private AudioSource BackgroundSound;
 
         [SerializeField] private Button SaveButton;  
         [SerializeField] private Button LoadButton;  
+        [SerializeField] private GameObject LoadingPanel;  
+  
 
         // private OpenAIApi openai = new OpenAIApi();
         private OpenAIApi openai = new OpenAIApi("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");
@@ -91,22 +94,37 @@ namespace OpenAI
 
             SaveButton.gameObject.SetActive(false);
             LoadButton.gameObject.SetActive(false);
+            LoadingPanel.gameObject.SetActive(false);
+
 
             if(from_book2 == false){ // 讀檔的過來的話就不用sendreply
                 SendReply(null);
-                // Debug.Log("跑到Start了!!!，from_book2 = false");
-
             }
             if(from_book2 == true){ // 從book2過來的
                 canMove = true;
                 // Debug.Log("跑到Start了!!!，從book2來");
+                LoadingPanel.gameObject.SetActive(true);
+                // LoadingScene loadingscene = new LoadingScene();
+                // loadingscene.LoadScene(0);
                 SendPreviousReply(textBoxButton.GetComponentInChildren<Text>().text);
             }
             
             lastChangeTime = Time.time;
+            int randomSoundInt = UnityEngine.Random.Range(1,14);
+            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/WuXia/" + randomSoundInt); 
+            BackgroundSound.clip = newSoundClip;
+            BackgroundSound.enabled = true;
+            BackgroundSound.Play();
         }
 
         private void Update(){
+
+            if(from_book2 == true){
+                if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
+                    MoveOn(); // 一直跳到有選項出現
+                }
+            }
+
             if(currentMessageRec && suspend == false){
                 currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
             }
@@ -135,28 +153,7 @@ namespace OpenAI
         }
 
         private void Test(){
-            //print(currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text);
-            // foreach (ChatMessage message in messages){
-            //     print(message.Role + ":" +message.Content);
-            // }
-            //print(canMove);
-            //print(textBoxCount);
-            //string p = "在青鳥村度過了許多平靜的日子後，有一天，一位神秘的訪客來到了村子，他自稱是「黑影刺客」，聲稱要挑戰村中最強的劍客。村子裡的人們都感到驚恐，不知如何是好。";
-            //ChangeImage(p);
-            //隨機換背景
-            // int randomInt = UnityEngine.Random.Range(1,5);
-            // Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + randomInt);
-            // backgroundImage.sprite = newSprite;
-            // string full = "\nsdfa532.古代中國66dc.\n\n古代657.0日本\n\n現91.c代社會PJI";
-            // string[] optionList = full.Split('\n');
-            // string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
-            // for (int i = 0; i < filteredOptions.Length; i++)
-            // {
-            //     //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
-            //     filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\d.()]+", "");
-            //     print(filteredOptions[i]);
-            // }
-            // messageFilter();
+            
             foreach(ChatMessage m in filteredMessages){
                 print(m.Role + ":" + m.Content);
             }
@@ -165,6 +162,7 @@ namespace OpenAI
 
         private async void SendReply(Button button)
         {
+            from_book2 = false; // reset
             optionChoicing.SetActive(false);
             SaveButton.gameObject.SetActive(false);
             LoadButton.gameObject.SetActive(false);
@@ -361,6 +359,9 @@ namespace OpenAI
                     textBoxCount++;
                 }
                 if(textBoxCount >= currentFullTexts.Length && getOptionDone){
+                    if(from_book2 = true){
+                        LoadingPanel.gameObject.SetActive(false);
+                    }
                     optionChoicing.SetActive(true);
                 }
             }
@@ -490,4 +491,3 @@ namespace OpenAI
 
     }
 }
-

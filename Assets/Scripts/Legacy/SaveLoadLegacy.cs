@@ -124,10 +124,13 @@ namespace OpenAI
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
             List<ChatMessage> chat_massage = GetChatMassage(readFromFilePath);
+
+
+            ChatMessage lastMessage;
             foreach (ChatMessage m in chat_massage){
                 Debug.Log(m.Role);
                 Debug.Log(m.Content);
-                var recItem = AppendMessage(m);
+                // var recItem = AppendMessage(m);
 
                 var sentItem = AppendMessage(m);
                 currentMessageRec = sentItem;
@@ -137,8 +140,30 @@ namespace OpenAI
                 // testing
                 WuxiaStoryController.from_book2 = true;
 
+                lastMessage = m;
             }
 
+            // 假设 chat_massage 是包含整篇文章的字符串
+            // string[] lines = lastMessage.Content.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            // var recItem = AppendMessage(m);
+
+            // var sentItem = AppendMessage(m);
+            // currentMessageRec = sentItem;
+            // textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
+
+
+            // if (lines.Length > 0)
+            // {
+            //     string lastLine = lines[lines.Length - 1];
+            //     var recItem = AppendMessage(lastMessage,lastLine);
+            //     var sentItem = AppendMessage(lastMessage,lastLine);
+            //     currentMessageRec = sentItem;
+            //     textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
+            // }
+            // else
+            // {
+            //     Debug.Log("文章为空，没有最后一行内容。");
+            // }
         }
 
         // private static RectTransform AppendMessage(ChatMessage message)
@@ -148,6 +173,7 @@ namespace OpenAI
 
             var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
             item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+
             item.anchoredPosition = new Vector2(0, -height);
             LayoutRebuilder.ForceRebuildLayoutImmediate(item);
             height += item.sizeDelta.y;
@@ -156,7 +182,21 @@ namespace OpenAI
 
             return item;
         }
-        
+        private RectTransform AppendMessage(ChatMessage message, string lastline)
+        {
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+
+            var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
+            item.GetChild(0).GetChild(0).GetComponent<Text>().text = lastline;
+
+            item.anchoredPosition = new Vector2(0, -height);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+            height += item.sizeDelta.y;
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            scroll.verticalNormalizedPosition = 0;
+
+            return item;
+        }
 
 
         // public static List<ChatMessage> GetChatMassage(string filepath){
