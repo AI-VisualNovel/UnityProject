@@ -41,7 +41,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SettingPage-main.unity
     guid: 0e266441d5c6fa84cb41f35ab4d5bc15
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GamePage.unity
     guid: 149f386f689b03b40b62c8959b5933f0
   - enabled: 0
