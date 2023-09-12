@@ -7,6 +7,7 @@ using System.Threading;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
 
 namespace OpenAI
 {
@@ -15,8 +16,8 @@ namespace OpenAI
         [SerializeField] private InputField inputField;
         [SerializeField] private Button sendButton;
         [SerializeField] private Text textArea;
-        [SerializeField] private Button backgroundButton;  
-        [SerializeField] private Button textBoxButton;  
+        [SerializeField] private Button backgroundButton;
+        [SerializeField] private Button textBoxButton;
         [SerializeField] private ScrollRect scroll;
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Button hideUIButton;
@@ -38,6 +39,7 @@ namespace OpenAI
 
         [SerializeField] private Button testButton;
         [SerializeField] private AudioSource BackgroundSound;
+        [SerializeField] private Button settingButton;
 
         private OpenAIApi openai = new OpenAIApi();
         private List<ChatMessage> messages = new List<ChatMessage>();
@@ -75,33 +77,40 @@ namespace OpenAI
             option2Button.onClick.AddListener(() => SendReply(option2Button));
             option3Button.onClick.AddListener(() => SendReply(option3Button));
             option4Button.onClick.AddListener(option4ButtonAct);
+            settingButton.onClick.AddListener(MoveB2);
 
             SendReply(null);
 
             lastChangeTime = Time.time;
 
-            int randomSoundInt = UnityEngine.Random.Range(1,11);
-            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/Ghost/" + randomSoundInt); 
+            int randomSoundInt = UnityEngine.Random.Range(1, 11);
+            AudioClip newSoundClip = Resources.Load<AudioClip>("GameMusic/Ghost/" + randomSoundInt);
             BackgroundSound.clip = newSoundClip;
             BackgroundSound.enabled = true;
-           BackgroundSound.Play();
+            BackgroundSound.Play();
 
         }
 
-        private void Update(){
-            if(currentMessageRec && suspend == false){
+        private void Update()
+        {
+            if (currentMessageRec && suspend == false)
+            {
                 currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
             }
-            if(textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false){
+            if (textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false)
+            {
                 //監測字串變化
-                if(textArea.text != currentFullTexts[textBoxCount]){
+                if (textArea.text != currentFullTexts[textBoxCount])
+                {
                     textArea.text = currentFullTexts[textBoxCount];
                     lastChangeTime = Time.time;
                     canMove = false;
                 }
-                
-                if(Time.time - lastChangeTime >= 1f && !canMove){
-                    if(textBoxCount == 0 && imgNeedChange){
+
+                if (Time.time - lastChangeTime >= 1f && !canMove)
+                {
+                    if (textBoxCount == 0 && imgNeedChange)
+                    {
                         ChangeImage(currentFullTexts[0]);
                         imgNeedChange = false;
                     }
@@ -109,16 +118,21 @@ namespace OpenAI
                 }
             }
 
-            if(canMove){
+            if (canMove)
+            {
                 moveOnTip.SetActive(true);
-            }else{
+            }
+            else
+            {
                 moveOnTip.SetActive(false);
             }
         }
 
-        private void Test(){
-            
-            foreach(ChatMessage m in filteredMessages){
+        private void Test()
+        {
+
+            foreach (ChatMessage m in filteredMessages)
+            {
                 print(m.Role + ":" + m.Content);
             }
             print(chatCount);
@@ -127,15 +141,19 @@ namespace OpenAI
         private async void SendReply(Button button)
         {
             optionChoicing.SetActive(false);
-            try{
+            try
+            {
                 textBoxCount = 0;
                 imgNeedChange = true;
                 getOptionDone = false;
 
                 string userContent = "";
-                if(button){
+                if (button)
+                {
                     userContent = button.GetComponentInChildren<Text>().text;
-                }else{
+                }
+                else
+                {
                     userContent = inputField.text;
                 }
                 var sentMessage = new ChatMessage()
@@ -149,9 +167,12 @@ namespace OpenAI
                     Content = ""
                 };
 
-                if (messages.Count == 0){
-                    sentMessage.Content = prompt + "\n" + inputField.text; 
-                }else{
+                if (messages.Count == 0)
+                {
+                    sentMessage.Content = prompt + "\n" + inputField.text;
+                }
+                else
+                {
                     var sentItem = AppendMessage(sentMessage);
                     currentMessageRec = sentItem;
                     textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text;
@@ -176,7 +197,8 @@ namespace OpenAI
                     Content = "請和我靈異鬼故事劇情遊戲，遊戲過程不停根據我的輸入給予我新的鬼故事世界探索劇情，劇情請以第一人稱視角進行並且盡可能充滿細節和豐富互動性，劇情節奏請慢慢來使我有更多時機能針對劇情做出選擇，遇到任何可供選擇的劇情點就停下詢問我我想怎麼做，每次給予的劇情不要一次太多，盡量小於300字"
                 };
                 sendMessages.Add(systemMessage);
-                foreach(ChatMessage m in sendMessages){
+                foreach (ChatMessage m in sendMessages)
+                {
                     print("[SEND]" + m.Role + ":" + m.Content);
                 }
                 semaphore = new SemaphoreSlim(0);
@@ -187,7 +209,7 @@ namespace OpenAI
                     Temperature = 1f,
                     //MaxTokens = 1024,
                     Stream = true
-                },(responses) => HandleResponse(responses, recMessage, recItem),HandleComplete,token);
+                }, (responses) => HandleResponse(responses, recMessage, recItem), HandleComplete, token);
                 await semaphore.WaitAsync();
 
                 scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
@@ -201,24 +223,28 @@ namespace OpenAI
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
-                
+
                 chatCount++;
-                if(chatCount >= 2){
+                if (chatCount >= 2)
+                {
                     messageFilter();
                     chatCount = 0;
                 }
-                
+
 
                 GetOptions(recMessage.Content);
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 Debug.LogError("An error occurred: " + ex.Message);
             }
         }
 
-        private async void messageFilter(){
+        private async void messageFilter()
+        {
             List<ChatMessage> toFilMessages = new List<ChatMessage>(filteredMessages);
             var toS = new ChatMessage()
             {
@@ -251,14 +277,18 @@ namespace OpenAI
             }
         }
 
-        private void MoveOn(){
-            if(canMove){
+        private void MoveOn()
+        {
+            if (canMove)
+            {
                 suspend = false;
                 textBoxCount++;
-                if(textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == ""){
+                if (textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] == "")
+                {
                     textBoxCount++;
                 }
-                if(textBoxCount >= currentFullTexts.Length && getOptionDone){
+                if (textBoxCount >= currentFullTexts.Length && getOptionDone)
+                {
                     optionChoicing.SetActive(true);
                 }
             }
@@ -278,21 +308,22 @@ namespace OpenAI
             return item;
         }
 
-        private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message,RectTransform item)
+        private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message, RectTransform item)
         {
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
-                message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
-                item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+            message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
+            item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
 
-                item.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(item);
-                // height += item.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-                scroll.verticalNormalizedPosition = 0;
+            item.anchoredPosition = new Vector2(0, -height);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+            // height += item.sizeDelta.y;
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            scroll.verticalNormalizedPosition = 0;
         }
 
-        private void HandleComplete(){
+        private void HandleComplete()
+        {
             semaphore.Release();
         }
 
@@ -306,7 +337,7 @@ namespace OpenAI
                 Temperature = 0.0f,
             });
 
-            print("[OPTIONS]:\n"+completionResponse.Choices[0].Text.Trim());
+            print("[OPTIONS]:\n" + completionResponse.Choices[0].Text.Trim());
             string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
             //字串處理
             string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
@@ -322,58 +353,73 @@ namespace OpenAI
 
             getOptionDone = true;
         }
-        private async void ChangeImage(string plot){
+        private async void ChangeImage(string plot)
+        {
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
-                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot +"\n\n(1)公園\n(2)古堡\n(3)地窖\n(4)墓地\n(5)娃娃\n(6)學校\n(7)小鎮\n(8)教堂\n(9)森林\n(10)油畫\n(11)沼澤\n(12)湖泊\n(13)牆壁\n(14)神殿\n(15)精神病院\n(16)船\n(17)莊園\n(18)蠟燭\n(19)遺物\n(20)遺骸\n(21)鬼屋\n\n請直接回答數字就好:\n",
+                Prompt = "請判斷以下劇情應該發生在哪一個場景?\n\n劇情:\n" + plot + "\n\n(1)公園\n(2)古堡\n(3)地窖\n(4)墓地\n(5)娃娃\n(6)學校\n(7)小鎮\n(8)教堂\n(9)森林\n(10)油畫\n(11)沼澤\n(12)湖泊\n(13)牆壁\n(14)神殿\n(15)精神病院\n(16)船\n(17)莊園\n(18)蠟燭\n(19)遺物\n(20)遺骸\n(21)鬼屋\n\n請直接回答數字就好:\n",
                 Model = "text-davinci-003",
                 MaxTokens = 128,
                 Temperature = 0.0f,
-                Stop="."
+                Stop = "."
             });
 
             //確保只有一個數字
             string cleanedString = "";
-            foreach (char c in completionResponse.Choices[0].Text.Trim()){
-                if(char.IsDigit(c)){
+            foreach (char c in completionResponse.Choices[0].Text.Trim())
+            {
+                if (char.IsDigit(c))
+                {
                     cleanedString += c;
                 }
             }
             //若類別碼無成功給予防範機制(給予隨機類別)
-            if(cleanedString.Length > 2){
+            if (cleanedString.Length > 2)
+            {
                 print("![圖片類別取得失敗]");
-                cleanedString = UnityEngine.Random.Range(1,31).ToString();
+                cleanedString = UnityEngine.Random.Range(1, 31).ToString();
             }
 
             //換圖
-            int randomInt = UnityEngine.Random.Range(1,5);
+            int randomInt = UnityEngine.Random.Range(1, 5);
             print("[圖片類別編號]: " + cleanedString + "\n[圖片隨機碼]: " + randomInt);
             Sprite newSprite = Resources.Load<Sprite>("GhostBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
         }
 
-        private void option4ButtonAct(){
+        private void option4ButtonAct()
+        {
             fourOptions.SetActive(false);
             selfChoicingPanel.SetActive(true);
         }
 
-        private void sendButtonAct(){
+        private void sendButtonAct()
+        {
             fourOptions.SetActive(true);
             selfChoicingPanel.SetActive(false);
             SendReply(null);
         }
-        private void UIHiding(){
+        private void UIHiding()
+        {
             gameUI.SetActive(false);
             UIHideing = true;
         }
 
-        private void BackGroundClick(){
-            if(UIHideing == true){
+        private void BackGroundClick()
+        {
+            if (UIHideing == true)
+            {
                 gameUI.SetActive(true);
                 UIHideing = false;
-            }else{
+            }
+            else
+            {
                 MoveOn();
             }
+        }
+        private void MoveB2()
+        {
+            SceneManager.LoadScene("Book2");
         }
 
     }
