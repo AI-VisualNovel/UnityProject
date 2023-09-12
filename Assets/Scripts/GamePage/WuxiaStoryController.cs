@@ -105,10 +105,6 @@ namespace OpenAI
             }
             if(from_book2 == true){ // 從book2過來的
                 canMove = true;
-                // Debug.Log("跑到Start了!!!，從book2來");
-                //LoadingPanel.gameObject.SetActive(true);
-                // LoadingScene loadingscene = new LoadingScene();
-                // loadingscene.LoadScene(0);
                 LoadImageFromJson();
                 SendPreviousReply(textBoxButton.GetComponentInChildren<Text>().text);
             }
@@ -321,7 +317,11 @@ namespace OpenAI
                     chatCount = 0;
                 }
                 
-                GetOptions(recMessage.Content);
+                if(from_book2 == false){
+                    GetOptions(recMessage.Content);
+                }else{
+                    GetOptionsFromJson();
+                }
 
                 inputField.enabled = true;
                 sendButton.enabled = true;
@@ -441,6 +441,15 @@ namespace OpenAI
 
             getOptionDone = true;
         }
+        private async void GetOptionsFromJson(){
+            GameData data = OpenAI.SaveLoadLegacy.GetGameData(JsonFilePath);
+            option1Button.GetComponentInChildren<Text>().text = data.LatestOption1;
+            option2Button.GetComponentInChildren<Text>().text = data.LatestOption2;
+            option3Button.GetComponentInChildren<Text>().text = data.LatestOption3;
+
+            getOptionDone = true;
+        }
+
         private async void ChangeImage(string plot){
             var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
             {
