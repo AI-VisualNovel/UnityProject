@@ -19,7 +19,7 @@ public class MainPageBtn : MonoBehaviour
     public void PrintNewGameMessage()
     {
         Debug.Log("NewGame!");
-        SceneManager.LoadScene("CreateNewGamePage");
+        SceneManager.LoadScene("GamSelect");
         soundPlayer.Play();
     }
     public void PrintContinueGameMessage()
