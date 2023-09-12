@@ -32,10 +32,14 @@ public class LabelController2 : MonoBehaviour
     public Button label3;
     public GameObject label3_native_size;
     public Button label4;
+    public GameObject label4_native_size;
     public Button label5;
     public Button label6;
     public Button label7;
     public Button label8;
+
+
+
 
     // public Animator buttonAnimator; // 你的按钮上的Animator组件
 
@@ -46,12 +50,14 @@ public class LabelController2 : MonoBehaviour
         HistoryPage.SetActive(false);
         SavePage.SetActive(false);
         LoadPage_inGame.SetActive(false);
-        SettingPage_inGame.SetActive(false);
+        SettingPage_inGame.SetActive(true); // 初始畫面在設定頁面
         AboutPage_inGame.SetActive(false);
         HelpPage_inGame.SetActive(false);
 
         label2_native_size.SetActive(false);
         label3_native_size.SetActive(false);
+        label4_native_size.SetActive(true);
+
 
 
 
@@ -114,6 +120,8 @@ public class LabelController2 : MonoBehaviour
     public void label2_pressed()
     {
         label2_native_size.SetActive(true);
+        label4_native_size.SetActive(false);
+
         HistoryPage.SetActive(false);
         SavePage.SetActive(true);
         LoadPage_inGame.SetActive(false);
@@ -127,6 +135,8 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label4_native_size.SetActive(false);
+
 
         HistoryPage.SetActive(false);
         SavePage.SetActive(true); // 共用畫面了
@@ -141,6 +151,7 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label4_native_size.SetActive(true);
         
         HistoryPage.SetActive(false);
         SavePage.SetActive(false);
