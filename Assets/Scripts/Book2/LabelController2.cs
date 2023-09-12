@@ -106,6 +106,7 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label4_native_size.SetActive(false);
 
 
         HistoryPage.SetActive(true);
@@ -165,6 +166,8 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label4_native_size.SetActive(false);
+
         
         HistoryPage.SetActive(false);
         SavePage.SetActive(false);
@@ -182,6 +185,8 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label4_native_size.SetActive(false);
+
         
         HistoryPage.SetActive(false);
         SavePage.SetActive(false);
