@@ -42,6 +42,9 @@ namespace OpenAI
         [SerializeField] private Button SaveButton;  
         [SerializeField] private Button LoadButton;  
         [SerializeField] private GameObject LoadingPanel;  
+
+        public static string JsonFilePath;
+
   
 
         // private OpenAIApi openai = new OpenAIApi();
@@ -106,6 +109,7 @@ namespace OpenAI
                 //LoadingPanel.gameObject.SetActive(true);
                 // LoadingScene loadingscene = new LoadingScene();
                 // loadingscene.LoadScene(0);
+                LoadImageFromJson();
                 SendPreviousReply(textBoxButton.GetComponentInChildren<Text>().text);
             }
             
@@ -145,7 +149,7 @@ namespace OpenAI
                     if(textBoxCount == 0 && imgNeedChange){
                         ChangeImage(currentFullTexts[0]);
                         imgNeedChange = false;
-                    }
+                    } 
                     canMove = true;
                 }
             }
@@ -274,11 +278,15 @@ namespace OpenAI
            optionChoicing.SetActive(false);
             try{
                 textBoxCount = 0;
-                imgNeedChange = true;
+
+
+                if(from_book2 == true){
+                    imgNeedChange = false;
+                }else{
+                    imgNeedChange = true;
+                }
                 getOptionDone = false;
 
-                
-                
                 var recMessage = new ChatMessage()
                 {
                     Role = "assistant",
@@ -466,6 +474,14 @@ namespace OpenAI
             WuxiaStoryController.BackgroundImagePath = backgroundImagePath;
 
             
+        }
+        private async void LoadImageFromJson(){
+            
+            string backgroundImagePath = OpenAI.SaveLoadLegacy.GetGameData(JsonFilePath).BackgroundImg; // 圖片路徑
+            Sprite newSprite = Resources.Load<Sprite>(backgroundImagePath);
+            backgroundImage.sprite = newSprite;
+            Debug.Log("backgroundImagePath: " + backgroundImagePath);
+
         }
 
         private void option4ButtonAct(){
