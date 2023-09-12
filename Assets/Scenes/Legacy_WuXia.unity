@@ -1956,6 +1956,7 @@ MonoBehaviour:
   SaveButton: {fileID: 1887135218}
   LoadButton: {fileID: 663583402}
   LoadingPanel: {fileID: 860528746}
+  settingButton: {fileID: 562031881}
   SaveLoadLegacy: {fileID: 135001614}
 --- !u!1 &928271495
 GameObject:
