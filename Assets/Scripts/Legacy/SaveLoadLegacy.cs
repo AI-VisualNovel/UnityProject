@@ -62,9 +62,9 @@ namespace OpenAI
         }
 
 
-        public void ScreenShot()
+        public void ScreenShot(string category)
         {
-            saved_time = System.DateTime.Now.ToString("MMddyyHHmmss");
+            saved_time = category + System.DateTime.Now.ToString("MMddyyHHmmss");
             ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
             newest_screenshot = saved_time;
             SavingLoadingPageController.saved_time = saved_time;
@@ -196,7 +196,7 @@ namespace OpenAI
             GameData data = JsonConvert.DeserializeObject<GameData>(json);
             return data;
         }
-       
+
 
 
     }

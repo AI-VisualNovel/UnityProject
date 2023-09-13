@@ -113,7 +113,18 @@ public class SavingLoadingPageController : MonoBehaviour
         OpenAI.WuxiaStoryController.from_book2 = true;
         OpenAI.SaveLoadLegacy.from_book2 = true;
         OpenAI.SaveLoadLegacy.jsonfile_name = jsonfile_name;
-        SceneManager.LoadScene("Legacy_WuXia");
+        if (jsonfile_name[0] == '1')
+        {
+            SceneManager.LoadScene("Legacy_WuXia");
+        }
+        else if (jsonfile_name[0] == '2')
+        {
+            SceneManager.LoadScene("Legacy_Ghost");
+        }
+        else
+        {
+            SceneManager.LoadScene("Legacy_Fantasy");
+        }
 
 
         // Debug.Log(jsonfile_name);
@@ -187,7 +198,10 @@ public class SavingLoadingPageController : MonoBehaviour
         string latestFileFullPath = jsonFiles.OrderByDescending(file =>
         {
             string filenameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-            if (Int64.TryParse(filenameWithoutExtension, out long result))
+
+            string numberPart = filenameWithoutExtension.Substring(1);
+
+            if (Int64.TryParse(numberPart, out long result))
             {
                 return result;
             }
@@ -198,6 +212,7 @@ public class SavingLoadingPageController : MonoBehaviour
         Debug.Log(latestFileNameWithoutExtension);
         return latestFileNameWithoutExtension;
     }
+
 
 
     public void LoadLatestGame()
