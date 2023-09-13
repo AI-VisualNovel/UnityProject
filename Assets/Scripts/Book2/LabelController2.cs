@@ -21,6 +21,8 @@ public class LabelController2 : MonoBehaviour
     // privious page
     public static bool from_main_page = false;
     public static bool from_game_page = false;
+    public static bool from_game_setting_btn = false;
+
 
 
     // which to display
@@ -64,13 +66,12 @@ public class LabelController2 : MonoBehaviour
         label3_native_size.SetActive(false);
         label4_native_size.SetActive(true);
 
-        // 如果從main page來，不能進入history page & save page
+        // 如果從main page過來，不能進入history page & save page
         if(from_main_page == true){
             label1.gameObject.SetActive(false);
             label2.gameObject.SetActive(false);
             label2_native_size.SetActive(false);
         }
-
 
         // buttonAnimator = GetComponent<Animator>();
 
@@ -102,15 +103,16 @@ public class LabelController2 : MonoBehaviour
         }
 
     }
-    // private void Update()
-    // {
-    //     // 检测键盘上的P键是否被按下
-    //     if (Input.GetKeyDown(KeyCode.P))
-    //     {
-    //         // 播放按钮的动画
-    //         buttonAnimator.SetTrigger("Highlighted"); // 这里的"ButtonClick"是你在Animator控制器中定义的触发器名称
-    //     }
-    // }
+    private void Update()
+    {
+        // 如果從game page的setting button過來，不能進入load page & save page
+        if(from_game_setting_btn == true){
+            label2.gameObject.SetActive(false);
+            label2_native_size.SetActive(false);
+            label3.gameObject.SetActive(false);
+            label3_native_size.SetActive(false);
+        }
+    }
 
     // history page
     public void label1_pressed()
