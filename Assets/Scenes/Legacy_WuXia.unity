@@ -578,6 +578,7 @@ MonoBehaviour:
   option2: {fileID: 1228116264}
   option3: {fileID: 663658169}
   WuxiaStoryController: {fileID: 0}
+  GhostStoryController: {fileID: 0}
 --- !u!1 &163248838
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,14 +17,7 @@ public class SavingLoadingPageController : MonoBehaviour
     public Button saveload1_2;
     public Button saveload1_3;
     public Button saveload1_4;
-    public Button saveload2_1;
-    public Button saveload2_2;
-    public Button saveload2_3;
-    public Button saveload2_4;
-    public Button saveload3_1;
-    public Button saveload3_2;
-    public Button saveload3_3;
-    public Button saveload3_4;
+    
 
 
 
@@ -178,14 +171,7 @@ public class SavingLoadingPageController : MonoBehaviour
         saveload1_2.gameObject.name = "1_2";
         saveload1_3.gameObject.name = "1_3";
         saveload1_4.gameObject.name = "1_4";
-        saveload2_1.gameObject.name = "2_1";
-        saveload2_2.gameObject.name = "2_2";
-        saveload2_3.gameObject.name = "2_3";
-        saveload2_4.gameObject.name = "2_4";
-        saveload3_1.gameObject.name = "3_1";
-        saveload3_2.gameObject.name = "3_2";
-        saveload3_3.gameObject.name = "3_3";
-        saveload3_4.gameObject.name = "3_4";
+        
     }
     public string GetLatestJsonFile()
     {

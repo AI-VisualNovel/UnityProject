@@ -17,6 +17,12 @@ public class LabelController2 : MonoBehaviour
     public static bool toAboutPage_inGame;
     public static bool toHelpPage_inGame;
 
+
+    // privious page
+    public static bool from_main_page = false;
+    public static bool from_game_page = false;
+
+
     // which to display
     public GameObject HistoryPage;
     public GameObject SavePage;
@@ -58,7 +64,12 @@ public class LabelController2 : MonoBehaviour
         label3_native_size.SetActive(false);
         label4_native_size.SetActive(true);
 
-
+        // 如果從main page來，不能進入history page & save page
+        if(from_main_page == true){
+            label1.gameObject.SetActive(false);
+            label2.gameObject.SetActive(false);
+            label2_native_size.SetActive(false);
+        }
 
 
         // buttonAnimator = GetComponent<Animator>();
@@ -74,7 +85,7 @@ public class LabelController2 : MonoBehaviour
         }
         if (toLoadPage_inGame == true)
         {
-            // label3_native_size.SetActive(true);
+            label3_native_size.SetActive(true);
             label3_pressed();
         }
         if (toSettingPage_inGame == true)
