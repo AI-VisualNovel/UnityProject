@@ -14,6 +14,9 @@ public class APIController : MonoBehaviour
 
     void Start()
     {
+        realText = PlayerPrefs.GetString("APIKey", "");
+        maskedText = new string('*', realText.Length);
+        inputField.text = maskedText;
         inputField.onValueChanged.AddListener(OnValueChange);
         button.onClick.AddListener(TransitInput);
     }
@@ -40,6 +43,8 @@ public class APIController : MonoBehaviour
             realText = text;
             maskedText = new string('*', realText.Length); 
         }
+        PlayerPrefs.SetString("APIKey", realText);
+        PlayerPrefs.Save();
     }
 
 
