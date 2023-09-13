@@ -110,15 +110,16 @@ public class SavingLoadingPageController : MonoBehaviour
         // SceneManager.LoadScene("GamePage");
 
         // 測試Legacy用
-        OpenAI.WuxiaStoryController.from_book2 = true;
         OpenAI.SaveLoadLegacy.from_book2 = true;
         OpenAI.SaveLoadLegacy.jsonfile_name = jsonfile_name;
         if (jsonfile_name[0] == '1')
         {
+            OpenAI.WuxiaStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_WuXia");
         }
         else if (jsonfile_name[0] == '2')
         {
+            OpenAI.GhostStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Ghost");
         }
         else

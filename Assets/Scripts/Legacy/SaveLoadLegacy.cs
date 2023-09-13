@@ -51,7 +51,7 @@ namespace OpenAI
         public Button option3;
         // image
         public WuxiaStoryController WuxiaStoryController;
-
+        public GhostStoryController GhostStoryController;
 
         void Start()
         {
@@ -129,6 +129,8 @@ namespace OpenAI
 
             string readFromFilePath = Application.streamingAssetsPath + "/Json/" + jsonfile_name + ".json";
             WuxiaStoryController.JsonFilePath = readFromFilePath; // 更新路徑去WuxiaStoryController
+            GhostStoryController.JsonFilePath = readFromFilePath;
+
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
             List<ChatMessage> chat_massage = GetChatMassage(readFromFilePath);
