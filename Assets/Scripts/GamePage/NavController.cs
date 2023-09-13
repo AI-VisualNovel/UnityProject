@@ -8,6 +8,7 @@ using static OpenAI.SaveLoad;
 public class NavController : MonoBehaviour
 {
     public static string newest_screenshot;
+    [SerializeField] private GameObject b2panel;
 
     public void Start()
     {
@@ -17,6 +18,7 @@ public class NavController : MonoBehaviour
         LabelController2.toSettingPage_inGame = false;
         LabelController2.toAboutPage_inGame = false;
         LabelController2.toHelpPage_inGame = false;
+
     }
 
     public void toSavePAge()
@@ -35,6 +37,14 @@ public class NavController : MonoBehaviour
     {
         LabelController2.toSettingPage_inGame = true;
         SceneManager.LoadScene("Book2");
+    }
+    public void setB2Active()
+    {
+        b2panel.SetActive(true);
+    }
+    public void back()
+    {
+        b2panel.SetActive(false);
     }
 }
 

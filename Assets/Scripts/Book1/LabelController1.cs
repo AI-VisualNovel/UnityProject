@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 
@@ -26,7 +26,8 @@ public class LabelController1 : MonoBehaviour
     public Button label8;
 
 
-    void Start(){
+    void Start()
+    {
         LoadPage_main.SetActive(false);
         SettingPage_main.SetActive(false);
         AboutPage_main.SetActive(false);
@@ -46,21 +47,24 @@ public class LabelController1 : MonoBehaviour
     // }
 
     // load page
-    public void label3_pressed(){ 
+    public void label3_pressed()
+    {
         LoadPage_main.SetActive(true);
         SettingPage_main.SetActive(false);
         AboutPage_main.SetActive(false);
         HelpPage_main.SetActive(false);
     }
     // setting page
-    public void label4_pressed(){ 
+    public void label4_pressed()
+    {
         SettingPage_main.SetActive(true);
         LoadPage_main.SetActive(false);
         AboutPage_main.SetActive(false);
         HelpPage_main.SetActive(false);
     }
     // about page
-    public void label5_pressed(){ 
+    public void label5_pressed()
+    {
 
         AboutPage_main.SetActive(true);
         SettingPage_main.SetActive(false);
@@ -68,24 +72,27 @@ public class LabelController1 : MonoBehaviour
         HelpPage_main.SetActive(false);
     }
     // help page
-    public void label6_pressed(){ 
+    public void label6_pressed()
+    {
         HelpPage_main.SetActive(true);
         SettingPage_main.SetActive(false);
         LoadPage_main.SetActive(false);
         AboutPage_main.SetActive(false);
     }
     // main page
-    public void label7_pressed(){ 
+    public void label7_pressed()
+    {
         SceneManager.LoadScene("MainPage");
     }
     // quit
-    public void label8_pressed(){ 
+    public void label8_pressed()
+    {
         Debug.Log("ExitGame!");
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         EditorApplication.isPlaying = false;
-        #else
+#else
         Application.Quit();
-        #endif
+#endif
     }
 
 }

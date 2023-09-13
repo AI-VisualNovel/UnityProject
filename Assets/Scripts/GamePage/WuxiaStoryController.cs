@@ -96,7 +96,6 @@ namespace OpenAI
             option2Button.onClick.AddListener(() => SendReply(option2Button));
             option3Button.onClick.AddListener(() => SendReply(option3Button));
             option4Button.onClick.AddListener(option4ButtonAct);
-            settingButton.onClick.AddListener(MoveB2);
 
             SaveButton.gameObject.SetActive(false);
             LoadButton.gameObject.SetActive(false);
@@ -577,10 +576,7 @@ namespace OpenAI
                 MoveOn();
             }
         }
-        private void MoveB2()
-        {
-            SceneManager.LoadScene("Book2");
-        }
+
 
     }
 }
