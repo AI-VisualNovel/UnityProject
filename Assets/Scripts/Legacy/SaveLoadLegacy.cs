@@ -52,6 +52,8 @@ namespace OpenAI
         // image
         public WuxiaStoryController WuxiaStoryController;
         public GhostStoryController GhostStoryController;
+        public FantasyStoryController FantasyStoryController;
+
 
         void Start()
         {
@@ -130,6 +132,8 @@ namespace OpenAI
             string readFromFilePath = Application.streamingAssetsPath + "/Json/" + jsonfile_name + ".json";
             WuxiaStoryController.JsonFilePath = readFromFilePath; // 更新路徑去WuxiaStoryController
             GhostStoryController.JsonFilePath = readFromFilePath;
+            FantasyStoryController.JsonFilePath = readFromFilePath;
+
 
             string[] fileLines = File.ReadAllLines(readFromFilePath); // 读取所有行并将其分割成数组
 
