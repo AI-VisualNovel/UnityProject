@@ -34,6 +34,8 @@ public class MainPageBtn : MonoBehaviour
         Debug.Log("ViewLoading!");
         // SceneManager.LoadScene("LoadPage-inGame");
         LabelController2.toLoadPage_inGame = true;
+        LabelController2.from_main_page = true;
+
         SceneManager.LoadScene("Book2");
         soundPlayer.Play();
     }

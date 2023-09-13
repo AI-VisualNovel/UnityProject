@@ -40,6 +40,7 @@ public class NavController : MonoBehaviour
     }
     public void setB2Active()
     {
+        LabelController2.from_game_setting_btn = true;
         b2panel.SetActive(true);
     }
     public void back()

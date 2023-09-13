@@ -8360,14 +8360,6 @@ MonoBehaviour:
   saveload1_2: {fileID: 1072607660}
   saveload1_3: {fileID: 888538162}
   saveload1_4: {fileID: 466563275}
-  saveload2_1: {fileID: 0}
-  saveload2_2: {fileID: 0}
-  saveload2_3: {fileID: 0}
-  saveload2_4: {fileID: 0}
-  saveload3_1: {fileID: 0}
-  saveload3_2: {fileID: 0}
-  saveload3_3: {fileID: 0}
-  saveload3_4: {fileID: 0}
 --- !u!4 &756491182
 Transform:
   m_ObjectHideFlags: 0
