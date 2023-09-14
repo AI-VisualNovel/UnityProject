@@ -2946,7 +2946,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 504014791}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 923904766}
+        m_TargetAssemblyTypeName: SavingLoadingPageController, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 504014790}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &504014791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3203,7 +3215,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &518806154
 GameObject:
@@ -6564,7 +6576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1001304707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6634,7 +6646,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1008784989
 GameObject:
@@ -8962,7 +8974,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1324767416}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 923904766}
+        m_TargetAssemblyTypeName: SavingLoadingPageController, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1324767415}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1324767416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13038,7 +13062,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907675238
 GameObject:
@@ -14303,7 +14327,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092241527}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 923904766}
+        m_TargetAssemblyTypeName: SavingLoadingPageController, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2092241526}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2092241527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14685,7 +14721,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2137621805}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 923904766}
+        m_TargetAssemblyTypeName: SavingLoadingPageController, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2137621804}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2137621805
 MonoBehaviour:
   m_ObjectHideFlags: 0
