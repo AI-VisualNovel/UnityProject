@@ -64,13 +64,12 @@ public class SavingLoadingPageController : MonoBehaviour
             UpdateJsonLocation(button);
             img = img + "already_saved";
         }
-        else // load game
-        {
-            // string json_name;
-            string jsonfile_name = GetJsonfile(button);
-            LoadGame(jsonfile_name);
-            // Debug.LogError("Image not found at path: " + fullPath);
-        }
+        // else // load game
+        // {
+        //     // string json_name;
+        //     string jsonfile_name = GetJsonfile(button);
+        //     LoadGame(jsonfile_name);
+        // }
     }
 
 
@@ -153,7 +152,9 @@ public class SavingLoadingPageController : MonoBehaviour
 
 
     public void LoadGame(string jsonfile_name)
-    { // 跳轉化面並載入遊戲
+    { 
+        
+        // 跳轉化面並載入遊戲
         OpenAI.NewStoryController.from_book2 = true;
         OpenAI.SaveLoad.from_book2 = true;
         OpenAI.SaveLoad.jsonfile_name = jsonfile_name;
@@ -177,12 +178,42 @@ public class SavingLoadingPageController : MonoBehaviour
             SceneManager.LoadScene("Legacy_Fantasy");
         }
 
-
-        // Debug.Log(jsonfile_name);
-
-        // OpenAI.SaveLoad.LoadFromJson(jsonfile_name);
     }
 
+
+
+    public void LoadGame(Button button)
+    { 
+        
+        string jsonfile_name = GetJsonfile(button);
+        
+        // 跳轉化面並載入遊戲
+        OpenAI.NewStoryController.from_book2 = true;
+        OpenAI.SaveLoad.from_book2 = true;
+        OpenAI.SaveLoad.jsonfile_name = jsonfile_name;
+        // SceneManager.LoadScene("GamePage");
+
+        // 測試Legacy用
+        OpenAI.SaveLoadLegacy.from_book2 = true;
+        OpenAI.SaveLoadLegacy.jsonfile_name = jsonfile_name;
+        if (jsonfile_name[0] == '1')
+        {
+            OpenAI.WuxiaStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_WuXia");
+        }
+        else if (jsonfile_name[0] == '2')
+        {
+            OpenAI.GhostStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_Ghost");
+        }
+        else
+        {
+            SceneManager.LoadScene("Legacy_Fantasy");
+        }
+
+    }
+
+    // 從按鈕去找json file
     public string GetJsonfile(Button button)
     {
 
@@ -200,7 +231,7 @@ public class SavingLoadingPageController : MonoBehaviour
                 json_name = data.Time;
             }
         }
-        Debug.Log(json_name);
+        // Debug.Log(json_name);
         return json_name;  // return json file name inorder to load the correct json file
     }
 
