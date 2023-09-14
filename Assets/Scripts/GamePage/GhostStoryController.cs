@@ -88,7 +88,7 @@ namespace OpenAI
         private void Start()
         {
             openai = new OpenAIApi(PlayerPrefs.GetString("APIKey", ""));
-
+            WrongApiPanel.SetActive(false);
             testButton.onClick.AddListener(Test);
 
             textBoxButton.onClick.AddListener(MoveOn);
@@ -447,7 +447,7 @@ namespace OpenAI
         {
             try
             {
-               // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
                 message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
                 item.GetComponent<Text>().text = message.Content;
