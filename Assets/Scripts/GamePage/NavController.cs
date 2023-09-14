@@ -9,7 +9,7 @@ public class NavController : MonoBehaviour
 {
     public static string newest_screenshot;
     [SerializeField] private GameObject b2panel;
-
+    public bool fromNoApi;
     public void Start()
     {
         LabelController2.toHistoryPage = false;
@@ -40,11 +40,28 @@ public class NavController : MonoBehaviour
     }
     public void setB2Active()
     {
+        LabelController2.from_game_setting_btn = true;
         b2panel.SetActive(true);
     }
-    public void back()
+    public void back(int current)
     {
-        b2panel.SetActive(false);
+        if (fromNoApi)
+        {
+            SceneManager.LoadScene(current);
+            fromNoApi = false;
+
+        }
+        else
+        {
+            b2panel.SetActive(false);
+        }
     }
+    public void NoapiToB2()
+    {
+        fromNoApi = true;
+        LabelController2.from_game_setting_btn = true;
+        b2panel.SetActive(true);
+    }
+
 }
 

@@ -103,7 +103,6 @@ namespace OpenAI
 
 
         private void Test(){
-
         }
 
         public static string GetPlaceNameByNum(int num){

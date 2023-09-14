@@ -18,6 +18,7 @@ public class LabelController1 : MonoBehaviour
     // public Button label1;
     // public Button label2;
     public Button label3;
+    public GameObject label3_native_size;
     public Button label4;
     public Button label5;
     public Button label6;
