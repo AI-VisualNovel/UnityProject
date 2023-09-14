@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class SettingRightPageController : MonoBehaviour
 {
     public InputField apiInputField;
-    public Button resetButton; 
-    public AudioSource clickSound;
+    public Button resetButton;
 
     public Slider bgmSlider;
     public Slider soundEffectSlider;
@@ -19,7 +18,6 @@ public class SettingRightPageController : MonoBehaviour
     }
     void ResetSetting()
     {
-        clickSound.Play();
         PlayerPrefs.SetFloat("BGMValue", 0.5f);
         PlayerPrefs.SetFloat("SoundEffectValue", 0.5f);
         PlayerPrefs.SetFloat("DTValue", 0.5f);
