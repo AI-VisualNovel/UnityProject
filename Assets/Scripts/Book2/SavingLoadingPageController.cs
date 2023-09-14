@@ -60,6 +60,14 @@ public class SavingLoadingPageController : MonoBehaviour
             buttonImage.sprite = sprite;
 
 
+            // 获取 JSON 文件列表
+            // string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+            // string jsonFile = Directory.GetFiles(jsonFolderPath, "img.json");
+            // string json = File.ReadAllText(img + "json");
+            // GameData data = JsonConvert.DeserializeObject<GameData>(json);
+            // // 同步顯示名字
+            LoadName(img,button.name);
+
             // 把位置也包到Json
             UpdateJsonLocation(button);
             img = img + "already_saved";
@@ -129,6 +137,31 @@ public class SavingLoadingPageController : MonoBehaviour
         string jsonfile_name = data.Time;
         // 找存name的GameObject
         GameObject foundGameObject = GameObject.Find("name" + data.Location);
+        string toprint = "";
+        string date = "";
+
+        date = jsonfile_name[1].ToString() + jsonfile_name[2] + "月" + jsonfile_name[3] + jsonfile_name[4] + "日";
+      
+        if (jsonfile_name[0] == '1')
+        {
+            toprint = "武俠" + date;
+        }
+        else if (jsonfile_name[0] == '2')
+        {
+            toprint = "靈異" + date;
+        }
+        else
+        {
+            toprint = "奇幻" + date;
+        }
+
+        foundGameObject.GetComponent<Text>().text = toprint;
+    }
+
+    public static void LoadName(string jsonfile_name, string button_name){
+
+        // 找存name的GameObject
+        GameObject foundGameObject = GameObject.Find("name" + button_name);
         string toprint = "";
         string date = "";
 
