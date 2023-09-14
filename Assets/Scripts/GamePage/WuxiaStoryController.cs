@@ -87,7 +87,7 @@ namespace OpenAI
         private void Start()
         {
             openai = new OpenAIApi(PlayerPrefs.GetString("APIKey", ""));
-
+            WrongApiPanel.SetActive(false);
             testButton.onClick.AddListener(Test);
 
             textBoxButton.onClick.AddListener(MoveOn);
