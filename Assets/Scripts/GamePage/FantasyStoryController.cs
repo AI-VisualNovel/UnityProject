@@ -45,12 +45,15 @@ namespace OpenAI
         [SerializeField] private GameObject LoadingPanel;
 
         [SerializeField] private Button settingButton;
+        [SerializeField] private GameObject WrongApiPanel;
+
         public static string JsonFilePath;
 
 
 
         // private OpenAIApi openai = new OpenAIApi();
-        private OpenAIApi openai = new OpenAIApi();
+        private OpenAIApi openai;
+
 
 
 
@@ -85,6 +88,7 @@ namespace OpenAI
 
         private void Start()
         {
+            openai = new OpenAIApi(PlayerPrefs.GetString("APIKey", ""));
             testButton.onClick.AddListener(Test);
 
             textBoxButton.onClick.AddListener(MoveOn);
@@ -440,16 +444,24 @@ namespace OpenAI
 
         private void HandleResponse(List<CreateChatCompletionResponse> responses, ChatMessage message, RectTransform item)
         {
-            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+            try
+            {
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
-            message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
-            item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+                message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
+                item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
 
-            item.anchoredPosition = new Vector2(0, -height);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(item);
-            // height += item.sizeDelta.y;
-            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-            scroll.verticalNormalizedPosition = 0;
+                item.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+                // height += item.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.verticalNormalizedPosition = 0;
+            }
+            catch (Exception ex)
+            {
+                WrongApiPanel.SetActive(true);
+                Debug.LogError("An error occurred: " + ex.Message);
+            }
         }
 
         private void HandleComplete()
@@ -459,32 +471,40 @@ namespace OpenAI
 
         private async void GetOptions(string fullPlot)
         {
-            var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+            try
             {
-                Prompt = "請根據以下劇情給予我三個選項\n\n劇情:\n" + fullPlot + "\n\n請以換行符分隔三個選項:\n",
-                Model = "text-davinci-003",
-                MaxTokens = 256,
-                Temperature = 0.0f,
-            });
+                var completionResponse = await openai.CreateCompletion(new CreateCompletionRequest()
+                {
+                    Prompt = "請根據以下劇情給予我三個選項\n\n劇情:\n" + fullPlot + "\n\n請以換行符分隔三個選項:\n",
+                    Model = "text-davinci-003",
+                    MaxTokens = 256,
+                    Temperature = 0.0f,
+                });
 
-            print("[OPTIONS]:\n" + completionResponse.Choices[0].Text.Trim());
-            string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
-            //字串處理
-            string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
-            for (int i = 0; i < filteredOptions.Length; i++)
-            {
-                //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
-                filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()\n]+", "");
+                print("[OPTIONS]:\n" + completionResponse.Choices[0].Text.Trim());
+                string[] optionList = completionResponse.Choices[0].Text.Trim().Split('\n');
+                //字串處理
+                string[] filteredOptions = optionList.Where(option => !string.IsNullOrEmpty(option)).ToArray();
+                for (int i = 0; i < filteredOptions.Length; i++)
+                {
+                    //filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()]+", "");
+                    filteredOptions[i] = Regex.Replace(filteredOptions[i], @"[\da-zA-Z.()\n]+", "");
+                }
+
+                option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
+                option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
+                option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
+                // 顯示存檔和讀檔的按鈕
+                SaveButton.gameObject.SetActive(true);
+                LoadButton.gameObject.SetActive(true);
+
+                getOptionDone = true;
             }
-
-            option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
-            option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
-            option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
-            // 顯示存檔和讀檔的按鈕
-            SaveButton.gameObject.SetActive(true);
-            LoadButton.gameObject.SetActive(true);
-
-            getOptionDone = true;
+            catch (Exception ex)
+            {
+                WrongApiPanel.SetActive(true);
+                Debug.LogError("An error occurred: " + ex.Message);
+            }
         }
         private async void GetOptionsFromJson()
         {
