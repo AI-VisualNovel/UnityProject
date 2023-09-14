@@ -144,7 +144,7 @@ namespace OpenAI
 
             if (currentMessageRec && suspend == false)
             {
-                currentFullTexts = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text.Split("\n");
+                currentFullTexts = currentMessageRec.GetComponent<Text>().text.Split("\n");
             }
             if (textBoxCount >= 0 && textBoxCount < currentFullTexts.Length && currentFullTexts[textBoxCount] != null && suspend == false)
             {
@@ -227,7 +227,7 @@ namespace OpenAI
                 {
                     var sentItem = AppendMessage(sentMessage);
                     currentMessageRec = sentItem;
-                    textArea.text = currentMessageRec.GetChild(0).GetChild(0).GetComponent<Text>().text; // 這裡!!!
+                    textArea.text = currentMessageRec.GetComponent<Text>().text; // 這裡!!!
                     suspend = true;
                     textBoxCount = -1;
                 }
@@ -266,14 +266,14 @@ namespace OpenAI
                 }, (responses) => HandleResponse(responses, recMessage, recItem), HandleComplete, token);
                 await semaphore.WaitAsync();
 
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                recItem.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
-                height += recItem.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                // recItem.anchoredPosition = new Vector2(0, -height);
+                // LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                // height += recItem.sizeDelta.y;
+                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
 
-                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                recMessage.Content = recItem.GetComponent<Text>().text;
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
@@ -336,14 +336,14 @@ namespace OpenAI
                 currentMessageRec = recItem;
 
 
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                recItem.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
-                height += recItem.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                // recItem.anchoredPosition = new Vector2(0, -height);
+                // LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                // height += recItem.sizeDelta.y;
+                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
 
-                recMessage.Content = recItem.GetChild(0).GetChild(0).GetComponent<Text>().text;
+                recMessage.Content = recItem.GetComponent<Text>().text;
                 messages.Add(recMessage);
                 filteredMessages.Add(recMessage);//此send前的濃縮若慢到這之後才結束會導致刪除到這段記憶，影響嚴重，但基本上不可能那麼慢
 
@@ -430,14 +430,14 @@ namespace OpenAI
         }
         private RectTransform AppendMessage(ChatMessage message)
         {
-            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+            // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
             var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
-            item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
-            item.anchoredPosition = new Vector2(0, -height);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(item);
-            height += item.sizeDelta.y;
-            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            item.GetComponent<Text>().text = message.Content;
+            // item.anchoredPosition = new Vector2(0, -height);
+            // LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+            // height += item.sizeDelta.y;
+            // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             scroll.verticalNormalizedPosition = 0;
 
             return item;
@@ -447,15 +447,15 @@ namespace OpenAI
         {
             try
             {
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+               // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
                 message.Content = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
-                item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+                item.GetComponent<Text>().text = message.Content;
 
-                item.anchoredPosition = new Vector2(0, -height);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(item);
-                // height += item.sizeDelta.y;
-                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                // item.anchoredPosition = new Vector2(0, -height);
+                // LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+                // // height += item.sizeDelta.y;
+                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
             }
             catch (Exception ex)
