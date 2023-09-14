@@ -4686,11 +4686,11 @@ MonoBehaviour:
       - m_Target: {fileID: 586381803}
         m_TargetAssemblyTypeName: NavController, Assembly-CSharp
         m_MethodName: back
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6288,6 +6288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   b2panel: {fileID: 5816808}
+  fromNoApi: 0
 --- !u!4 &586381804
 Transform:
   m_ObjectHideFlags: 0
@@ -9331,6 +9332,7 @@ MonoBehaviour:
   SaveButton: {fileID: 1887135218}
   LoadButton: {fileID: 663583402}
   LoadingPanel: {fileID: 860528746}
+  WrongApiPanel: {fileID: 880073336}
   settingButton: {fileID: 562031881}
   SaveLoadLegacy: {fileID: 135001614}
 --- !u!1 &921266669
@@ -12936,7 +12938,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 586381803}
         m_TargetAssemblyTypeName: NavController, Assembly-CSharp
-        m_MethodName: toSettingPage_inGame
+        m_MethodName: NoapiToB2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
