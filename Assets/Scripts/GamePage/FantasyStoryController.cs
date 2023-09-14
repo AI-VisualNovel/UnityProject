@@ -529,8 +529,8 @@ namespace OpenAI
             Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
             // 提供給SaveLoad script存取
-            string backgroundImagePath = "WuxiaBackground/" + cleanedString + "/" + randomInt;
-            WuxiaStoryController.BackgroundImagePath = backgroundImagePath;
+            string backgroundImagePath = "FantasyBackground/" + cleanedString + "/" + randomInt;
+            FantasyStoryController.BackgroundImagePath = backgroundImagePath;
 
 
         }

@@ -531,7 +531,7 @@ namespace OpenAI
             backgroundImage.sprite = newSprite;
             // 提供給SaveLoad script存取
             string backgroundImagePath = "GhostBackground/" + cleanedString + "/" + randomInt;
-            WuxiaStoryController.BackgroundImagePath = backgroundImagePath;
+            GhostStoryController.BackgroundImagePath = backgroundImagePath;
 
 
         }

@@ -92,6 +92,8 @@ namespace OpenAI
         // fires after the save buttin been pressed
         public void SaveToJson()
         {
+            SavingLoadingPageController.from_game_page = true; // 從gamepage過去存檔頁面
+
             GameData data = new GameData();
             data.Time = saved_time;
 

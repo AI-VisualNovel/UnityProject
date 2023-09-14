@@ -82,10 +82,12 @@ public class LabelController2 : MonoBehaviour
         }
         if (toSavePage == true) // 只有從game page按存檔才會過來
         {
+            // SavingLoadingPageController.toSavePage = true;
             label2_pressed();
         }
         if (toLoadPage_inGame == true)
         {
+            // SavingLoadingPageController.toLoadPage = true;
             label3_native_size.SetActive(true);
             label3_pressed();
         }
@@ -153,8 +155,8 @@ public class LabelController2 : MonoBehaviour
 
 
         HistoryPage.SetActive(false);
-        SavePage.SetActive(true); // 共用畫面了
-        LoadPage_inGame.SetActive(false);
+        SavePage.SetActive(false); // 共用畫面了
+        LoadPage_inGame.SetActive(true);
         SettingPage_inGame.SetActive(false);
         AboutPage_inGame.SetActive(false);
         HelpPage_inGame.SetActive(false);
