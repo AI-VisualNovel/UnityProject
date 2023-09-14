@@ -41,8 +41,11 @@ public class SettingEffectController : MonoBehaviour
     }
     public void AdjustTransparency()
     {
-        Color currentColor = targetPanel.color;
-        currentColor.a = PlayerPrefs.GetFloat("DTValue");
-        targetPanel.color = currentColor;
+        if (targetPanel)
+        {
+            Color currentColor = targetPanel.color;
+            currentColor.a = PlayerPrefs.GetFloat("DTValue");
+            targetPanel.color = currentColor;
+        }
     }
 }
