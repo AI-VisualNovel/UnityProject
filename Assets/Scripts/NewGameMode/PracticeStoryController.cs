@@ -27,18 +27,25 @@ namespace OpenAI
         [SerializeField] private Text practiceStoryTextArea;
         [SerializeField] private GameObject moveOnTip;
 
+        [SerializeField] private GameObject practiceSelectPanel;
+        [SerializeField] private ToggleGroup toggleGroup;
+        [SerializeField] private Button enterPracticeButton;
+
+
+
 
         private string currentFullText = "";
         private string[] currentFullTexts = new string[50];
         private int textBoxCount = 0;
         private bool canMove = false;
         private float lastChangeTime;
-
         private int addForceValue = 0;
+        private string practiceType = "";
 
         private void Start()
         {
-            practiceButton.onClick.AddListener(() => EnterPractice(0));
+            practiceButton.onClick.AddListener(EnterPracticeSelect);
+            enterPracticeButton.onClick.AddListener(EnterPractice);
             textBoxButton.onClick.AddListener(MoveOn);
             practiceBackgroundButton.onClick.AddListener(MoveOn);
         }
@@ -66,8 +73,25 @@ namespace OpenAI
             }
         }
 
-        public void EnterPractice(int num){
+        private void EnterPracticeSelect(){
+            practiceSelectPanel.SetActive(true);
+        }
+        public void OnToggleValueChanged(bool isOn)
+        {
+            if (isOn)
+            {
+                Toggle selectedToggle = toggleGroup.ActiveToggles().FirstOrDefault(); // 獲取選中的Toggle
+                if (selectedToggle != null)
+                {
+                    practiceType = selectedToggle.GetComponentInChildren<Text>().text; // 獲取選中Toggle的標籤文字
+                    print(practiceType);
+                }
+            }
+        }
+
+        public void EnterPractice(){
             canMove = false;
+            practiceSelectPanel.SetActive(false);
             practiceBackground.SetActive(true);
 
             int randomSoundInt = UnityEngine.Random.Range(2,15);
@@ -109,7 +133,7 @@ namespace OpenAI
                 new ChatMessage()
                 {
                     Role = "user",
-                    Content = "請以第一人稱視角生成一小段修練武功一天且" + addCondition + "的劇情"
+                    Content = "請以第一人稱視角生成一小段修練武功一天且" + addCondition + "的劇情，而你修練的武功是" + practiceType
                 }
             };
             void HandleResponse(List<CreateChatCompletionResponse> responses){
@@ -119,7 +143,7 @@ namespace OpenAI
             {
                 Model = "gpt-3.5-turbo-0613",
                 Messages = practiceStoryMessage,
-                Temperature = 0.5f,
+                Temperature = 0.8f,
                 Stream = true
             }, HandleResponse, null,token);
         }
