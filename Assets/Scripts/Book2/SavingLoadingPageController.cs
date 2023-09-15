@@ -201,13 +201,14 @@ public class SavingLoadingPageController : MonoBehaviour
             OpenAI.WuxiaStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_WuXia");
         }
-        else if (jsonfile_name[0] == '2')
+        if (jsonfile_name[0] == '2')
         {
             OpenAI.GhostStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Ghost");
         }
-        else
+        if (jsonfile_name[0] == '3')
         {
+            OpenAI.FantasyStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Fantasy");
         }
 
@@ -241,6 +242,7 @@ public class SavingLoadingPageController : MonoBehaviour
         }
         else
         {
+            OpenAI.FantasyStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Fantasy");
         }
 

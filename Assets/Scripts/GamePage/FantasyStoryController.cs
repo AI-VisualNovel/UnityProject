@@ -546,7 +546,7 @@ namespace OpenAI
             //換圖
             int randomInt = UnityEngine.Random.Range(1, 5);
             print("[圖片類別編號]: " + cleanedString + "\n[圖片隨機碼]: " + randomInt);
-            Sprite newSprite = Resources.Load<Sprite>("WuxiaBackground/" + cleanedString + "/" + randomInt);
+            Sprite newSprite = Resources.Load<Sprite>("FantasyBackground/" + cleanedString + "/" + randomInt);
             backgroundImage.sprite = newSprite;
             // 提供給SaveLoad script存取
             string backgroundImagePath = "FantasyBackground/" + cleanedString + "/" + randomInt;

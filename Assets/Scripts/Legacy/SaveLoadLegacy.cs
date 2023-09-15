@@ -90,7 +90,7 @@ namespace OpenAI
         }
 
         // fires after the save buttin been pressed
-        public void SaveToJson()
+        public void SaveToJson(int storytype)
         {
             SavingLoadingPageController.from_game_page = true; // 從gamepage過去存檔頁面
 
@@ -111,8 +111,20 @@ namespace OpenAI
             data.LatestOption2 = latestOption2Text;
             data.LatestOption3 = latestOption3Text;
 
+
             // 讀取文件路徑
-            string imagePath = WuxiaStoryController.BackgroundImagePath;
+
+            string imagePath = "";
+            if(storytype == 1){
+                imagePath = WuxiaStoryController.BackgroundImagePath;
+            }
+            if(storytype == 2){
+                imagePath = GhostStoryController.BackgroundImagePath;
+            }
+            if(storytype == 3){
+                imagePath = FantasyStoryController.BackgroundImagePath;
+            }
+            
             data.BackgroundImg = imagePath;
 
             Debug.Log("saved_time in SaveToJson: " + saved_time);

@@ -336,11 +336,11 @@ namespace OpenAI
                 currentMessageRec = recItem;
 
 
-                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                // recItem.anchoredPosition = new Vector2(0, -height);
-                // LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
-                // height += recItem.sizeDelta.y;
-                // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+                recItem.anchoredPosition = new Vector2(0, -height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(recItem);
+                height += recItem.sizeDelta.y;
+                scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
                 scroll.verticalNormalizedPosition = 0;
 
                 recMessage.Content = recItem.GetComponent<Text>().text;
