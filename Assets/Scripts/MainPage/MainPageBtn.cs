@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MainPageBtn : MonoBehaviour
 {
-    [SerializeField] private SavingLoadingPageController slpc;
+    // [SerializeField] private SavingLoadingPageController slpc;
     public AudioSource soundPlayer;
     [SerializeField] private GameObject B2;
 
@@ -30,6 +30,9 @@ public class MainPageBtn : MonoBehaviour
         SceneManager.LoadScene("GamSelect");
         soundPlayer.Play();
     }
+
+
+    // 繼續遊戲
     public void PrintContinueGameMessage()
     {
         PlayerPrefs.SetString("ContinueGame", "1");
@@ -37,22 +40,25 @@ public class MainPageBtn : MonoBehaviour
 
         Debug.Log("ContinueGame!");
         soundPlayer.Play();
-        slpc.LoadLatestGame();
+        // SavingLoadingPageController.LoadLatestGame();
     }
+
+    // 讀取暫存
     public void PrintViewLoadingMessage()
     {
         Debug.Log("ViewLoading!");
         // SceneManager.LoadScene("LoadPage-inGame");
-        LabelController2.toLoadPage_inGame = true;
-        LabelController2.from_main_page = true;
-
+        LabelController_MainPage.toLoadPage = true;
+        
         B2.SetActive(true);
         soundPlayer.Play();
     }
+
+
     public void PrintSettingMessage()
     {
         Debug.Log("Setting!");
-        LabelController2.toSettingPage_inGame = true;
+        LabelController_MainPage.toSettingPage = true;
         B2.SetActive(true);
         soundPlayer.Play();
     }

@@ -10,8 +10,12 @@ public class NavController : MonoBehaviour
     public static string newest_screenshot;
     [SerializeField] private GameObject b2panel;
     public bool fromNoApi;
+
     public void Start()
     {
+
+        b2panel.SetActive(false);
+
         LabelController2.toHistoryPage = false;
         LabelController2.toSavePage = false;
         LabelController2.toLoadPage_inGame = false;

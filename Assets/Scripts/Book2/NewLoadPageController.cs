@@ -104,6 +104,59 @@ public class NewLoadPageController : MonoBehaviour
         foundGameObject.GetComponent<Text>().text = toprint;
     }
 
+     public void LoadGame(Button button)
+    { 
+        
+        string jsonfile_name = GetJsonfile(button);
+        
+        // 跳轉化面並載入遊戲
+        OpenAI.NewStoryController.from_book2 = true;
+        OpenAI.SaveLoad.from_book2 = true;
+        OpenAI.SaveLoad.jsonfile_name = jsonfile_name;
+        // SceneManager.LoadScene("GamePage");
+
+        // 測試Legacy用
+        OpenAI.SaveLoadLegacy.from_book2 = true;
+        OpenAI.SaveLoadLegacy.jsonfile_name = jsonfile_name;
+        if (jsonfile_name[0] == '1')
+        {
+            OpenAI.WuxiaStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_WuXia");
+        }
+        else if (jsonfile_name[0] == '2')
+        {
+            OpenAI.GhostStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_Ghost");
+        }
+        else
+        {
+            OpenAI.FantasyStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_Fantasy");
+        }
+
+    }
+
+    // 從按鈕去找json file
+    public string GetJsonfile(Button button)
+    {
+
+        string json_name = "Empty";
+        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
+        foreach (string jsonFilePath in jsonFiles)
+        {
+
+            string json = File.ReadAllText(jsonFilePath);
+            GameData data = JsonConvert.DeserializeObject<GameData>(json);
+
+            if (data.Location == button.name)
+            {
+                json_name = data.Time;
+            }
+        }
+        // Debug.Log(json_name);
+        return json_name;  // return json file name inorder to load the correct json file
+    }
 
     public void NameGameObjects()
     {
