@@ -11,11 +11,18 @@ public class TutorialController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tutorialPanels[0].SetActive(true);
-        for (int i = 0; i < tutorialPanels.Count; i++)
+        if (PlayerPrefs.GetString("ContinueGame", "") == "1")
         {
-            int index = i;
-            tutorialPanels[i].GetComponent<Button>().onClick.AddListener(() => ShowNextTutorial(index));
+            StoryController.SetActive(true);
+        }
+        else
+        {
+            tutorialPanels[0].SetActive(true);
+            for (int i = 0; i < tutorialPanels.Count; i++)
+            {
+                int index = i;
+                tutorialPanels[i].GetComponent<Button>().onClick.AddListener(() => ShowNextTutorial(index));
+            }
         }
     }
 
