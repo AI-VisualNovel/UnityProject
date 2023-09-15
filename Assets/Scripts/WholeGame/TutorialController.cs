@@ -13,6 +13,8 @@ public class TutorialController : MonoBehaviour
     {
         if (PlayerPrefs.GetString("ContinueGame", "") == "1")
         {
+            PlayerPrefs.SetString("ContinueGame", "0");
+            PlayerPrefs.Save();
             StoryController.SetActive(true);
         }
         else
