@@ -13717,9 +13717,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 603969962}
+  - {fileID: 2037056495}
+  - {fileID: 832049657}
   audio: {fileID: 1052227672}
 --- !u!114 &2019581611
 MonoBehaviour:
@@ -13748,9 +13748,9 @@ MonoBehaviour:
   - {fileID: 387810103}
   - {fileID: 1646140262}
   - {fileID: 2092633049}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1841247593}
+  - {fileID: 1323178369}
+  - {fileID: 436613376}
 --- !u!114 &2019581612
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1871,7 +1871,7 @@ MonoBehaviour:
   desiredColor: {r: 0.48235294, g: 0.3882353, b: 0.24313726, a: 0}
   toggles: []
   UserInput: {fileID: 506911597}
-  ClickSound: {fileID: 1514840311}
+  ClickSound: {fileID: 1772286111}
 --- !u!4 &580219199
 Transform:
   m_ObjectHideFlags: 0
@@ -2066,17 +2066,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3230d724557041a7b223bb7de88ee76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGMSource:
-  - {fileID: 525721620}
+  BGMSource: {fileID: 525721620}
   SoundEffectSource:
   - {fileID: 63523434}
   - {fileID: 243486167}
   - {fileID: 1639545291}
   - {fileID: 2140843212}
   - {fileID: 1429987992}
-  - {fileID: 292719245}
+  - {fileID: 1514840311}
   - {fileID: 160769817}
   targetPanel: {fileID: 0}
+  bgmMaxVolume: 0.5
+  BGSoundLong: 59
+  fadeInDuration: 2
+  fadeOutDuration: 2
 --- !u!4 &681902800
 Transform:
   m_ObjectHideFlags: 0
@@ -2090,7 +2093,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697595027
 GameObject:
@@ -4609,7 +4612,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1794413836
 GameObject:
