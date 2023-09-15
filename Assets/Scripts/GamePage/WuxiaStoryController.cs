@@ -46,6 +46,8 @@ namespace OpenAI
         [SerializeField] private GameObject WrongApiPanel;
 
         [SerializeField] private Button settingButton;
+
+
         public static string JsonFilePath;
 
 
