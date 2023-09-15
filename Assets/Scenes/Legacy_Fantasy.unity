@@ -21400,13 +21400,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3230d724557041a7b223bb7de88ee76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGMSource:
-  - {fileID: 606014989}
+  BGMSource: {fileID: 606014989}
   SoundEffectSource:
   - {fileID: 1235737210}
   - {fileID: 513685357}
   - {fileID: 1495249410}
   targetPanel: {fileID: 1449821111}
+  bgmMaxVolume: 0.5
+  BGSoundLong: 59
+  fadeInDuration: 2
+  fadeOutDuration: 2
 --- !u!4 &2052740323
 Transform:
   m_ObjectHideFlags: 0
