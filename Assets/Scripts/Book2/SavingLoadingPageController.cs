@@ -24,6 +24,14 @@ public class SavingLoadingPageController : MonoBehaviour
     public GameObject name1_3;
     public GameObject name1_4;
 
+
+    // SavingMessagePanel的東東
+    public GameObject SavingMessagePanel;
+    public Button Cancel;
+    public Button Enter;
+
+
+
     public static string img; // will receive the newest img name from SaveLoad
     public static string saved_time;
 
@@ -31,14 +39,41 @@ public class SavingLoadingPageController : MonoBehaviour
     public static bool toSavePage = false;
     public static bool toLoadPage = true;
 
+    public Button btn_been_pressed; // 存是哪一個save btn被點到
+
 
     void Start()
     {
+
+        SavingMessagePanel.SetActive(false);
         NameGameObjects();
         if(from_game_page == true){
             LoadAllImage();
         }
     }
+
+    // 判斷當前button有沒有存其他進度
+    public void CheckAvailable(Button button){
+        btn_been_pressed = button; // 傳當前點到的btn過去
+        GameObject foundGameObject = GameObject.Find("name" + button.name); 
+        string text = foundGameObject.GetComponent<Text>().text;
+        if(text != ""){ // 有存東西
+            SavingMessagePanel.SetActive(true);
+        }
+    }
+
+    public void CancelOverwrite()
+    {
+        SavingMessagePanel.SetActive(false);
+    }
+
+
+    public void ConfirmOverwrite()
+    {
+        SavingMessagePanel.SetActive(false);
+        LoadImage(btn_been_pressed); // 在确认后加载图像
+    }
+
 
     public void LoadImage(Button button)
     {
@@ -59,12 +94,6 @@ public class SavingLoadingPageController : MonoBehaviour
             Image buttonImage = button.image;
             buttonImage.sprite = sprite;
 
-
-            // 获取 JSON 文件列表
-            // string jsonFolderPath = Application.streamingAssetsPath + "/Json";
-            // string jsonFile = Directory.GetFiles(jsonFolderPath, "img.json");
-            // string json = File.ReadAllText(img + "json");
-            // GameData data = JsonConvert.DeserializeObject<GameData>(json);
             // // 同步顯示名字
             LoadName(img,button.name);
 
@@ -72,12 +101,6 @@ public class SavingLoadingPageController : MonoBehaviour
             UpdateJsonLocation(button);
             img = img + "already_saved";
         }
-        // else // load game
-        // {
-        //     // string json_name;
-        //     string jsonfile_name = GetJsonfile(button);
-        //     LoadGame(jsonfile_name);
-        // }
     }
 
 
