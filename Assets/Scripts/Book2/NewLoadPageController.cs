@@ -92,11 +92,11 @@ public class NewLoadPageController : MonoBehaviour
         {
             toprint = "武俠" + date;
         }
-        else if (jsonfile_name[0] == '2')
+        if (jsonfile_name[0] == '2')
         {
             toprint = "靈異" + date;
         }
-        else
+        if (jsonfile_name[0] == '3')
         {
             toprint = "奇幻" + date;
         }
@@ -123,12 +123,42 @@ public class NewLoadPageController : MonoBehaviour
             OpenAI.WuxiaStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_WuXia");
         }
-        else if (jsonfile_name[0] == '2')
+        if (jsonfile_name[0] == '2')
         {
             OpenAI.GhostStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Ghost");
         }
-        else
+        if (jsonfile_name[0] == '3')
+        {
+            OpenAI.FantasyStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_Fantasy");
+        }
+
+    }
+
+    public static void LoadGame(string jsonfile_name)
+    { 
+        
+        // 跳轉化面並載入遊戲
+        OpenAI.NewStoryController.from_book2 = true;
+        OpenAI.SaveLoad.from_book2 = true;
+        OpenAI.SaveLoad.jsonfile_name = jsonfile_name;
+        // SceneManager.LoadScene("GamePage");
+
+        // 測試Legacy用
+        OpenAI.SaveLoadLegacy.from_book2 = true;
+        OpenAI.SaveLoadLegacy.jsonfile_name = jsonfile_name;
+        if (jsonfile_name[0] == '1')
+        {
+            OpenAI.WuxiaStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_WuXia");
+        }
+        if (jsonfile_name[0] == '2')
+        {
+            OpenAI.GhostStoryController.from_book2 = true;
+            SceneManager.LoadScene("Legacy_Ghost");
+        }
+        if (jsonfile_name[0] == '3')
         {
             OpenAI.FantasyStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Fantasy");
@@ -156,6 +186,41 @@ public class NewLoadPageController : MonoBehaviour
         }
         // Debug.Log(json_name);
         return json_name;  // return json file name inorder to load the correct json file
+    }
+
+    public static string GetLatestJsonFile()
+    {
+        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+
+        string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
+
+        if (jsonFiles.Length == 0)
+            return null;
+
+        string latestFileFullPath = jsonFiles.OrderByDescending(file =>
+        {
+            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+
+            string numberPart = filenameWithoutExtension.Substring(1);
+
+            if (Int64.TryParse(numberPart, out long result))
+            {
+                return result;
+            }
+            return 0;
+        }).FirstOrDefault();
+
+        string latestFileNameWithoutExtension = Path.GetFileNameWithoutExtension(latestFileFullPath);
+        Debug.Log(latestFileNameWithoutExtension);
+        return latestFileNameWithoutExtension;
+    }
+
+
+
+    public static void LoadLatestGame()
+    {
+        string jsonfile_name = GetLatestJsonFile();
+        LoadGame(jsonfile_name);
     }
 
     public void NameGameObjects()

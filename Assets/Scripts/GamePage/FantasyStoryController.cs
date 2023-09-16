@@ -432,11 +432,11 @@ namespace OpenAI
             // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
 
             var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
-            // item.GetComponent<Text>().text = message.Content;
-            // item.anchoredPosition = new Vector2(0, -height);
-            // LayoutRebuilder.ForceRebuildLayoutImmediate(item);
-            // height += item.sizeDelta.y;
-            // scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            item.GetComponent<Text>().text = message.Content;
+            item.anchoredPosition = new Vector2(0, -height);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+            height += item.sizeDelta.y;
+            scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             scroll.verticalNormalizedPosition = 0;
 
             return item;

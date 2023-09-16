@@ -41,6 +41,7 @@ public class MainPageBtn : MonoBehaviour
         Debug.Log("ContinueGame!");
         soundPlayer.Play();
         // SavingLoadingPageController.LoadLatestGame();
+        NewLoadPageController.LoadLatestGame();
     }
 
     // 讀取暫存
