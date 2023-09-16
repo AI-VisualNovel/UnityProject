@@ -22,6 +22,8 @@ public class LabelController2 : MonoBehaviour
     public static bool from_main_page = false;
     public static bool from_game_page = false;
     public static bool from_game_setting_btn = false;
+    public static bool new_game_been_saved = false;
+   
 
 
 
@@ -114,6 +116,17 @@ public class LabelController2 : MonoBehaviour
             label3.gameObject.SetActive(false);
             label3_native_size.SetActive(false);
         }
+
+        // 有新的存檔存完就會跳轉到讀檔頁面
+        if(new_game_been_saved == true){
+            label3_native_size.SetActive(true);
+            label3_pressed();
+
+            // 就不能再回去存檔畫面了
+            label2.gameObject.SetActive(false);
+            label2_native_size.SetActive(false);
+            new_game_been_saved = false; // reset
+        }
     }
 
     // history page
@@ -144,6 +157,9 @@ public class LabelController2 : MonoBehaviour
         SettingPage_inGame.SetActive(false);
         AboutPage_inGame.SetActive(false);
         HelpPage_inGame.SetActive(false);
+
+        SavingLoadingPageController.LoadAllImage();
+
     }
 
     // load page
@@ -160,6 +176,8 @@ public class LabelController2 : MonoBehaviour
         SettingPage_inGame.SetActive(false);
         AboutPage_inGame.SetActive(false);
         HelpPage_inGame.SetActive(false);
+
+        SavingLoadingPageController.LoadAllImage();
 
     }
     // setting page

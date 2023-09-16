@@ -59,6 +59,10 @@ public class SavingLoadingPageController : MonoBehaviour
         string text = foundGameObject.GetComponent<Text>().text;
         if(text != ""){ // 有存東西
             SavingMessagePanel.SetActive(true);
+        }else{
+            LoadImage(button);
+            // book2.to load 
+            LabelController2.new_game_been_saved = true;
         }
     }
 
@@ -71,7 +75,10 @@ public class SavingLoadingPageController : MonoBehaviour
     public void ConfirmOverwrite()
     {
         SavingMessagePanel.SetActive(false);
-        LoadImage(btn_been_pressed); // 在确认后加载图像
+        LoadImage(btn_been_pressed); 
+        // book2.to load page
+        LabelController2.new_game_been_saved = true;
+
     }
 
 
@@ -258,12 +265,12 @@ public class SavingLoadingPageController : MonoBehaviour
             OpenAI.WuxiaStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_WuXia");
         }
-        else if (jsonfile_name[0] == '2')
+        if (jsonfile_name[0] == '2')
         {
             OpenAI.GhostStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Ghost");
         }
-        else
+        if (jsonfile_name[0] == '3')
         {
             OpenAI.FantasyStoryController.from_book2 = true;
             SceneManager.LoadScene("Legacy_Fantasy");
