@@ -1420,7 +1420,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1572478179}
         m_TargetAssemblyTypeName: NewLoadPageController, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: CanLoad
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 202471987}
@@ -8499,7 +8499,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1572478179}
         m_TargetAssemblyTypeName: NewLoadPageController, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: CanLoad
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1278213931}
@@ -9843,7 +9843,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1572478179}
         m_TargetAssemblyTypeName: NewLoadPageController, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: CanLoad
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1513762858}
@@ -10124,6 +10124,7 @@ MonoBehaviour:
   name1_2: {fileID: 236242457}
   name1_3: {fileID: 1152436515}
   name1_4: {fileID: 1899693584}
+  btn_been_pressed: {fileID: 0}
 --- !u!4 &1572478180
 Transform:
   m_ObjectHideFlags: 0
@@ -13637,7 +13638,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1572478179}
         m_TargetAssemblyTypeName: NewLoadPageController, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: CanLoad
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1995857750}

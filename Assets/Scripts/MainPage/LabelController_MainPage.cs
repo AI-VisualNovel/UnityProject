@@ -11,8 +11,8 @@ public class LabelController_MainPage : MonoBehaviour
 
     // booleans to show which page to go to
     
-    public static bool toLoadPage;
-    public static bool toSettingPage;
+    public static bool toLoadPage = false;
+    public static bool toSettingPage = false;
     // public static bool toAboutPage;
     // public static bool toHelpPage;
 
@@ -38,17 +38,16 @@ public class LabelController_MainPage : MonoBehaviour
 
     void Start()
     {
+
         LoadPage.SetActive(false);
-        SettingPage.SetActive(true);
+        SettingPage.SetActive(false);
         AboutPage.SetActive(false);
         HelpPage.SetActive(false);
 
         
         label3_native_size.SetActive(false);
         label4_native_size.SetActive(false);
-    }
 
-    void Update(){
         if (toLoadPage == true)
         {
             label3_native_size.SetActive(true);
@@ -59,7 +58,6 @@ public class LabelController_MainPage : MonoBehaviour
             label4_native_size.SetActive(true);
             label4_pressed();
         }
-        
     }
 
     // load page
@@ -68,14 +66,12 @@ public class LabelController_MainPage : MonoBehaviour
         // labels
         label4_native_size.SetActive(false);
 
-        SavingLoadingPageController.LoadAllImage();
-
-
         LoadPage.SetActive(true);
         SettingPage.SetActive(false);
         AboutPage.SetActive(false);
         HelpPage.SetActive(false);
 
+        SavingLoadingPageController.LoadAllImage();
         toSettingPage = false;
 
     }

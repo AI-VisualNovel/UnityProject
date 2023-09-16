@@ -40,7 +40,6 @@ public class MainPageBtn : MonoBehaviour
 
         Debug.Log("ContinueGame!");
         soundPlayer.Play();
-        // SavingLoadingPageController.LoadLatestGame();
         NewLoadPageController.LoadLatestGame();
     }
 
@@ -48,10 +47,9 @@ public class MainPageBtn : MonoBehaviour
     public void PrintViewLoadingMessage()
     {
         Debug.Log("ViewLoading!");
-        // SceneManager.LoadScene("LoadPage-inGame");
-        LabelController_MainPage.toLoadPage = true;
-        
         B2.SetActive(true);
+        LabelController_MainPage.toLoadPage = true;
+
         soundPlayer.Play();
     }
 
@@ -60,6 +58,7 @@ public class MainPageBtn : MonoBehaviour
     {
         Debug.Log("Setting!");
         LabelController_MainPage.toSettingPage = true;
+
         B2.SetActive(true);
         soundPlayer.Play();
     }

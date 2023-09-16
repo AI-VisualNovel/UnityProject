@@ -24,6 +24,9 @@ public class NewLoadPageController : MonoBehaviour
     public GameObject name1_3;
     public GameObject name1_4;
 
+    public Button btn_been_pressed; // 存是哪一個save btn被點到
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -103,6 +106,19 @@ public class NewLoadPageController : MonoBehaviour
 
         foundGameObject.GetComponent<Text>().text = toprint;
     }
+
+    // 判斷當前button有沒有存其他進度
+    public void CanLoad(Button button){
+        btn_been_pressed = button; // 傳當前點到的btn過去
+        GameObject foundGameObject = GameObject.Find("name" + button.name); 
+        string text = foundGameObject.GetComponent<Text>().text;
+        if(text != ""){ // 有存東西
+            LoadGame(button);
+        }else{
+           Debug.Log("該位置沒有儲存遊戲進度");
+        }
+    }
+
 
      public void LoadGame(Button button)
     { 
