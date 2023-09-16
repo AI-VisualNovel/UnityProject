@@ -424,6 +424,8 @@ namespace OpenAI
                         LoadingPanel.gameObject.SetActive(false);
                     }
                     optionChoicing.SetActive(true);
+                    SaveButton.gameObject.SetActive(true);
+
                 }
             }
         }

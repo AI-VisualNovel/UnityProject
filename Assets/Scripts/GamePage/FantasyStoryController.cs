@@ -41,8 +41,6 @@ namespace OpenAI
         [SerializeField] private AudioSource BackgroundSound;
 
         [SerializeField] private Button SaveButton;
-        [SerializeField] private Button LoadButton;
-        [SerializeField] private GameObject LoadingPanel;
 
         [SerializeField] private Button settingButton;
         [SerializeField] private GameObject WrongApiPanel;
@@ -102,8 +100,6 @@ namespace OpenAI
             option4Button.onClick.AddListener(option4ButtonAct);
 
             SaveButton.gameObject.SetActive(false);
-            LoadButton.gameObject.SetActive(false);
-            LoadingPanel.gameObject.SetActive(false);
 
 
             if (from_book2 == false)
@@ -138,6 +134,8 @@ namespace OpenAI
                 if (getOptionDone)
                 {
                     optionChoicing.SetActive(true);
+                    SaveButton.gameObject.SetActive(true);
+
                 }
             }
 
@@ -191,7 +189,6 @@ namespace OpenAI
             from_book2 = false; // reset
             optionChoicing.SetActive(false);
             SaveButton.gameObject.SetActive(false);
-            LoadButton.gameObject.SetActive(false);
             try
             {
                 textBoxCount = 0;
@@ -419,11 +416,9 @@ namespace OpenAI
                 }
                 if (textBoxCount >= currentFullTexts.Length && getOptionDone)
                 {
-                    if (from_book2 = true)
-                    {
-                        LoadingPanel.gameObject.SetActive(false);
-                    }
                     optionChoicing.SetActive(true);
+                    SaveButton.gameObject.SetActive(true);
+
                 }
             }
         }
@@ -494,9 +489,6 @@ namespace OpenAI
                 option1Button.GetComponentInChildren<Text>().text = filteredOptions[0];
                 option2Button.GetComponentInChildren<Text>().text = filteredOptions[1];
                 option3Button.GetComponentInChildren<Text>().text = filteredOptions[2];
-                // 顯示存檔和讀檔的按鈕
-                SaveButton.gameObject.SetActive(true);
-                LoadButton.gameObject.SetActive(true);
 
                 getOptionDone = true;
             }
@@ -569,7 +561,6 @@ namespace OpenAI
             fourOptions.SetActive(false);
             selfChoicingPanel.SetActive(true);
             SaveButton.gameObject.SetActive(false);
-            LoadButton.gameObject.SetActive(false);
         }
 
         private void sendButtonAct()
