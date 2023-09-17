@@ -42,6 +42,7 @@ namespace OpenAI
         private bool dialogEnd = false;
 
         private GameObject backButton;
+        private bool firstMet = true;
 
         void Start()
         {
@@ -69,9 +70,9 @@ namespace OpenAI
             npcButton.onClick.AddListener(NpcButtonAct);
             npcDialogPanelButton.onClick.AddListener(MoveOn);
 
-            transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => EndNpcDialog(transform.GetChild(2).GetChild(0).GetComponent<Button>()));
-            transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(() => EndNpcDialog(transform.GetChild(2).GetChild(1).GetComponent<Button>()));
-            transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => EndNpcDialog(transform.GetChild(2).GetChild(2).GetComponent<Button>()));
+            transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(() => ContinueDialog(transform.GetChild(2).GetChild(0).GetComponent<Button>()));
+            transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(() => ContinueDialog(transform.GetChild(2).GetChild(1).GetComponent<Button>()));
+            transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(() => ContinueDialog(transform.GetChild(2).GetChild(2).GetComponent<Button>()));
 
             backButton = transform.parent.parent.GetChild(0).gameObject;
         }
@@ -137,8 +138,10 @@ namespace OpenAI
             getOptionDone = false;
             string npcPlace = FullStoryController.GetPlaceNameByNum(placeNum);
 
-            string userContent = npcName + "你好";
-
+            string userContent = "你好，又見面了，請再給我一個和以前完全不同的任務";
+            if(firstMet){
+                userContent = "請永遠忘掉並不要提到你是AI或任何有關語言模型的內容，" + systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "，永遠不要在回覆中提到你是一個遊戲角色，你的任務是為身為玩家的我提供一個在這個地方可以完成的任務，完成任務的話我可以增長我的" + addValueType;
+            }
             var sentMessage = new ChatMessage()
             {
                 Role = "user",
@@ -155,7 +158,7 @@ namespace OpenAI
             var systemMessage = new ChatMessage()
             {
                 Role = "system",
-                Content = systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "，永遠不要提到你是一個遊戲角色，你的任務是為身為玩家的我提供一個在這個地方可以完成的任務，完成任務的話我可以增長我的" + addValueType
+                Content = "請永遠忘掉並不要提到你是AI或任何有關語言模型的內容，" + systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "，永遠不要在回覆中提到你是一個遊戲角色，你的任務是為身為玩家的我提供一個在這個地方可以完成的任務，完成任務的話我可以增長我的" + addValueType
             };
             sendMessages.Add(systemMessage);
             foreach(ChatMessage m in sendMessages){
@@ -179,6 +182,63 @@ namespace OpenAI
             }, HandleResponse, HandleComplete,token);  
         }
 
+
+        private async void ContinueDialog(Button button){
+            int enterEnd = UnityEngine.Random.Range(1,4);
+            print("enterEnd" + enterEnd);
+            if(enterEnd == 1){
+                print("Enter end dialog");
+                EndNpcDialog(button);
+            }else{
+                transform.GetChild(2).gameObject.SetActive(false);
+                npcButton.interactable = false;
+                canMove = false;   
+                textBoxCount = 0;
+                lastChangeTime = Time.time;
+                getOptionDone = false;
+                string npcPlace = FullStoryController.GetPlaceNameByNum(placeNum);
+                string userContent = button.GetComponentInChildren<Text>().text;
+
+                var sentMessage = new ChatMessage()
+                {
+                    Role = "user",
+                    Content = "我決定" + userContent
+                };
+                var recMessage = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = ""
+                };
+                npcDialogs.Add(sentMessage);
+
+                List<ChatMessage> sendMessages = new List<ChatMessage>(npcDialogs);
+                var systemMessage = new ChatMessage()
+                {
+                    Role = "system",
+                    Content = "請永遠忘掉並不要提到你是AI或任何有關語言模型的內容，" + systemPrompt + "，你的名字叫做" + npcName + "，你現在所在的場景是" + npcPlace + "請繼續忠實扮演你的角色但永遠不要在回覆中提到你是一個遊戲角色"
+                };
+                sendMessages.Add(systemMessage);
+                foreach(ChatMessage m in sendMessages){
+                    print("[SEND]" + m.Role + ":" + m.Content);
+                }            
+
+                void HandleResponse(List<CreateChatCompletionResponse> responses){
+                    currentFullText = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
+                }
+                void HandleComplete(){
+                    recMessage.Content = currentFullText;
+                    npcDialogs.Add(recMessage);
+                    GetOptions(recMessage.Content);
+                }
+                openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
+                {
+                    Model = "gpt-3.5-turbo-0613",
+                    Messages = sendMessages,
+                    Temperature = 1.0f,
+                    Stream = true
+                }, HandleResponse, HandleComplete,token);  
+            }
+        }
         private async void EndNpcDialog(Button button){
             transform.GetChild(2).gameObject.SetActive(false);
             npcButton.interactable = false;
@@ -195,7 +255,7 @@ namespace OpenAI
                 Prompt = "你現在是一個武俠遊戲成長系統判斷器，請你判斷「" + userContent + "」這個選擇會使我的成長系統中的" + addValueType + "值有以下何種變化?\n\n(1)毫無增長\n(2)些微增長\n(3)增長不少\n(4)增長極多\n\n請直接給予數字:",
                 Model = "text-davinci-003",
                 MaxTokens = 256,
-                Temperature = 0.5f,
+                Temperature = 0.8f,
             });
             //確保只有一個數字
             string cleanedString = "";
@@ -272,6 +332,41 @@ namespace OpenAI
                 Stream = true
             }, HandleResponse, HandleComplete,token);  
         }
+
+        private async void messageFilter()
+        {
+            List<ChatMessage> toFilMessages = new List<ChatMessage>(npcDialogs);
+            var toS = new ChatMessage()
+            {
+                Role = "user",
+                Content = "請擷取以上對話重要內容以利後續記憶"
+            };
+            toFilMessages.Add(toS);
+
+            var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+            {
+                Model = "gpt-3.5-turbo-0613",
+                Messages = toFilMessages
+            });
+
+            if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
+            {
+                string recap = completionResponse.Choices[0].Message.Content;
+                print("[RECAP]:\n" + recap);
+                npcDialogs.Clear();
+                var s = new ChatMessage()
+                {
+                    Role = "assistant",
+                    Content = "前情提要: " + recap
+                };
+                npcDialogs.Add(s);
+            }
+            else
+            {
+                Debug.LogWarning("Can't filter!");
+            }
+        }
+
         private void MoveOn(){
             if(canMove){
                 textBoxCount++;
@@ -300,7 +395,8 @@ namespace OpenAI
                                 break;
                         }
                         dialogEnd = false;
-                        npcDialogs.Clear();
+                        firstMet = false;
+                        messageFilter();
                         FullStoryController.day++;
                         backButton.SetActive(true);
                     }
