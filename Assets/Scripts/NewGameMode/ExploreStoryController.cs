@@ -35,7 +35,9 @@ namespace OpenAI
         private float lastChangeTime;
         private int addValueTypeNum = 0;
         private int addValueAmont = 0;
+        private string getNewWuKungPrompt = "";
 
+        public PracticeStoryController practiceStoryController; 
         private void Start()
         {
             exploreButton.onClick.AddListener(() => EnterExplore(0));
@@ -66,12 +68,31 @@ namespace OpenAI
             }
         }
 
-        public void EnterExplore(int num){
+        public async void EnterExplore(int num){
             addValueTypeNum = UnityEngine.Random.Range(1,5);
             string addValueType = "";
             switch(addValueTypeNum){
                 case 1:
                     addValueType = "武功";
+                    var getNewWuKungName = new List<ChatMessage>
+                    {
+                        new ChatMessage()
+                        {
+                            Role = "user",
+                            Content = "請給予我一項武功的名字，七個字以內\n\n直接給予武功名:\n"
+                        }
+                    };
+                    var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+                    {
+                        Model = "gpt-3.5-turbo-0613",
+                        Messages = getNewWuKungName,
+                        MaxTokens = 128,
+                        Temperature = 1.0f
+                    });
+                    print(completionResponse.Choices[0].Message.Content.Trim());
+                    getNewWuKungPrompt = "並且獲得一項新的武功名叫" + completionResponse.Choices[0].Message.Content.Trim();
+                    WuKung newWuKung = new WuKung(completionResponse.Choices[0].Message.Content.Trim(), 1, 100);
+                    practiceStoryController.wuKungs.Add(newWuKung);
                     break;
                 case 2:
                     addValueType = "智慧";
@@ -139,7 +160,7 @@ namespace OpenAI
                 new ChatMessage()
                 {
                     Role = "user",
-                    Content = "請給我一小段武俠世界故事的探險劇情，以第一人稱視角探索" + placeName + "這個區域，並且這次的探險會使你的" + addValueType + addCondition
+                    Content = "請給我一小段武俠世界故事的探險劇情，以第一人稱視角探索" + placeName + "這個區域，並且這次的探險會使你的" + addValueType + addCondition + getNewWuKungPrompt
                 }
             };
             void HandleResponse(List<CreateChatCompletionResponse> responses){
