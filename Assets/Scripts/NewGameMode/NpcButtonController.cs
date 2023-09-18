@@ -184,7 +184,7 @@ namespace OpenAI
 
 
         private async void ContinueDialog(Button button){
-            int enterEnd = UnityEngine.Random.Range(1,4);
+            int enterEnd = UnityEngine.Random.Range(1,3);
             print("enterEnd" + enterEnd);
             if(enterEnd == 1){
                 print("Enter end dialog");
