@@ -9517,6 +9517,7 @@ MonoBehaviour:
   label6: {fileID: 1337067662}
   label7: {fileID: 1531225234}
   label8: {fileID: 2013977094}
+  returnButton: {fileID: 0}
 --- !u!4 &968062192
 Transform:
   m_ObjectHideFlags: 0
@@ -18495,7 +18496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1837984827
 RectTransform:
   m_ObjectHideFlags: 0
