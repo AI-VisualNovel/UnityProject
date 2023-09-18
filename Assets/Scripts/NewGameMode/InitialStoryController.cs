@@ -24,6 +24,8 @@ namespace OpenAI
         [SerializeField] private GameObject initMoveOnTip;
         [SerializeField] private List<GameObject> tutorialPanels;
 
+        public AudioSource typingSounds;
+
 
         private CanvasGroup initPanelCanvasGroup;
         private float fadeDuration = 3.0f;
@@ -68,6 +70,7 @@ namespace OpenAI
             void HandleComplete(){
                 initMoveOnTip.SetActive(true);
                 initialStoryPanelButton.interactable = true;
+                typingSounds.Stop();
             }
             openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
             {
@@ -76,6 +79,8 @@ namespace OpenAI
                 Temperature = 0.7f,
                 Stream = true
             }, HandleResponse, HandleComplete,token);
+            typingSounds.loop = true;
+            typingSounds.Play();
         }
 
         private void InitialStoryPanelButtonAct(){
