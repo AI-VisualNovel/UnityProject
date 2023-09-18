@@ -66,8 +66,11 @@ namespace OpenAI
             practiceBackgroundButton.onClick.AddListener(MoveOn);
             goBackButton.onClick.AddListener(GoBack);
 
-            WuKung firstWuKung = new WuKung("基礎拳法", 1, 10);
-            wuKungs.Add(firstWuKung);
+            if(wuKungs.Count == 0){
+                WuKung firstWuKung = new WuKung("基礎拳法", 1, 10);
+                wuKungs.Add(firstWuKung);
+            }
+           
         }
 
         private void Update()
@@ -98,6 +101,9 @@ namespace OpenAI
         }
 
         private void EnterPracticeSelect(){
+            for (int i = 0; i < toggleGroupTransform.childCount; i++){
+                Destroy(toggleGroupTransform.GetChild(i).gameObject);
+            }
             foreach (var wuKung in wuKungs){
                 var thisWuKung = Instantiate(togglePreferb, toggleGroupTransform);
                 thisWuKung.GetChild(1).GetComponent<Text>().text = wuKung.wuKungName;

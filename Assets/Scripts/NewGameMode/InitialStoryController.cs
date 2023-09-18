@@ -79,8 +79,8 @@ namespace OpenAI
         }
 
         private void InitialStoryPanelButtonAct(){
+            initialStoryPanelButton.interactable = false;
             StartCoroutine(InitFadeOut());
-
         }
 
         private IEnumerator InitFadeOut()
