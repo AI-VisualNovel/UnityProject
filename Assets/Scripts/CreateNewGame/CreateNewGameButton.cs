@@ -9,11 +9,40 @@ public class CreateNewGameButton : MonoBehaviour
     public Toggle[] toggles;
     [SerializeField] private InputField UserInput;
     [SerializeField] private AudioSource ClickSound;
+    [SerializeField] private Button FantasyBTN;
+    [SerializeField] private Button GhostBTN;
+    [SerializeField] private GameObject exploreText;
+
+
+    [SerializeField] private Button explore;
+
+
 
     public static string[] buttonTexts;
     public static int buttonLength;
     public static string gamedir;
     public static string User_API = "";
+
+    public void Update()
+    {
+        ColorBlock FantasybuttonColorBlock = FantasyBTN.colors;
+        ColorBlock GhostbuttonColorBlock = GhostBTN.colors;
+
+        Color FantasybuttonNormalColor = FantasybuttonColorBlock.normalColor;
+        Color GhostbuttonNormalColor = GhostbuttonColorBlock.normalColor;
+
+        if (ColorUtility.ToHtmlStringRGB(FantasybuttonNormalColor) == ColorUtility.ToHtmlStringRGB(desiredColor) || ColorUtility.ToHtmlStringRGB(GhostbuttonNormalColor) == ColorUtility.ToHtmlStringRGB(desiredColor))
+        {
+            explore.gameObject.SetActive(false);
+            exploreText.SetActive(false);
+        }
+        else
+        {
+            explore.gameObject.SetActive(true);
+            exploreText.SetActive(true);
+
+        }
+    }
     public void SearchSelectedButtonText()
     {
         buttonLength = buttons.Length;
