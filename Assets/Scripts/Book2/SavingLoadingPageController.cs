@@ -29,6 +29,7 @@ public class SavingLoadingPageController : MonoBehaviour
     public GameObject SavingMessagePanel;
     public Button Cancel;
     public Button Enter;
+    public GameObject returnButton;
 
 
 
@@ -39,7 +40,10 @@ public class SavingLoadingPageController : MonoBehaviour
     public static bool toSavePage = false;
     public static bool toLoadPage = true;
 
+
+
     public Button btn_been_pressed; // 存是哪一個save btn被點到
+
 
 
     void Start()
@@ -49,6 +53,7 @@ public class SavingLoadingPageController : MonoBehaviour
         NameGameObjects();
         if(from_game_page == true){
             LoadAllImage();
+            returnButton.SetActive(false); // 存完才可以按返回
         }
     }
 
@@ -63,6 +68,7 @@ public class SavingLoadingPageController : MonoBehaviour
             LoadImage(button);
             // book2.to load 
             LabelController2.new_game_been_saved = true;
+            returnButton.SetActive(true); // 存完才可以按返回
         }
     }
 
