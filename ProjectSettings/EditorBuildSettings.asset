@@ -50,7 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Book2.unity
     guid: 58f242d7328745d47ac50b415dcebbf2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Book1.unity
     guid: ed98f538ed6327e4098aca2523ca4246
   - enabled: 0
