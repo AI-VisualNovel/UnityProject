@@ -29,6 +29,8 @@ public class NavController : MonoBehaviour
     {
         LabelController2.toSavePage = true;
         SceneManager.LoadScene("Book2");
+        SavingLoadingPageController.LoadAllImage();
+
     }
 
     public void toHistoryPage()

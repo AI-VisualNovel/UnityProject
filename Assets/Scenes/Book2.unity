@@ -606,6 +606,7 @@ MonoBehaviour:
   label6: {fileID: 1387374953}
   label7: {fileID: 877892237}
   label8: {fileID: 2140097332}
+  returnButton: {fileID: 0}
 --- !u!4 &88895143
 Transform:
   m_ObjectHideFlags: 0
@@ -6364,6 +6365,7 @@ MonoBehaviour:
   SavingMessagePanel: {fileID: 1547678619}
   Cancel: {fileID: 1728096888}
   Enter: {fileID: 435188018}
+  returnButton: {fileID: 1721547262}
   btn_been_pressed: {fileID: 0}
 --- !u!4 &923904767
 Transform:
@@ -12377,7 +12379,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1721547265}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1044368608}
+        m_TargetAssemblyTypeName: NewLoadPageController, Assembly-CSharp
+        m_MethodName: LoadLatestGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1721547265
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class LabelController2 : MonoBehaviour
 
     // privious page
     public static bool from_main_page = false;
-    public static bool from_game_page = false;
+    public static bool from_game_page = false; // 只有要存檔的時候才會從gamepage來
     public static bool from_game_setting_btn = false;
     public static bool new_game_been_saved = false;
    
@@ -47,6 +47,8 @@ public class LabelController2 : MonoBehaviour
     public Button label6;
     public Button label7;
     public Button label8;
+
+    public GameObject returnButton;
 
 
 
@@ -75,8 +77,22 @@ public class LabelController2 : MonoBehaviour
             label2_native_size.SetActive(false);
         }
 
-        // buttonAnimator = GetComponent<Animator>();
+        if(from_game_page == true){ // 要存檔
+            label1.gameObject.SetActive(false);
+            // label2.SetActive(false);
+            // label2_native_size.SetActive(false);
+            label3.gameObject.SetActive(false);
+            label3_native_size.gameObject.SetActive(false);
+            label4.gameObject.SetActive(false);
+            label4_native_size.gameObject.SetActive(false);
+            label5.gameObject.SetActive(false);
+            label6.gameObject.SetActive(false);
+            label7.gameObject.SetActive(false);
+            label8.gameObject.SetActive(false);
 
+            returnButton.SetActive(false);
+
+        }
 
         if (toHistoryPage == true)
         {
@@ -84,12 +100,12 @@ public class LabelController2 : MonoBehaviour
         }
         if (toSavePage == true) // 只有從game page按存檔才會過來
         {
-            // SavingLoadingPageController.toSavePage = true;
+            SavingLoadingPageController.LoadAllImage();
+            label2_native_size.SetActive(true);
             label2_pressed();
         }
         if (toLoadPage_inGame == true)
         {
-            // SavingLoadingPageController.toLoadPage = true;
             label3_native_size.SetActive(true);
             label3_pressed();
         }
@@ -245,6 +261,7 @@ public class LabelController2 : MonoBehaviour
 #endif
     }
     
+
 }
 
 
