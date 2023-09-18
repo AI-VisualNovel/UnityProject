@@ -11,6 +11,20 @@ using System.Text.RegularExpressions;
 
 namespace OpenAI
 {
+        [System.Serializable]
+        public class WuKung
+        {
+            public string wuKungName;
+            public int wuKungLevel;
+            public int wuKungStrength;
+
+            public WuKung(string name, int level, int strength)
+            {
+                wuKungName = name;
+                wuKungLevel = level;
+                wuKungStrength = strength;
+            }
+        }
     public class PracticeStoryController : MonoBehaviour
     {
         private OpenAIApi openai = new OpenAIApi();
@@ -30,9 +44,11 @@ namespace OpenAI
         [SerializeField] private GameObject practiceSelectPanel;
         [SerializeField] private ToggleGroup toggleGroup;
         [SerializeField] private Button enterPracticeButton;
+        [SerializeField] private Button goBackButton;
 
-
-
+        [SerializeField] private Transform toggleGroupTransform;
+        [SerializeField] private RectTransform togglePreferb;
+        public List<WuKung> wuKungs = new List<WuKung>();
 
         private string currentFullText = "";
         private string[] currentFullTexts = new string[50];
@@ -48,6 +64,13 @@ namespace OpenAI
             enterPracticeButton.onClick.AddListener(EnterPractice);
             textBoxButton.onClick.AddListener(MoveOn);
             practiceBackgroundButton.onClick.AddListener(MoveOn);
+            goBackButton.onClick.AddListener(GoBack);
+
+            if(wuKungs.Count == 0){
+                WuKung firstWuKung = new WuKung("基礎拳法", 1, 10);
+                wuKungs.Add(firstWuKung);
+            }
+           
         }
 
         private void Update()
@@ -73,7 +96,20 @@ namespace OpenAI
             }
         }
 
+        private void GoBack(){
+            practiceSelectPanel.SetActive(false);
+        }
+
         private void EnterPracticeSelect(){
+            for (int i = 0; i < toggleGroupTransform.childCount; i++){
+                Destroy(toggleGroupTransform.GetChild(i).gameObject);
+            }
+            foreach (var wuKung in wuKungs){
+                var thisWuKung = Instantiate(togglePreferb, toggleGroupTransform);
+                thisWuKung.GetChild(1).GetComponent<Text>().text = wuKung.wuKungName;
+                thisWuKung.GetComponent<Toggle>().group = toggleGroup;
+                thisWuKung.GetComponent<Toggle>().onValueChanged.AddListener(OnToggleValueChanged);
+            }
             practiceSelectPanel.SetActive(true);
         }
         public void OnToggleValueChanged(bool isOn)
@@ -138,6 +174,7 @@ namespace OpenAI
             };
             void HandleResponse(List<CreateChatCompletionResponse> responses){
                 currentFullText = string.Join("", responses.Select(r => r.Choices[0].Delta.Content));
+                print(currentFullText);
             }
             openai.CreateChatCompletionAsync(new CreateChatCompletionRequest()
             {
