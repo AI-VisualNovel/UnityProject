@@ -418,7 +418,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 41845586}
   m_HandleRect: {fileID: 41845585}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11211,7 +11211,6 @@ MonoBehaviour:
   - {fileID: 1407712186}
   - {fileID: 599205053}
   - {fileID: 558551580}
-  typingSounds: {fileID: 780717916}
 --- !u!114 &1596384819
 MonoBehaviour:
   m_ObjectHideFlags: 0

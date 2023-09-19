@@ -28,6 +28,8 @@ public class NavController : MonoBehaviour
     public void toSavePAge()
     {
         LabelController2.toSavePage = true;
+        LabelController2.from_game_page = true;
+
         SceneManager.LoadScene("Book2");
         SavingLoadingPageController.LoadAllImage();
 

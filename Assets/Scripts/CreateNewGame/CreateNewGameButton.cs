@@ -18,6 +18,8 @@ public class CreateNewGameButton : MonoBehaviour
 
 
 
+
+
     public static string[] buttonTexts;
     public static int buttonLength;
     public static string gamedir;
@@ -77,12 +79,17 @@ public class CreateNewGameButton : MonoBehaviour
             {
                 case "武俠":
                     SceneManager.LoadScene("Legacy_WuXia");
+                    OpenAI.WuxiaStoryController.from_book2 = false;
                     break;
                 case "奇幻":
                     SceneManager.LoadScene("Legacy_Fantasy");
+                    OpenAI.FantasyStoryController.from_book2 = false;
+
                     break;
                 case "靈異":
                     SceneManager.LoadScene("Legacy_Ghost");
+                    OpenAI.GhostStoryController.from_book2 = false;
+
                     break;
             }
 
