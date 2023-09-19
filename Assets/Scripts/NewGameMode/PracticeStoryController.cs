@@ -56,7 +56,7 @@ namespace OpenAI
         private bool canMove = false;
         private float lastChangeTime;
         private int addForceValue = 0;
-        private string practiceType = "";
+        private string practiceType = "基礎拳法";
 
         private void Start()
         {

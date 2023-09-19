@@ -69,7 +69,7 @@ namespace OpenAI
         }
 
         public async void EnterExplore(int num){
-            addValueTypeNum = UnityEngine.Random.Range(1,5);
+            addValueTypeNum = 1;
             string addValueType = "";
             switch(addValueTypeNum){
                 case 1:
