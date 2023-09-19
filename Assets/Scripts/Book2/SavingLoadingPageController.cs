@@ -84,7 +84,7 @@ public class SavingLoadingPageController : MonoBehaviour
         LoadImage(btn_been_pressed); 
         // book2.to load page
         LabelController2.new_game_been_saved = true;
-
+        returnButton.SetActive(true); // 存完才可以按返回
     }
 
 

@@ -572,6 +572,7 @@ namespace OpenAI
         private void UIHiding()
         {
             gameUI.SetActive(false);
+            SaveButton.gameObject.SetActive(false);
             UIHideing = true;
         }
 
