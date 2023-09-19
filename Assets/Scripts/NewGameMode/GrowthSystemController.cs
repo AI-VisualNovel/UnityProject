@@ -10,12 +10,16 @@ using System.Text.RegularExpressions;
 
 public class GrowthSystemController : MonoBehaviour
 {
+    public Image foreceValueBar;
+    public Image wisdomValueBar;
+    public Image infoValueBar;
+    public Image fameValueBar;
 
     public GameObject getValueTipPanel;
-    private int forceValue = 0;
-    private int wisdomValue = 0;
-    private int infoValue = 0;
-    private int fameValue = 0;
+    public float forceValue = 0f;
+    public float wisdomValue = 0f;
+    public float infoValue = 0f;
+    public float fameValue = 0f;
 
     void Start()
     {
@@ -25,7 +29,10 @@ public class GrowthSystemController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        foreceValueBar.fillAmount = forceValue / 150f;
+        wisdomValueBar.fillAmount = wisdomValue / 150f;
+        infoValueBar.fillAmount = infoValue / 150f;
+        fameValueBar.fillAmount = fameValue / 150f;
     }
     public void GetForceValue(int value){
         string getValueTip="";
