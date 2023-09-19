@@ -59,16 +59,7 @@ public class LabelController2 : MonoBehaviour
     void Start()
     {
 
-        HistoryPage.SetActive(false);
-        SavePage.SetActive(false);
-        LoadPage_inGame.SetActive(false);
-        SettingPage_inGame.SetActive(true); // 初始畫面在設定頁面
-        AboutPage_inGame.SetActive(false);
-        HelpPage_inGame.SetActive(false);
-
-        label2_native_size.SetActive(false);
-        label3_native_size.SetActive(false);
-        label4_native_size.SetActive(true);
+        
 
         // 如果從main page過來，不能進入history page & save page
         if(from_main_page == true){
@@ -77,21 +68,18 @@ public class LabelController2 : MonoBehaviour
             label2_native_size.SetActive(false);
         }
 
-        if(from_game_page == true){ // 要存檔
+        if(from_game_page == true && toSavePage == true){ // 要存檔
             label1.gameObject.SetActive(false);
             // label2.SetActive(false);
             // label2_native_size.SetActive(false);
             label3.gameObject.SetActive(false);
-            label3_native_size.gameObject.SetActive(false);
+            label3_native_size.SetActive(false);
             label4.gameObject.SetActive(false);
-            label4_native_size.gameObject.SetActive(false);
+            label4_native_size.SetActive(false);
             label5.gameObject.SetActive(false);
             label6.gameObject.SetActive(false);
             label7.gameObject.SetActive(false);
             label8.gameObject.SetActive(false);
-
-            returnButton.SetActive(false);
-
         }
 
         if (toHistoryPage == true)
@@ -122,6 +110,19 @@ public class LabelController2 : MonoBehaviour
             label6_pressed();
         }
 
+        returnButton.SetActive(false);
+
+        HistoryPage.SetActive(false);
+        SavePage.SetActive(false);
+        LoadPage_inGame.SetActive(false);
+        SettingPage_inGame.SetActive(true); // 初始畫面在設定頁面
+        AboutPage_inGame.SetActive(false);
+        HelpPage_inGame.SetActive(false);
+
+        label2_native_size.SetActive(false);
+        label3_native_size.SetActive(false);
+        label4_native_size.SetActive(true);
+
     }
     private void Update()
     {
@@ -142,6 +143,17 @@ public class LabelController2 : MonoBehaviour
             label2.gameObject.SetActive(false);
             label2_native_size.SetActive(false);
             new_game_been_saved = false; // reset
+
+            label3.gameObject.SetActive(true);
+            label3_native_size.SetActive(true);
+            label4.gameObject.SetActive(true);
+            label4_native_size.SetActive(false);
+            label5.gameObject.SetActive(true);
+            label6.gameObject.SetActive(true);
+            label7.gameObject.SetActive(true);
+            label8.gameObject.SetActive(true);
+            returnButton.SetActive(true);
+
         }
     }
 
@@ -151,6 +163,8 @@ public class LabelController2 : MonoBehaviour
         // labels
         label2_native_size.SetActive(false);
         label4_native_size.SetActive(false);
+        label3_native_size.SetActive(false);
+
 
 
         HistoryPage.SetActive(true);
@@ -165,6 +179,7 @@ public class LabelController2 : MonoBehaviour
     public void label2_pressed()
     {
         label2_native_size.SetActive(true);
+        label3_native_size.SetActive(false);
         label4_native_size.SetActive(false);
 
         HistoryPage.SetActive(false);
@@ -183,6 +198,7 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label3_native_size.SetActive(true);
         label4_native_size.SetActive(false);
 
 
@@ -201,6 +217,7 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label3_native_size.SetActive(false);
         label4_native_size.SetActive(true);
         
         HistoryPage.SetActive(false);
@@ -215,6 +232,7 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label3_native_size.SetActive(false);
         label4_native_size.SetActive(false);
 
         
@@ -234,6 +252,7 @@ public class LabelController2 : MonoBehaviour
     {
         // labels
         label2_native_size.SetActive(false);
+        label3_native_size.SetActive(false);
         label4_native_size.SetActive(false);
 
         
