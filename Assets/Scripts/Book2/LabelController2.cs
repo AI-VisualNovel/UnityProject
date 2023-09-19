@@ -82,6 +82,8 @@ public class LabelController2 : MonoBehaviour
             label8.gameObject.SetActive(false);
         }
 
+       
+
         if (toHistoryPage == true)
         {
             label1_pressed();
@@ -132,6 +134,9 @@ public class LabelController2 : MonoBehaviour
             label2_native_size.SetActive(false);
             label3.gameObject.SetActive(false);
             label3_native_size.SetActive(false);
+
+            label4_pressed();
+            from_game_setting_btn = false;
         }
 
         // 有新的存檔存完就會跳轉到讀檔頁面
