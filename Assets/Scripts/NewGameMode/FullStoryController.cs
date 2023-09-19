@@ -46,6 +46,7 @@ namespace OpenAI
 
         private void Start()
         {
+            day = 1;
             //分配地圖
             for (int i = 1; i <= 30; i++){
                 allPlaces.Add(i);
