@@ -55,6 +55,12 @@ namespace OpenAI
         public FantasyStoryController FantasyStoryController;
 
 
+        public string persistentDataPath;
+        void Awake()
+        {
+            persistentDataPath = Application.persistentDataPath;
+        }
+
         void Start()
         {
             if (from_book2 == true)
@@ -67,7 +73,9 @@ namespace OpenAI
         public void ScreenShot(string category)
         {
             saved_time = category + System.DateTime.Now.ToString("MMddyyHHmmss");
-            ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
+            // ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
+            // ScreenCapture.CaptureScreenshot("Assets/StreamingAssets/ScreenShots/" + saved_time + ".png"); // 10/18測試
+            ScreenCapture.CaptureScreenshot(persistentDataPath + "/ScreenShots/" + saved_time + ".png"); // 10/18測試
             newest_screenshot = saved_time;
             SavingLoadingPageController.saved_time = saved_time;
             SavingLoadingPageController.img = newest_screenshot;
@@ -135,7 +143,9 @@ namespace OpenAI
             }
             data.Location = ""; // will update in SavingLoadingPageController
             string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(Application.streamingAssetsPath + "/Json/" + data.Time + ".json", json);
+            // File.WriteAllText(Application.streamingAssetsPath + "/Json/" + data.Time + ".json", json);
+            File.WriteAllText(persistentDataPath + "/Json/" + data.Time + ".json", json);
+
         }
 
         // public static void LoadFromJson(string jsonfile_name){
@@ -143,7 +153,9 @@ namespace OpenAI
         {
 
 
-            string readFromFilePath = Application.streamingAssetsPath + "/Json/" + jsonfile_name + ".json";
+            // string readFromFilePath = Application.streamingAssetsPath + "/Json/" + jsonfile_name + ".json";
+            string readFromFilePath = persistentDataPath + "/Json/" + jsonfile_name + ".json";
+
             WuxiaStoryController.JsonFilePath = readFromFilePath; // 更新路徑去WuxiaStoryController
             GhostStoryController.JsonFilePath = readFromFilePath;
             FantasyStoryController.JsonFilePath = readFromFilePath;

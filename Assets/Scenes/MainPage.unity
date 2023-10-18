@@ -8022,7 +8022,6 @@ GameObject:
   - component: {fileID: 1165797063}
   - component: {fileID: 1165797062}
   - component: {fileID: 1165797061}
-  - component: {fileID: 1165797060}
   m_Layer: 5
   m_Name: Book2
   m_TagString: Untagged
@@ -8059,30 +8058,6 @@ RectTransform:
   m_AnchoredPosition: {x: 400.00006, y: 225}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1165797060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1165797058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92b2d679ad3d9864bad14abc678c58ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  load1_1: {fileID: 1776245489}
-  load1_2: {fileID: 149357831}
-  load1_3: {fileID: 1899062089}
-  load1_4: {fileID: 1838303495}
-  load2_1: {fileID: 0}
-  load2_2: {fileID: 0}
-  load2_3: {fileID: 0}
-  load2_4: {fileID: 0}
-  load3_1: {fileID: 0}
-  load3_2: {fileID: 0}
-  load3_3: {fileID: 0}
-  load3_4: {fileID: 0}
 --- !u!114 &1165797061
 MonoBehaviour:
   m_ObjectHideFlags: 0

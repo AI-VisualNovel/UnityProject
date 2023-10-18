@@ -58,8 +58,18 @@ public class LabelController2 : MonoBehaviour
 
     void Start()
     {
+        returnButton.SetActive(false);
+        HistoryPage.SetActive(false);
+        SavePage.SetActive(false);
+        LoadPage_inGame.SetActive(false);
+        SettingPage_inGame.SetActive(true); // 初始畫面在設定頁面
+        AboutPage_inGame.SetActive(false);
+        HelpPage_inGame.SetActive(false);
 
-        
+        label2_native_size.SetActive(false);
+        label3_native_size.SetActive(false);
+        label4_native_size.SetActive(true);
+
 
         // 如果從main page過來，不能進入history page & save page
         if(from_main_page == true){
@@ -80,6 +90,11 @@ public class LabelController2 : MonoBehaviour
             label6.gameObject.SetActive(false);
             label7.gameObject.SetActive(false);
             label8.gameObject.SetActive(false);
+
+            label2_native_size.SetActive(true);
+            label2_pressed();
+            SavingLoadingPageController.LoadAllImage();
+            
         }
 
        
@@ -88,12 +103,12 @@ public class LabelController2 : MonoBehaviour
         {
             label1_pressed();
         }
-        if (toSavePage == true) // 只有從game page按存檔才會過來
-        {
-            SavingLoadingPageController.LoadAllImage();
-            label2_native_size.SetActive(true);
-            label2_pressed();
-        }
+        // if (toSavePage == true) // 只有從game page按存檔才會過來
+        // {
+        //     SavingLoadingPageController.LoadAllImage();
+        //     label2_native_size.SetActive(true);
+        //     label2_pressed();
+        // }
         if (toLoadPage_inGame == true)
         {
             label3_native_size.SetActive(true);
@@ -112,18 +127,8 @@ public class LabelController2 : MonoBehaviour
             label6_pressed();
         }
 
-        returnButton.SetActive(false);
 
-        HistoryPage.SetActive(false);
-        SavePage.SetActive(false);
-        LoadPage_inGame.SetActive(false);
-        SettingPage_inGame.SetActive(true); // 初始畫面在設定頁面
-        AboutPage_inGame.SetActive(false);
-        HelpPage_inGame.SetActive(false);
 
-        label2_native_size.SetActive(false);
-        label3_native_size.SetActive(false);
-        label4_native_size.SetActive(true);
 
     }
     private void Update()

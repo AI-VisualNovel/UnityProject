@@ -11,7 +11,7 @@ using System;
 public class NewLoadPageController : MonoBehaviour
 {
 
-    public static string imagePath = "/Art/ScreenShots/";
+    // public static string imagePath = "/Art/ScreenShots/";
 
     public Button load1_1;
     public Button load1_2;
@@ -27,6 +27,15 @@ public class NewLoadPageController : MonoBehaviour
     public Button btn_been_pressed; // 存是哪一個save btn被點到
 
 
+    public static string imagePath;
+    public static string persistentDataPath;
+    void Awake()
+    {
+        imagePath = Application.persistentDataPath + "/ScreenShots/";
+        persistentDataPath = Application.persistentDataPath;
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +47,9 @@ public class NewLoadPageController : MonoBehaviour
     public static void LoadAllImage()
     {
         // 获取 JSON 文件列表
-        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        // string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string jsonFolderPath = persistentDataPath + "/Json";
+
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 
         // 遍历 JSON 文件
@@ -59,7 +70,9 @@ public class NewLoadPageController : MonoBehaviour
                 {
                     LoadName(data);
 
-                    string fullPath = Application.dataPath + imagePath + data.Time + ".png";
+                    // string fullPath = Application.dataPath + imagePath + data.Time + ".png";
+                    string fullPath = imagePath + data.Time + ".png"; // 10/18 testing
+
                     byte[] imageData = File.ReadAllBytes(fullPath);
                     Texture2D texture = new Texture2D(2, 2); // Create a new Texture2D
                     texture.LoadImage(imageData); // Load the image data into the Texture2D
@@ -187,7 +200,9 @@ public class NewLoadPageController : MonoBehaviour
     {
 
         string json_name = "Empty";
-        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        // string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string jsonFolderPath = persistentDataPath + "/Json";
+
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
         foreach (string jsonFilePath in jsonFiles)
         {
@@ -206,7 +221,8 @@ public class NewLoadPageController : MonoBehaviour
 
     public static string GetLatestJsonFile()
     {
-        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        // string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string jsonFolderPath = persistentDataPath + "/Json";
 
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 

@@ -62,7 +62,9 @@ namespace OpenAI
         
         public void ScreenShot(){
             saved_time = System.DateTime.Now.ToString("MM-dd-yy-HH-mm-ss");
-            ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
+            // ScreenCapture.CaptureScreenshot("Assets/Art/ScreenShots/" + saved_time + ".png");
+            ScreenCapture.CaptureScreenshot("Assets/StreamingAssets/ScreenShots/" + saved_time + ".png"); // 10/18測試
+
             newest_screenshot = saved_time;
             SavingLoadingPageController.saved_time = saved_time;
             SavingLoadingPageController.img = newest_screenshot;

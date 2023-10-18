@@ -12,7 +12,10 @@ using System;
 public class SavingLoadingPageController : MonoBehaviour
 {
 
-    public static string imagePath = "/Art/ScreenShots/";
+    // public static string imagePath = "/Art/ScreenShots/";
+    // public static string imagePath = "/StreamingAssets/ScreenShots/"; // 10/18測試
+    
+
     public Button save1_1;
     public Button save1_2;
     public Button save1_3;
@@ -44,6 +47,15 @@ public class SavingLoadingPageController : MonoBehaviour
 
     public Button btn_been_pressed; // 存是哪一個save btn被點到
 
+    public static string imagePath;
+    public static string persistentDataPath;
+
+    void Awake()
+    {
+        imagePath = Application.persistentDataPath + "/ScreenShots/"; // 10/18測試 
+        persistentDataPath = Application.persistentDataPath;
+
+    }
 
 
     void Start()
@@ -90,7 +102,9 @@ public class SavingLoadingPageController : MonoBehaviour
 
     public void LoadImage(Button button)
     {
-        string fullPath = Application.dataPath + imagePath + img + ".png";
+        // string fullPath = Application.dataPath + imagePath + img + ".png";
+        string fullPath = imagePath + img + ".png";
+
 
         if (img == "already_saved")
         {
@@ -123,7 +137,10 @@ public class SavingLoadingPageController : MonoBehaviour
     public static void LoadAllImage()
     {
         // 获取 JSON 文件列表
-        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        // string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+       
+        string jsonFolderPath =  persistentDataPath + "/Json";
+
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 
         // 遍历 JSON 文件
@@ -146,7 +163,9 @@ public class SavingLoadingPageController : MonoBehaviour
                 {
                     LoadName(data);
 
-                    string fullPath = Application.dataPath + imagePath + data.Time + ".png";
+                    // string fullPath = Application.dataPath + imagePath + data.Time + ".png";
+                    string fullPath = imagePath + data.Time + ".png";
+
                     byte[] imageData = File.ReadAllBytes(fullPath);
                     Texture2D texture = new Texture2D(2, 2); // Create a new Texture2D
                     texture.LoadImage(imageData); // Load the image data into the Texture2D
@@ -289,7 +308,7 @@ public class SavingLoadingPageController : MonoBehaviour
     {
 
         string json_name = "Empty";
-        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string jsonFolderPath = persistentDataPath + "/Json";
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
         foreach (string jsonFilePath in jsonFiles)
         {
@@ -310,15 +329,15 @@ public class SavingLoadingPageController : MonoBehaviour
     public void UpdateJsonLocation(Button button)
     {
 
-        string json = File.ReadAllText(Application.streamingAssetsPath + "/Json/" + saved_time + ".json");
+        string json = File.ReadAllText(persistentDataPath + "/Json/" + saved_time + ".json");
 
         // 將JSON解析為C#對象
         GameData data = JsonConvert.DeserializeObject<GameData>(json);
         data.Location = button.name;
         json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(Application.streamingAssetsPath + "/Json/" + saved_time + ".json", json);
+        File.WriteAllText(persistentDataPath + "/Json/" + saved_time + ".json", json);
 
-        string json2 = File.ReadAllText(Application.streamingAssetsPath + "/Json/" + saved_time + ".json");
+        string json2 = File.ReadAllText(persistentDataPath + "/Json/" + saved_time + ".json");
         GameData data2 = JsonUtility.FromJson<GameData>(json2);
 
     }
@@ -347,7 +366,7 @@ public class SavingLoadingPageController : MonoBehaviour
     }
     public string GetLatestJsonFile()
     {
-        string jsonFolderPath = Application.streamingAssetsPath + "/Json";
+        string jsonFolderPath = persistentDataPath + "/Json";
 
         string[] jsonFiles = Directory.GetFiles(jsonFolderPath, "*.json");
 
